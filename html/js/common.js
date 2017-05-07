@@ -14,3 +14,7 @@ function getCookie(name) {
 function deleteCookie(name) {
     setCookie(name, null);
 }
+
+function todo() {
+    alert("开发中...");
+}

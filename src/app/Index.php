@@ -7,6 +7,7 @@ class Index extends AppBase
 {
     function get($f3)
     {
-        echo $f3->get('REALM');
+        $f3->set('title', '首页');
+        echo \Template::instance()->render('index.html');
     }
 }

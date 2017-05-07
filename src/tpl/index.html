@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include href="common/header.html" />
+    <style>
+        .main {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-group {
+            width: 80%;
+        }
+        #create, #search {
+            cursor: pointer;
+        }
+        #create {
+            color: dodgerblue;
+        }
+        #search {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="active"><a>首页</a></li>
+            <li><a href="javascript:todo()">配置</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="main">
+    <div class="input-group">
+        <div class="input-group-addon"><span id="create">Create</span></div>
+        <input type="text" class="form-control" name="keyword"/>
+        <div class="input-group-addon"><span id="search">Search</span></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".main").height($(window).height());
+        $("#create").click(function () {
+            window.open("{{@BASE}}/Edit");
+        })
+        $("#search").click(function () {
+            todo();
+        })
+    })
+</script>
+</body>
+</html>

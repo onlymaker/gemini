@@ -13,7 +13,7 @@ class AppBase
     function beforeRoute($f3)
     {
         $this->db = Database::mysql();
-        if (!$f3->get('SESSION.AUTH')) {
+        if (!$f3->get('SESSION.AUTHENTICATION')) {
             if ($f3->get('VERB') == 'GET') {
                 setcookie('target', $f3->get('REALM'), 0, '/');
             } else {

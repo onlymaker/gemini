@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <include href="common/header.html" />
+    <style>
+        .base-info, .row {
+            margin: 20px auto;
+        }
+        .submit {
+            display: flex;
+            width: 100%;
+            height: 80px;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-horizontal base-info">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="name">标题(长度小于80)</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="name" name="name" placeholder="name"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="model">型号</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="model" name="model" placeholder="model"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="count">型号数量</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="count" name="count" placeholder="count"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="store">店铺</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="store" name="store"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="brand">品牌</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="brand" name="brand"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="price">价格($)</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="price" name="price" placeholder="price"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="delivery">运输方式</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="delivery" name="delivery" placeholder="delivery"/>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="feature">
+        <div class="form-group">
+            <label>卖点1</label>
+            <textarea class="form-control" id="sp1" name="feature"></textarea>
+        </div>
+        <div class="form-group">
+            <label>卖点2</label>
+            <textarea class="form-control" id="sp2" name="feature"></textarea>
+        </div>
+        <div class="form-group">
+            <label>卖点3</label>
+            <textarea class="form-control" id="sp3" name="feature"></textarea>
+        </div>
+        <div class="form-group">
+            <label>卖点4</label>
+            <textarea class="form-control" id="sp4" name="feature"></textarea>
+        </div>
+        <div class="form-group">
+            <label>卖点5</label>
+            <textarea class="form-control" id="sp5" name="feature"></textarea>
+        </div>
+    </div>
+    <hr/>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="type">产品类型</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="type" name="type"></select>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="style-name">Style Name</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="style-name" name="style-name"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="platform">水台高度(inch)</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="platform" name="platform"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="">跟高(cm)</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="" name=""></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="">筒高(cm)</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="" name=""></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="">筒围(cm)</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="" name=""></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="heel-type">Heel Type</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="heel-type" name="heelType"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="strap-type">Strap Type</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="strap-type" name="strap-type"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="closure-type">Closure Type</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="closure-type" name="closure-type"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="pattern-type">Pattern Type</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="pattern-type" name="pattern-type"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="toe-type">Toe Type</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="toe-type" name="toe-type"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="occasion-lifestyle">Occasion Lifestyle</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="occasion-lifestyle" name="occasion-lifestyle"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="">Shoe Height Map(靴子)</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="shoe-height-map" name="shoeHeightMap"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="leather-type">Leather Type(靴子)</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="leather-type" name="leather-type"></select>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Material Fabric</div>
+                <select class="form-control" name="materialFabric"></select>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Material Fabric</div>
+                <select class="form-control" name="materialFabric"></select>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Material Fabric</div>
+                <select class="form-control" name="materialFabric"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Style keywords</div>
+                <select class="form-control" name="styleKeywords"></select>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Style keywords</div>
+                <select class="form-control" name="styleKeywords"></select>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Style keywords</div>
+                <select class="form-control" name="styleKeywords"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Special Features</div>
+                <select class="form-control" name="specialFeatures"></select>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Special Features</div>
+                <select class="form-control" name="specialFeatures"></select>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Special Features</div>
+                <select class="form-control" name="specialFeatures"></select>
+            </div>
+        </div>
+    </div>
+    <h3>SKU 信息</h3>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name 1</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map 1</div>
+                <select class="form-control" name="colorMap"></select>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量 1</div>
+                <select class="form-control" name="images"></select>
+            </div>
+        </div>
+    </div>
+    <div class="submit">
+        <div class="btn-group">
+            <div class="btn btn-default btn-close">关闭</div>
+            <div class="btn btn-primary btn-submit">提交</div>
+        </div>
+    </div>
+</div>
+<script src="{{@BASE}}/js/kindeditor-4.1.2/kindeditor-all-min.js"></script>
+<script src="{{@BASE}}/js/kindeditor-4.1.2/lang/zh-CN.js"></script>
+<script>
+    KindEditor.ready(function(K) {
+        var editorOptions = {
+            items: [
+                'source', '|',
+                'undo', 'redo', '|',
+                'preview', 'cut', 'copy', 'paste', 'plainpaste', '|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'selectall', '/',
+                'formatblock', 'fontname', 'fontsize', '|',
+                'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|',
+                'table', 'hr', 'emoticons', 'pagebreak', 'anchor', 'link', 'unlink'
+            ]
+        };
+        K.create('#sp1', editorOptions);
+        K.create('#sp2', editorOptions);
+        K.create('#sp3', editorOptions);
+        K.create('#sp4', editorOptions);
+        K.create('#sp5', editorOptions);
+    });
+    $(function () {
+        $(".btn-close").click(function () {
+            window.close();
+        })
+        $(".btn-submit").click(function () {
+            todo();
+        })
+    })
+</script>
+</body>
+</html>

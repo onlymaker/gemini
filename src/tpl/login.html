@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>登录</title>
-    <script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <link href="http://cdn.bootcss.com/zui/1.5.0/css/zui.min.css" rel="stylesheet"/>
+    <include href="common/header.html" />
     <style>
         .login {
             text-align: center;
@@ -32,7 +29,6 @@
     </div>
 </div>
 <script src="http://cdn.bootcss.com/blueimp-md5/2.6.0/js/md5.min.js"></script>
-<script src="{{@BASE}}/js/common.js"></script>
 <script>
     $(function () {
         $(".login").css('margin-top', ($(window).height() - $(".login").height())/2);
