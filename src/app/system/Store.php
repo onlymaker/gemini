@@ -21,7 +21,7 @@ class Store extends SysBase
         $store->load(["name = ?", $name]);
         if ($store->dry()) {
             $f3->log('Create store ' . $name);
-            $store['name'] = $name;
+            $store['name'] = strtoupper($name);
             $store->save();
             echo 'SUCCESS';
         } else {
