@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include href="common/header.html"/>
+    <style>
+        .table>tbody>tr>th {
+            border-top: none;
+            border-bottom: none;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .create-user {
+            color: blue;
+        }
+        .reset-password {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <tr><th></th><th class="create-user">添加用户</th></tr>
+        <repeat group="{{@users}}" value="{{@user}}">
+            <tr><td>{{@user['username']}}</td><td><span class="reset-password" data="{{@user['id']}}">重置密码</span></td></tr>
+        </repeat>
+    </table>
+</div>
+<script>
+    $(function () {
+        $(".create-user").click(function () {
+            var html = '<tr><td><input class="form-contrl"/></td><td><div class="btn-group"><div class="btn btn-primary">添加</div><div class="btn btn-danger">取消</div></div></td></tr>';
+            $(".table").append(html);
+            $(".btn-primary").click(function () {
+                var row = $(this).parent().parent().parent();
+                var name = row.find("input").val().trim();
+                if (!name) {
+                    alert("输入不能为空");
+                    return false;
+                }
+                var that = $(this);
+                that.empty().append("<i class='fa fa-spinner fa-spin'></i>");
+                $.post("{{@BASE}}/system/user/create", {name: name})
+                    .done(function (data) {
+                        console.log(data);
+                        if (data == "SUCCESS") {
+                            alert("用户已添加");
+                            location.reload();
+                        } else if (data == "EXISTED") {
+                            alert("用户已经存在");
+                        }
+                    })
+                    .complete(function () {
+                        row.remove();
+                    })
+            })
+            $(".btn-danger").click(function () {
+                $(this).parent().parent().parent().remove();
+            })
+        })
+        $(".reset-password").click(function () {
+            var that = $(this);
+            that.empty().append("<i class='fa fa-spinner fa-spin'></i>");
+            $.post("{{@BASE}}/system/user/password", {id: that.attr("data")})
+                .done(function (data) {
+                    console.log(data);
+                    if (data == "SUCCESS") alert("密码已重置");
+                })
+                .complete(function () {
+                    that.empty().append("重置密码");
+                })
+        })
+    })
+</script>
+</body>
+</html>

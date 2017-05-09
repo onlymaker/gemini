@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include href="common/header.html"/>
+    <style>
+        .container {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+<check if="{{@user['role'] == 'administrator'}}">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a href="{{@BASE}}/">首页</a></li>
+                <li class="active"><a>配置</a></li>
+            </ul>
+        </div>
+    </nav>
+</check>
+<div class="container">
+    <table class="table">
+        <tr><td><a href="{{@BASE}}/system/User" target="_blank">用户</a></td></tr>
+    </table>
+</div>
+<script>
+    $(function () {
+
+    })
+</script>
+</body>
+</html>

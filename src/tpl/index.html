@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <include href="common/header.html" />
+    <include href="common/header.html"/>
     <style>
         .main {
             display: flex;
@@ -24,14 +24,16 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li class="active"><a>首页</a></li>
-            <li><a href="javascript:todo()">配置</a></li>
-        </ul>
-    </div>
-</nav>
+<check if="{{@user['role'] == 'administrator'}}">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li class="active"><a>首页</a></li>
+                <li><a href="{{@BASE}}/system/Index">配置</a></li>
+            </ul>
+        </div>
+    </nav>
+</check>
 <div class="main">
     <div class="input-group">
         <div class="input-group-addon"><span id="create">Create</span></div>

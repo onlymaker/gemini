@@ -2,11 +2,14 @@
 namespace app;
 
 use app\common\Url;
+use data\Database;
 use Ramsey\Uuid\Uuid;
 
 class Login
 {
     use Url;
+
+    private $administrator = ['onlymaker', 'debug'];
 
     function get($f3)
     {
@@ -16,16 +19,15 @@ class Login
 
     function post($f3)
     {
-        $auth = [
-            'username' => 'onlymaker',
-            'password' => md5('onlymaker123')
-        ];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $f3->log('User login: ' . $username);
 
-        $f3->log('user login: ' . $_POST['username']);
+        $query = Database::mysql()->exec("SELECT * FROM user WHERE username = '$username' AND PASSWORD = md5(concat('$password', salt))");
 
-        if ($this->authenticate($_POST['username'], $_POST['password'])) {
-            $uuid = str_replace('-', '', Uuid::uuid1());
-            $f3->set('SESSION.AUTHENTICATION', $uuid);
+        if ($query) {
+            $f3->set('SESSION.AUTHENTICATION', $username);
+            $f3->set('SESSION.AUTHORIZATION', in_array($username, $this->administrator) ? 'administrator' : 'user');
             echo json_encode([
                 'error' => ['code' => 0]
             ]);
@@ -37,25 +39,5 @@ class Login
                 ]
             ]);
         }
-    }
-
-    function authenticate($username, $password)
-    {
-        $users = [
-            [
-                'username' => 'onlymaker',
-                'password' => md5('onlymaker123')
-            ],
-            [
-                'username' => 'debug',
-                'password' => md5('123456')
-            ]
-        ];
-        foreach ($users as $user) {
-            if ($username === $user['username'] && $password === $user['password']) {
-                return true;
-            }
-        }
-        return false;
     }
 }

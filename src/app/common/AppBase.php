@@ -8,6 +8,7 @@ class AppBase
     use Url;
 
     protected $error = ['code' => -1, 'text' => 'Undefined'];
+    protected $user;
     protected $db;
 
     function beforeRoute($f3)
@@ -21,6 +22,11 @@ class AppBase
             }
             $f3->reroute($this->url('/Login'));
         }
+        $this->user = [
+            'name' => $f3->get('SESSION.AUTHENTICATION'),
+            'role' => $f3->get('SESSION.AUTHORIZATION')
+        ];
+        $f3->set('user', $this->user);
     }
 
     function jsonResponse($data = [])
