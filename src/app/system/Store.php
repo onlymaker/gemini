@@ -1,16 +1,15 @@
 <?php
 namespace app\system;
 
+use data\Database;
 use DB\SQL\Mapper;
 
 class Store extends SysBase
 {
     function get($f3)
     {
-        $store = new Mapper($this->db, 'store');
-        $stores = $store->find();
-        $f3->set('title', '  用户管理');
-        $f3->set('stores', $stores);
+        $f3->set('title', '商店管理');
+        $f3->set('stores', $this->stores());
         echo \Template::instance()->render('system/store.html');
     }
 
@@ -27,5 +26,24 @@ class Store extends SysBase
         } else {
             echo 'EXISTED';
         }
+    }
+
+    function stores()
+    {
+        $store = new Mapper($this->db ?? Database::mysql(), 'store');
+        return $store->find();
+    }
+
+    function storeArray()
+    {
+        $data = [];
+        $stores = $this->stores();
+        foreach ($stores as $item) {
+            $data[] = [
+                'id' => $item['id'],
+                'name' => $item['name']
+            ];
+        }
+        return $data;
     }
 }

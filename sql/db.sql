@@ -22,4 +22,12 @@ CREATE TABLE store (
   create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
-CREATE UNIQUE INDEX index_store_name ON store(name);
+
+DROP TABLE IF EXISTS brand;
+CREATE TABLE brand (
+  id int(20) unsigned NOT NULL AUTO_INCREMENT,
+  store_id int(20) unsigned NOT NULL,
+  name varchar(100) NOT NULL,
+  create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id)
+);
