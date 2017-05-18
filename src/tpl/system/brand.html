@@ -25,7 +25,7 @@
 <body>
 <div class="container">
     <table class="table">
-        <tr><th class="create-brand">添加品牌</th></tr>
+        <tr><th class="create-brand">添加品牌</th><th class="close">关闭</th></tr>
         <repeat group="{{@brand}}" value="{{@data}}">
             <tr>
                 <td>{{@data['name']}}</td>
@@ -43,6 +43,9 @@
         $(".edit-brand").click(function () {
             edit($(this).prev().text(), $(this).attr("data"));
         })
+        $(".close").click(function () {
+            window.close();
+        })
     })
 
     function edit(name, stores) {
@@ -57,7 +60,7 @@
         </repeat>
         storeHtml += '</div>';
         var html = nameHtml + storeHtml + '<div class="btn-group"><div class="btn btn-primary">添加</div><div class="btn btn-danger">取消</div></div>';
-        $(".table").after(html);
+        $(".table").before(html);
         if (!!stores) {
             stores = stores.split(',');
             $("input[type=checkbox]").each(function () {
