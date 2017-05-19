@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>
+    <include href="common/header.html"/>
+    <style>
+        .form-control {
+            margin: 10px auto 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p class="help-block">上传的excel文件格式如图所示：</p>
+    <div class="thumbnail"><img src="{{@BASE}}/excel.png"></div>
+    <p class="help-block">excel内容不要超过100行</p>
+
+    <form id="upload-form" enctype="multipart/form-data">
+        <label>Excel类型</label>
+        <div class="form-group">
+            <select class="form-control">
+                <option selected></option>
+                <option value="item_type">item type</option>
+                <option value="closure">closure</option>
+                <option value="heel">heel</option>
+                <option value="height_map">height map</option>
+                <option value="material">material</option>
+                <option value="occasion">occasion</option>
+                <option value="pattern">pattern</option>
+                <option value="strap">strap</option>
+                <option value="toe">toe</option>
+            </select>
+        </div>
+        <input id="upload-file" class="form-control" type="file" name="file"/>
+        <button class="btn btn-danger shutdown" type="button">关闭</button>
+        <button class="btn btn-primary upload" type="button">上传</button>
+    </form>
+    <hr/>
+    <p class="help-block">Upload:</p>
+    <table class="table"></table>
+</div>
+<script>
+    $(function () {
+        $(".shutdown").on("click", function () {
+            window.close();
+        });
+        $(".upload").on("click", upload);
+    })
+
+    function upload() {
+        var table = $("select").children("option:checked").val();
+        if (!table) {
+            return alert("尚未选择Excel类型");
+        }
+        var info = fileInfo(document.getElementById("upload-file"));
+        if (!checkFileType(info)) {
+            return alert("错误的文件类型");
+        }
+        if (!checkFileSize(info)) {
+            return alert("文件大小不要超过2M");
+        }
+        $(".btn.upload").attr("disabled", true);
+        $(".btn.upload").append("<i class='fa fa-spinner fa-spin'></i>");
+        // $.ajax 不能上传 gif
+        $.ajax({
+            url: "{{@BASE}}/system/Upload?table=" + table,
+            type: "POST",
+            cache: false,
+            data: new FormData(document.getElementById("upload-form")),
+            contentType: false,
+            processData: false
+        })
+            .done(function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                if (data.type.indexOf('ms-excel') == -1) {
+                    data.url = 'invalid file type';
+                } else {
+                    data.url = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
+                }
+                var html = '<tr><td>' + data.name + '</td><td>' + data.url + '</td></tr>';
+                $(".table").append(html);
+            })
+            .fail(console.log)
+            .complete(function () {
+                $(".btn.upload").removeAttr("disabled");
+                $(".fa.fa-spinner.fa-spin").remove();
+            })
+    }
+
+    function checkFileSize(info) {
+        var size = info ? info.size / 1024 / 1024 : -1;
+        console.log(info.name, 'size', size, 'M');
+        return (size != -1) && (size < 2);
+    }
+
+    function checkFileType(info) {
+        console.log(info.name, 'type', info.type);
+        return typeof info.type == 'string' ? ((info.type.indexOf('ms-excel') != -1) || (info.type.indexOf('openxmlformats') != -1)) : false;
+    }
+</script>
+</body>
+</html>
