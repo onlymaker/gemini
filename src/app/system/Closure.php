@@ -9,7 +9,7 @@ class Closure extends SysBase
     function get($f3)
     {
         $mapper = new Mapper(Database::mysql(), 'closure');
-        $f3->set('title', 'closure');
+        $f3->set('title', 'Closure');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/closure.html');
     }
