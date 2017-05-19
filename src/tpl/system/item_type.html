@@ -16,7 +16,7 @@
             align-items: center;
             justify-content: center;
         }
-        .create-store {
+        .create {
             color: blue;
             cursor: pointer;
         }
@@ -25,16 +25,16 @@
 <body>
 <div class="container">
     <table class="table">
-        <tr><th class="create-store">添加店铺</th><th class="close">关闭</th></tr>
-        <repeat group="{{@stores}}" value="{{@store}}">
-            <tr><td colspan="2">{{@store['name']}}</td></tr>
+        <tr><th class="create">添加产品类型</th><th class="close">关闭</th></tr>
+        <repeat group="{{@results}}" value="{{@data}}">
+            <tr><td colspan="2">{{@data['name']}}</td></tr>
         </repeat>
     </table>
 </div>
 <script>
     $(function () {
         window.mode = 'read';
-        $(".create-store").click(function () {
+        $(".create").click(function () {
             if (mode != 'read') {
                 alert("已经处于编辑模式");
                 return false;
@@ -49,14 +49,14 @@
                 }
                 var that = $(this);
                 that.append("<i class='fa fa-spinner fa-spin'></i>");
-                $.post("{{@BASE}}/system/store/create", {name: name})
+                $.post("{{@BASE}}/system/ItemType", {name: name})
                     .done(function (data) {
                         console.log(data);
                         if (data == "SUCCESS") {
-                            alert("店铺已添加");
+                            alert("类型已添加");
                             location.reload();
                         } else if (data == "EXISTED") {
-                            alert("店铺已存在");
+                            alert("类型已存在");
                         }
                     })
                     .complete(function () {
