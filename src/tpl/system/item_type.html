@@ -25,7 +25,7 @@
 <body>
 <div class="container">
     <table class="table">
-        <tr><th class="create">添加产品类型</th><th class="close">关闭</th></tr>
+        <tr><th class="create">添加</th><th class="close">关闭</th></tr>
         <repeat group="{{@results}}" value="{{@data}}">
             <tr><td colspan="2">{{@data['name']}}</td></tr>
         </repeat>
@@ -49,14 +49,14 @@
                 }
                 var that = $(this);
                 that.append("<i class='fa fa-spinner fa-spin'></i>");
-                $.post("{{@BASE}}/system/ItemType", {name: name})
+                $.post(location.href, {name: name})
                     .done(function (data) {
                         console.log(data);
                         if (data == "SUCCESS") {
-                            alert("类型已添加");
+                            alert("添加成功");
                             location.reload();
                         } else if (data == "EXISTED") {
-                            alert("类型已存在");
+                            alert("名称已存在");
                         }
                     })
                     .complete(function () {

@@ -25,7 +25,7 @@
 <body>
 <div class="container">
     <table class="table">
-        <tr><th class="create-brand">添加品牌</th><th class="close">关闭</th></tr>
+        <tr><th class="create-brand">添加</th><th class="close">关闭</th></tr>
         <repeat group="{{@brand}}" value="{{@data}}">
             <tr>
                 <td>{{@data['name']}}</td>
@@ -87,11 +87,11 @@
             }
             var that = $(this);
             that.append("<i class='fa fa-spinner fa-spin'></i>");
-            $.post("{{@BASE}}/system/Brand", {name: name, stores: stores.join()})
+            $.post(location.href, {name: name, stores: stores.join()})
                 .done(function (data) {
                     console.log(data);
                     if (data == "SUCCESS") {
-                        alert("品牌已添加");
+                        alert("添加成功");
                         location.reload();
                     }
                 })
