@@ -53,10 +53,10 @@
                     .done(function (data) {
                         console.log(data);
                         if (data == "SUCCESS") {
-                            alert("类型已添加");
+                            alert("添加成功");
                             location.reload();
                         } else if (data == "EXISTED") {
-                            alert("类型已存在");
+                            alert("名称已存在");
                         }
                     })
                     .complete(function () {

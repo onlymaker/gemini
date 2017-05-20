@@ -25,7 +25,6 @@ CREATE TABLE store (
 DROP TABLE IF EXISTS brand;
 CREATE TABLE brand (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  store_id int(20) unsigned NOT NULL,
   name varchar(100) NOT NULL,
   PRIMARY KEY(id)
 );
