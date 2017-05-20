@@ -28,12 +28,13 @@ class Create extends AppBase
 
     function post($f3)
     {
-        $model = $_POST['model'] ?? 'undefined';
         $data = json_encode($_POST, JSON_UNESCAPED_UNICODE);
         $f3->log($data);
         $raw = new Mapper($this->db, 'raw');
         $raw['user'] = $this->user['name'];
-        $raw['model'] = $model;
+        $raw['model'] = $_POST['model'] ?? 'undefined';
+        $raw['store'] = $_POST['store'] ?? 'undefined';
+        $raw['brand'] = $_POST['brand'] ?? 'undefined';
         $raw['data'] = $data;
         $raw->save();
         $this->error['code'] = 0;

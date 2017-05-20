@@ -117,6 +117,8 @@ DROP TABLE IF EXISTS raw;
 CREATE TABLE raw (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
   model VARCHAR(100) NOT NULL,
+  store VARCHAR(100) NOT NULL,
+  brand VARCHAR(100) NOT NULL,
   data TEXT,
   user VARCHAR(100),
   create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
