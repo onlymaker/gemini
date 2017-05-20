@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="{{@BASE}}/">首页</a></li>
+            <check if="{{@user['role'] == 'administrator'}}">
+            <li><a href="{{@BASE}}/system/Index">配置</a></li>
+            </check>
+            <li><a href="{{@BASE}}/Password">修改密码</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{@BASE}}/Logout">退出</a></li>
+        </ul>
+    </div>
+</nav>
+<script>
+    $(function () {
+        var base = "{{@BASE}}";
+        var prefix = location.protocol + "//" + location.host + base;
+        var url = location.href.substr(prefix.length);
+        if (url.indexOf("?") != -1) {
+            url = url.substr(0, url.indexOf("?"));
+        }
+        if (url.indexOf("#") != -1) {
+            url = url.substr(0, url.indexOf("#"));
+        }
+        $("nav.navbar-fixed-top a").each(function () {
+            var href = $(this).attr("href");
+            console.log("href: " + href + ", url: " + url);
+            if (href == url) {
+                $(this).removeAttr("href");
+                $(this).parent().addClass("active");
+                return false;
+            }
+        })
+    })
+</script>

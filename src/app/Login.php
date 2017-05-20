@@ -21,6 +21,7 @@ class Login
     {
         $username = $_POST['username'];
         $password = $_POST['password'];
+
         $f3->log('User login: ' . $username);
 
         $query = Database::mysql()->exec("SELECT * FROM user WHERE username = '$username' AND PASSWORD = md5(concat('$password', salt))");

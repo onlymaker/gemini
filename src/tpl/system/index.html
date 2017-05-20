@@ -12,16 +12,7 @@
     </style>
 </head>
 <body>
-<check if="{{@user['role'] == 'administrator'}}">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                <li><a href="{{@BASE}}/">首页</a></li>
-                <li class="active"><a>配置</a></li>
-            </ul>
-        </div>
-    </nav>
-</check>
+<include href="common/navbar.html"/>
 <div class="container">
     <h3>系统配置</h3>
     <table class="table">
@@ -39,6 +30,7 @@
         <tr><td><a href="{{@BASE}}/system/Feature" target="_blank">Feature</a></td></tr>
         <tr><td><a href="{{@BASE}}/system/Keyword" target="_blank">Keyword</a></td></tr>
         <tr><td><a href="{{@BASE}}/system/ColorMap" target="_blank">Color Map</a></td></tr>
+        <tr><td><a href="{{@BASE}}/system/User" target="_blank">用户</a></td></tr>
         <tr><td><h4>excel上传：</h4></td></tr>
         <tr><td><a href="{{@BASE}}/system/Upload" target="_blank">Upload</a></td></tr>
     </table>
