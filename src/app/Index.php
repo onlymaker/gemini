@@ -22,11 +22,27 @@ class Index extends AppBase
                 'id' => $result['id'],
                 'user' => $result['user'],
                 'model' => $result['model'],
+                'store' => $result['store'],
+                'brand' => $result['brand'],
                 'create_time' => $result['create_time']
             ];
         }
         $f3->log($this->db->log());
         $this->error['code'] = 0;
         echo $this->jsonResponse(['results' => $data]);
+    }
+
+    function delete($f3)
+    {
+        $f3->log('Request to delete raw: ' . $_POST['id']);
+        $mapper = new Mapper($this->db, 'raw');
+        $mapper->load(['id = ?', $_POST['id']]);
+        if (!$mapper->dry()) {
+            $f3->log('erase raw: ' . $mapper['id']);
+            $mapper->erase();
+        }
+        $f3->log($this->db->log());
+        $this->error['code'] = 0;
+        echo $this->jsonResponse();
     }
 }

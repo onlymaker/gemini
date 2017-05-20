@@ -1012,7 +1012,7 @@
         var data = [];
         $(".row").each(function () {
             var sku = $(this).find("input[name=subSku]");
-            if (sku) {
+            if (sku && sku.val()) {
                 data.push({
                     sku: sku.val(),
                     colorName: $(this).find("input[name=colorName]").val(),
