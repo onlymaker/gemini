@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Toe extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'toe');
+        $mapper = new Mapper($this->db, 'toe');
         $f3->set('title', 'Toe');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/toe.html');

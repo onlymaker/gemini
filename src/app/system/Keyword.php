@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Keyword extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'keyword');
+        $mapper = new Mapper($this->db, 'keyword');
         $f3->set('title', 'Keyword');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/keyword.html');

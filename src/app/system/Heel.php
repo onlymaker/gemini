@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Heel extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'heel');
+        $mapper = new Mapper($this->db, 'heel');
         $f3->set('title', 'Heel');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/heel.html');

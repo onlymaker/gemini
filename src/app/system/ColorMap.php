@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class ColorMap extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'color_map');
+        $mapper = new Mapper($this->db, 'color_map');
         $f3->set('title', 'ColorMap');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/color_map.html');

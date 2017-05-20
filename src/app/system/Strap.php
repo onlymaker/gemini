@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Strap extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'strap');
+        $mapper = new Mapper($this->db, 'strap');
         $f3->set('title', 'Strap');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/strap.html');

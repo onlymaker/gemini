@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class HeightMap extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'height_map');
+        $mapper = new Mapper($this->db, 'height_map');
         $f3->set('title', 'Height Map');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/height_map.html');

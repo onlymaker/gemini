@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Feature extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'feature');
+        $mapper = new Mapper($this->db, 'feature');
         $f3->set('title', 'Feature');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/feature.html');

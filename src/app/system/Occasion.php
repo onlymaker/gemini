@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Occasion extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'occasion');
+        $mapper = new Mapper($this->db, 'occasion');
         $f3->set('title', 'Occasion');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/occasion.html');

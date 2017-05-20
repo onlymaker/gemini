@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class ItemType extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'item_type');
+        $mapper = new Mapper($this->db, 'item_type');
         $f3->set('title', '产品类型管理');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/item_type.html');

@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Material extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'material');
+        $mapper = new Mapper($this->db, 'material');
         $f3->set('title', 'Material');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/material.html');

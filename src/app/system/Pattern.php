@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Pattern extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'pattern');
+        $mapper = new Mapper($this->db, 'pattern');
         $f3->set('title', 'Pattern');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/pattern.html');

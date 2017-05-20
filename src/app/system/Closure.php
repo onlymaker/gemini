@@ -1,14 +1,13 @@
 <?php
 namespace app\system;
 
-use data\Database;
 use DB\SQL\Mapper;
 
 class Closure extends SysBase
 {
     function get($f3)
     {
-        $mapper = new Mapper(Database::mysql(), 'closure');
+        $mapper = new Mapper($this->db, 'closure');
         $f3->set('title', 'Closure');
         $f3->set('results', $mapper->find());
         echo \Template::instance()->render('system/closure.html');
