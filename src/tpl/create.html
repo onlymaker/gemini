@@ -19,9 +19,9 @@
 <div class="container">
     <div class="form-horizontal base-info">
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="name">标题(长度小于80)</label>
+            <label class="col-sm-2 control-label" for="title">标题(长度小于80)</label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" id="name" name="name" placeholder="name"/>
+                <input class="form-control" type="text" id="title" name="title" placeholder="title"/>
             </div>
         </div>
         <div class="form-group">
@@ -33,13 +33,23 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="store">店铺</label>
             <div class="col-sm-10">
-                <select class="form-control" id="store" name="store"></select>
+                <select class="form-control" id="store" name="store">
+                    <option></option>
+                    <repeat group="{{@stores}}" value="{{@store}}">
+                    <option value="{{@store['id']}}">{{@store['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="brand">品牌</label>
             <div class="col-sm-10">
-                <select class="form-control" id="brand" name="brand"></select>
+                <select class="form-control" id="brand" name="brand">
+                    <option></option>
+                    <repeat group="{{@brands}}" value="{{@brand}}">
+                    <option value="{{@brand['id']}}">{{@brand['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -75,31 +85,31 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="sp1">卖点1</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp1" name="feature"></textarea>
+                    <textarea class="form-control" id="sp1" name="sp"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="sp1">卖点2</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp2" name="feature"></textarea>
+                    <textarea class="form-control" id="sp2" name="sp"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="sp1">卖点3</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp3" name="feature"></textarea>
+                    <textarea class="form-control" id="sp3" name="sp"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="sp1">卖点4</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp4" name="feature"></textarea>
+                    <textarea class="form-control" id="sp4" name="sp"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label" for="sp1">卖点5</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp5" name="feature"></textarea>
+                    <textarea class="form-control" id="sp5" name="sp"></textarea>
                 </div>
             </div>
         </div>    </div>
@@ -108,7 +118,12 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="item-type">产品类型</label>
             <div class="col-sm-10">
-                <select class="form-control" id="item-type" name="item-type"></select>
+                <select class="form-control" id="item-type" name="item-type">
+                    <option></option>
+                    <repeat group="{{@itemTypes}}" value="{{@itemType}}">
+                    <option value="{{@itemType['id']}}">{{@itemType['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
     </div>
@@ -138,51 +153,91 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="heel-type">Heel Type</label>
+            <label class="col-sm-2 control-label" for="heel">Heel Type</label>
             <div class="col-sm-10">
-                <select class="form-control" id="heel-type" name="heelType"></select>
+                <select class="form-control" id="heel" name="heal">
+                    <option></option>
+                    <repeat group="{{@heels}}" value="{{@heel}}">
+                    <option value="{{@heel['id']}}">{{@heel['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="strap-type">Strap Type</label>
+            <label class="col-sm-2 control-label" for="strap">Strap Type</label>
             <div class="col-sm-10">
-                <select class="form-control" id="strap-type" name="strap-type"></select>
+                <select class="form-control" id="strap" name="strap">
+                    <option></option>
+                    <repeat group="{{@straps}}" value="{{@strap}}">
+                    <option value="{{@strap['id']}}">{{@strap['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="closure-type">Closure Type</label>
+            <label class="col-sm-2 control-label" for="closure">Closure Type</label>
             <div class="col-sm-10">
-                <select class="form-control" id="closure-type" name="closure-type"></select>
+                <select class="form-control" id="closure" name="closure">
+                    <option></option>
+                    <repeat group="{{@closures}}" value="{{@closure}}">
+                    <option value="{{@closure['id']}}">{{@closure['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="pattern-type">Pattern Type</label>
+            <label class="col-sm-2 control-label" for="pattern">Pattern Type</label>
             <div class="col-sm-10">
-                <select class="form-control" id="pattern-type" name="pattern-type"></select>
+                <select class="form-control" id="pattern" name="pattern">
+                    <option></option>
+                    <repeat group="{{@patterns}}" value="{{@pattern}}">
+                    <option value="{{@pattern['id']}}">{{@pattern['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="toe-type">Toe Type</label>
+            <label class="col-sm-2 control-label" for="toe">Toe Type</label>
             <div class="col-sm-10">
-                <select class="form-control" id="toe-type" name="toe-type"></select>
+                <select class="form-control" id="toe" name="toe">
+                    <option></option>
+                    <repeat group="{{@toes}}" value="{{@toe}}">
+                    <option value="{{@toe['id']}}">{{@toe['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="occasion-lifestyle">Occasion Lifestyle</label>
+            <label class="col-sm-2 control-label" for="occasion">Occasion Lifestyle</label>
             <div class="col-sm-10">
-                <select class="form-control" id="occasion-lifestyle" name="occasion-lifestyle"></select>
+                <select class="form-control" id="occasion" name="occasion">
+                    <option></option>
+                    <repeat group="{{@occasions}}" value="{{@occasion}}">
+                    <option value="{{@occasion['id']}}">{{@occasion['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="material-fabric">Material Fabric</label>
+            <label class="col-sm-2 control-label" for="material">Material Fabric</label>
             <div class="col-sm-10">
-                <select class="form-control" id="material-fabric" name="material-fabric"></select>
+                <select class="form-control" id="material" name="material">
+                    <option></option>
+                    <repeat group="{{@materials}}" value="{{@material}}">
+                    <option value="{{@material['id']}}">{{@material['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="shoe-height-map">Shoe Height Map(靴子)</label>
             <div class="col-sm-10">
-                <select class="form-control" id="shoe-height-map" name="shoe-height-map"></select>
+                <select class="form-control" id="shoe-height-map" name="height-map">
+                    <option></option>
+                    <repeat group="{{@heightMaps}}" value="{{@heightMap}}">
+                    <option value="{{@heightMap['id']}}">{{@heightMap['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
     </div>
@@ -191,19 +246,34 @@
         <div class="col-xs-4">
             <div class="input-group">
                 <div class="input-group-addon">Style keywords</div>
-                <select class="form-control" name="styleKeywords"></select>
+                <select class="form-control" name="keyword">
+                    <option></option>
+                    <repeat group="{{@keywords}}" value="{{@keyword}}">
+                    <option value="{{@keyword['id']}}">{{@keyword['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="col-xs-4">
             <div class="input-group">
                 <div class="input-group-addon">Style keywords</div>
-                <select class="form-control" name="styleKeywords"></select>
+                <select class="form-control" name="keyword">
+                    <option></option>
+                    <repeat group="{{@keywords}}" value="{{@keyword}}">
+                    <option value="{{@keyword['id']}}">{{@keyword['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="col-xs-4">
             <div class="input-group">
                 <div class="input-group-addon">Style keywords</div>
-                <select class="form-control" name="styleKeywords"></select>
+                <select class="form-control" name="keyword">
+                    <option></option>
+                    <repeat group="{{@keywords}}" value="{{@keyword}}">
+                    <option value="{{@keyword['id']}}">{{@keyword['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
     </div>
@@ -211,19 +281,34 @@
         <div class="col-xs-4">
             <div class="input-group">
                 <div class="input-group-addon">Special Features</div>
-                <select class="form-control" name="specialFeatures"></select>
+                <select class="form-control" name="feature">
+                    <option></option>
+                    <repeat group="{{@features}}" value="{{@feature}}">
+                        <option value="{{@feature['id']}}">{{@feature['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="col-xs-4">
             <div class="input-group">
                 <div class="input-group-addon">Special Features</div>
-                <select class="form-control" name="specialFeatures"></select>
+                <select class="form-control" name="feature">
+                    <option></option>
+                    <repeat group="{{@features}}" value="{{@feature}}">
+                    <option value="{{@feature['id']}}">{{@feature['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="col-xs-4">
             <div class="input-group">
                 <div class="input-group-addon">Special Features</div>
-                <select class="form-control" name="specialFeatures"></select>
+                <select class="form-control" name="feature">
+                    <option></option>
+                    <repeat group="{{@features}}" value="{{@feature}}">
+                    <option value="{{@feature['id']}}">{{@feature['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
     </div>
@@ -232,29 +317,624 @@
     <div class="row">
         <div class="col-xs-3">
             <div class="input-group">
-                <div class="input-group-addon">子 SKU 1</div>
+                <div class="input-group-addon">子 SKU</div>
                 <input type="text" class="form-control" name="subSku"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
-                <div class="input-group-addon">Color Name 1</div>
+                <div class="input-group-addon">Color Name</div>
                 <input type="text" class="form-control" name="colorName"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
-                <div class="input-group-addon">Color Map 1</div>
-                <select class="form-control" name="colorMap"></select>
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
-                <div class="input-group-addon">图片数量 1</div>
-                <select class="form-control" name="images"></select>
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">子 SKU</div>
+                <input type="text" class="form-control" name="subSku"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Name</div>
+                <input type="text" class="form-control" name="colorName"/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">Color Map</div>
+                <select class="form-control" name="colorMap">
+                    <option></option>
+                    <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
+                    <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
+                    </repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="input-group">
+                <div class="input-group-addon">图片数量</div>
+                <input class="form-control" name="images"/>
+            </div>
+        </div>
+    </div>
+    <hr/>
     <div class="submit">
         <div class="btn-group">
             <div class="btn btn-default btn-close">关闭</div>
@@ -265,32 +945,84 @@
 <script src="{{@BASE}}/js/kindeditor-4.1.2/kindeditor-all-min.js"></script>
 <script src="{{@BASE}}/js/kindeditor-4.1.2/lang/zh-CN.js"></script>
 <script>
-    /*KindEditor.ready(function(K) {
-        var editorOptions = {
-            items: [
-                'source', '|',
-                'undo', 'redo', '|',
-                'preview', 'cut', 'copy', 'paste', 'plainpaste', '|',
-                'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'selectall', '/',
-                'formatblock', 'fontname', 'fontsize', '|',
-                'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|',
-                'table', 'hr', 'emoticons', 'pagebreak', 'anchor', 'link', 'unlink'
-            ]
-        };
-        K.create('#sp1', editorOptions);
-        K.create('#sp2', editorOptions);
-        K.create('#sp3', editorOptions);
-        K.create('#sp4', editorOptions);
-        K.create('#sp5', editorOptions);
-    });*/
     $(function () {
         $(".btn-close").click(function () {
             window.close();
         })
         $(".btn-submit").click(function () {
-            todo();
+            var data = buildData();
+            console.log("post data: ", data);
+            $(this).append("<i class='fa fa-spinner fa-spin'></i>");
+            $.post(location.href, data)
+                .done(function (data) {
+                    var json = JSON.parse(data);
+                    if (json.error.code == 0) {
+                        alert("已保存");
+                        window.close();
+                    } else {
+                        alert(json.error.text);
+                    }
+                })
+                .fail(alert)
+                .complete(function () {
+                    $(".fa-spin").remove();
+                })
         })
     })
+
+    function buildData() {
+        return {
+            title: $("input[name=title]").val(),
+            model: $("input[name=model]").val(),
+            store: $("select[name=store]").children("option:selected").val(),
+            brand: $("select[name=brand]").children("option:selected").val(),
+            price: $("input[name=price]").val(),
+            currency: $("input[name=currency]").val(),
+            delivery: $("input[name=deliver]").val(),
+            size: $("select[name=size]").children("option:selected").val(),
+            itemType: $("select[name=item-type]").children("option:selected").val(),
+            platform: $("input[name=platform]").val(),
+            heelHeight: $("input[name=heel-height]").val(),
+            shaftHeight: $("input[name=shaft-height]").val(),
+            minimumCircumference: $("input[name=minimum-circumference]").val(),
+            heel: $("select[name=heel]").children("option:selected").val(),
+            strap: $("select[name=strap]").children("option:selected").val(),
+            closure: $("select[name=closure]").children("option:selected").val(),
+            pattern: $("select[name=pattern]").children("option:selected").val(),
+            toe: $("select[name=toe]").children("option:selected").val(),
+            occasion: $("select[name=occasion]").children("option:selected").val(),
+            material: $("select[name=material]").children("option:selected").val(),
+            heightMap: $("select[name=shoe-height-map]").children("option:selected").val(),
+            sp: getMultiValue($("input[name=sp]")),
+            keyword: getMultiValue($("select[name=keyword]").children("option:selected")),
+            feature: getMultiValue($("select[name=feature]").children("option:selected")),
+            sku: getSKU()
+        }
+    }
+
+    function getMultiValue(obj) {
+        var data = [];
+        obj.each(function () {
+            data.push($(this).val());
+        })
+        return data;
+    }
+
+    function getSKU() {
+        var data = [];
+        $(".row").each(function () {
+            var sku = $(this).find("input[name=subSku]");
+            if (sku) {
+                data.push({
+                    sku: sku.val(),
+                    colorName: $(this).find("input[name=colorName]").val(),
+                    colorMap: $(this).find("select[name=colorMap]").children("option:selected").val(),
+                    images: $(this).find("input[name=images]").val()
+                })
+            }
+        })
+        return data;
+    }
 </script>
 </body>
 </html>

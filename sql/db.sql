@@ -113,3 +113,13 @@ CREATE TABLE color_map (
   name varchar(100) NOT NULL,
   PRIMARY KEY(id)
 );
+
+DROP TABLE IF EXISTS raw;
+CREATE TABLE raw (
+  id int(20) unsigned NOT NULL AUTO_INCREMENT,
+  model VARCHAR(100) NOT NULL,
+  data TEXT,
+  user VARCHAR(100),
+  create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(id)
+);
