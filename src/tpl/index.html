@@ -8,6 +8,7 @@
             width: 100%;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
         .input-group {
             width: 80%;
@@ -20,6 +21,9 @@
         }
         #search {
             color: black;
+        }
+        .table {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -39,7 +43,37 @@
             window.open("{{@BASE}}/Create");
         })
         $("#search").click(function () {
-            todo();
+            var model = $("input[name=keyword]").val();
+            if (!model) {
+                return alert("输入为空");
+            }
+            $(this).append("<i class='fa fa-spinner fa-spin'></i>");
+            $.get("{{@BASE}}/search?model=" + model)
+                .done(function (data) {
+                    console.log(data);
+                    var json = JSON.parse(data);
+                    if (json.error.code == 0) {
+                        $(".table").remove();
+                        var results = json.results;
+                        if (results && results.length > 0) {
+                            var html = '<table class="table">';
+                            for(var i in results) {
+                                html += '<tr><td>' + results[i]['create_time'] + '</td><td>' + results[i]['user'] + '</td><td>' + results[i]['model'] + '</td><td>' + results[i]['id'] + '</td></tr>';
+                            }
+                            html += '</table>';
+                            console.log(html);
+                            $(".main").append(html);
+                        } else {
+                            alert("找不到相关内容");
+                        }
+                    } else {
+                        alert(json.error.text);
+                    }
+                })
+                .fail(alert)
+                .complete(function () {
+                    $(".fa-spin").remove();
+                })
         })
     })
 </script>
