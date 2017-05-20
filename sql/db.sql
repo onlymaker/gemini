@@ -92,3 +92,24 @@ CREATE TABLE toe (
   name varchar(100) NOT NULL,
   PRIMARY KEY(id)
 );
+
+DROP TABLE IF EXISTS feature;
+CREATE TABLE feature (
+  id int(20) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS keyword;
+CREATE TABLE keyword (
+  id int(20) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+DROP TABLE IF EXISTS color_map;
+CREATE TABLE color_map (
+  id int(20) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  PRIMARY KEY(id)
+);
