@@ -79,6 +79,10 @@
                             })
                             $(".btn-delete").click(function () {
                                 var that = $(this);
+                                var user = that.parent().parent().find("td").eq(1).text();
+                                if (user != "{{@user['name']}}") {
+                                    return alert("只能删除自己创建的记录");
+                                }
                                 $.post("{{@BASE}}/delete", {id: $(this).attr("data")})
                                     .done(function (data) {
                                         var json = JSON.parse(data);
