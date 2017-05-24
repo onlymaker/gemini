@@ -19,9 +19,9 @@
 <div class="container">
     <div class="form-horizontal base-info">
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="title">标题(长度小于80)</label>
+            <label class="col-sm-2 control-label" for="name">标题(长度小于80)</label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" id="title" name="title" placeholder="title"/>
+                <input class="form-control" type="text" id="name" name="name" placeholder="name"/>
             </div>
         </div>
         <div class="form-group">
@@ -83,33 +83,33 @@
         <hr/>
         <div class="feature">
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="sp1">卖点1</label>
+                <label class="col-sm-2 control-label" for="bullet-point1">卖点1</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp1" name="sp"></textarea>
+                    <textarea class="form-control" id="bullet-point1" name="bullet-point"></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="sp1">卖点2</label>
+                <label class="col-sm-2 control-label" for="bullet-point1">卖点2</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp2" name="sp"></textarea>
+                    <textarea class="form-control" id="bullet-point2" name="bullet-point"></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="sp1">卖点3</label>
+                <label class="col-sm-2 control-label" for="bullet-point1">卖点3</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp3" name="sp"></textarea>
+                    <textarea class="form-control" id="bullet-point3" name="bullet-point"></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="sp1">卖点4</label>
+                <label class="col-sm-2 control-label" for="bullet-point1">卖点4</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp4" name="sp"></textarea>
+                    <textarea class="form-control" id="bullet-point4" name="bullet-point"></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="sp1">卖点5</label>
+                <label class="col-sm-2 control-label" for="bullet-point1">卖点5</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="sp5" name="sp"></textarea>
+                    <textarea class="form-control" id="bullet-point5" name="bullet-point"></textarea>
                 </div>
             </div>
         </div>    </div>
@@ -129,9 +129,9 @@
     </div>
     <div class="form-horizontal">
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="platform">水台(cm)</label>
+            <label class="col-sm-2 control-label" for="platform-height">水台(cm)</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="platform" name="platform"/>
+                <input type="text" class="form-control" id="platform-height" name="platform-height"/>
             </div>
         </div>
         <div class="form-group">
@@ -155,7 +155,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="heel">Heel Type</label>
             <div class="col-sm-10">
-                <select class="form-control" id="heel" name="heal">
+                <select class="form-control" id="heel" name="heel">
                     <option></option>
                     <repeat group="{{@heels}}" value="{{@heel}}">
                     <option value="{{@heel['id']}}">{{@heel['name']}}</option>
@@ -230,9 +230,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="shoe-height-map">Shoe Height Map(靴子)</label>
+            <label class="col-sm-2 control-label" for="height-map">Height Map</label>
             <div class="col-sm-10">
-                <select class="form-control" id="shoe-height-map" name="height-map">
+                <select class="form-control" id="height-map" name="height-map">
                     <option></option>
                     <repeat group="{{@heightMaps}}" value="{{@heightMap}}">
                     <option value="{{@heightMap['id']}}">{{@heightMap['name']}}</option>
@@ -324,13 +324,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -355,13 +355,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -386,13 +386,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -417,13 +417,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -448,13 +448,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -479,13 +479,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -510,13 +510,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -541,13 +541,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -572,13 +572,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -603,13 +603,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -634,13 +634,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -665,13 +665,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -696,13 +696,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -727,13 +727,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -758,13 +758,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -789,13 +789,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -820,13 +820,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -851,13 +851,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -882,13 +882,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -913,13 +913,13 @@
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Name</div>
-                <input type="text" class="form-control" name="colorName"/>
+                <input type="text" class="form-control" name="color-name"/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="input-group">
                 <div class="input-group-addon">Color Map</div>
-                <select class="form-control" name="colorMap">
+                <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
                     <option value="{{@colorMap['id']}}">{{@colorMap['name']}}</option>
@@ -972,7 +972,7 @@
 
     function buildData() {
         return {
-            title: $("input[name=title]").val(),
+            name: $("input[name=name]").val(),
             model: $("input[name=model]").val(),
             store: $("select[name=store]").children("option:selected").val(),
             brand: $("select[name=brand]").children("option:selected").val(),
@@ -981,7 +981,7 @@
             delivery: $("input[name=deliver]").val(),
             size: $("select[name=size]").children("option:selected").val(),
             itemType: $("select[name=item-type]").children("option:selected").val(),
-            platform: $("input[name=platform]").val(),
+            platformHeight: $("input[name=platform-height]").val(),
             heelHeight: $("input[name=heel-height]").val(),
             shaftHeight: $("input[name=shaft-height]").val(),
             minimumCircumference: $("input[name=minimum-circumference]").val(),
@@ -992,8 +992,8 @@
             toe: $("select[name=toe]").children("option:selected").val(),
             occasion: $("select[name=occasion]").children("option:selected").val(),
             material: $("select[name=material]").children("option:selected").val(),
-            heightMap: $("select[name=shoe-height-map]").children("option:selected").val(),
-            sp: getMultiValue($("input[name=sp]")),
+            heightMap: $("select[name=height-map]").children("option:selected").val(),
+            bulletPoint: getMultiValue($("textarea[name=bullet-point]")),
             keyword: getMultiValue($("select[name=keyword]").children("option:selected")),
             feature: getMultiValue($("select[name=feature]").children("option:selected")),
             sku: getSKU()
@@ -1015,8 +1015,8 @@
             if (sku && sku.val()) {
                 data.push({
                     sku: sku.val(),
-                    colorName: $(this).find("input[name=colorName]").val(),
-                    colorMap: $(this).find("select[name=colorMap]").children("option:selected").val(),
+                    colorName: $(this).find("input[name=color-name]").val(),
+                    colorMap: $(this).find("select[name=color-map]").children("option:selected").val(),
                     images: $(this).find("input[name=images]").val()
                 })
             }
