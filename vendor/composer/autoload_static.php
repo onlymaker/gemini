@@ -24,10 +24,6 @@ class ComposerStaticInitb27b18f721954ae75f8885616eb5735c
         array (
             'Ramsey\\Uuid\\' => 12,
         ),
-        'P' => 
-        array (
-            'PhpAmqpLib\\' => 11,
-        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -49,10 +45,6 @@ class ComposerStaticInitb27b18f721954ae75f8885616eb5735c
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
-        ),
-        'PhpAmqpLib\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/php-amqplib/php-amqplib/PhpAmqpLib',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

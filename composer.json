@@ -10,7 +10,6 @@
     "require": {
         "bcosca/fatfree": "3.6.1",
         "nategood/httpful": "0.2.20",
-        "php-amqplib/php-amqplib": "2.6.3",
         "phpoffice/phpexcel": "1.8.1",
         "ramsey/uuid": "3.6.1"
     },
