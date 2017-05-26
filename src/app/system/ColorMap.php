@@ -15,12 +15,12 @@ class ColorMap extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $colorMap = new Mapper($this->db, 'color_map');
-        $colorMap->load(["name = ?", $name]);
+        $colorMap->load(["data = ?", $data]);
         if ($colorMap->dry()) {
-            $f3->log('Create color map ' . $name);
-            $colorMap['name'] = strtoupper($name);
+            $f3->log('Create color map ' . $data);
+            $colorMap['data'] = strtoupper($data);
             $colorMap->save();
             echo 'SUCCESS';
         } else {

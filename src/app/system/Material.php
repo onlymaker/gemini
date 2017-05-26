@@ -15,12 +15,12 @@ class Material extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $Material = new Mapper($this->db, 'material');
-        $Material->load(["name = ?", $name]);
+        $Material->load(["data = ?", $data]);
         if ($Material->dry()) {
-            $f3->log('Create material ' . $name);
-            $Material['name'] = strtoupper($name);
+            $f3->log('Create material ' . $data);
+            $Material['data'] = strtoupper($data);
             $Material->save();
             echo 'SUCCESS';
         } else {

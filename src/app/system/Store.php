@@ -15,12 +15,12 @@ class Store extends SysBase
 
     function create($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $store = new Mapper($this->db, 'store');
-        $store->load(["name = ?", $name]);
+        $store->load(["data = ?", $data]);
         if ($store->dry()) {
-            $f3->log('Create store ' . $name);
-            $store['name'] = strtoupper($name);
+            $f3->log('Create store ' . $data);
+            $store['data'] = strtoupper($data);
             $store->save();
             echo 'SUCCESS';
         } else {
@@ -41,7 +41,7 @@ class Store extends SysBase
         foreach ($stores as $item) {
             $data[] = [
                 'id' => $item['id'],
-                'name' => $item['name']
+                'data' => $item['data']
             ];
         }
         return $data;

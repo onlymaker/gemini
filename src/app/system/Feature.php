@@ -15,12 +15,12 @@ class Feature extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $feature = new Mapper($this->db, 'feature');
-        $feature->load(["name = ?", $name]);
+        $feature->load(["data = ?", $data]);
         if ($feature->dry()) {
-            $f3->log('Create feature ' . $name);
-            $feature['name'] = strtoupper($name);
+            $f3->log('Create feature ' . $data);
+            $feature['data'] = strtoupper($data);
             $feature->save();
             echo 'SUCCESS';
         } else {

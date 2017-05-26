@@ -15,12 +15,12 @@ class Keyword extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $keyword = new Mapper($this->db, 'keyword');
-        $keyword->load(["name = ?", $name]);
+        $keyword->load(["data = ?", $data]);
         if ($keyword->dry()) {
-            $f3->log('Create keyword ' . $name);
-            $keyword['name'] = strtoupper($name);
+            $f3->log('Create keyword ' . $data);
+            $keyword['data'] = strtoupper($data);
             $keyword->save();
             echo 'SUCCESS';
         } else {

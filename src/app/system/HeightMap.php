@@ -15,12 +15,12 @@ class HeightMap extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $heightMap = new Mapper($this->db, 'height_map');
-        $heightMap->load(["name = ?", $name]);
+        $heightMap->load(["data = ?", $data]);
         if ($heightMap->dry()) {
-            $f3->log('Create height map ' . $name);
-            $heightMap['name'] = strtoupper($name);
+            $f3->log('Create height map ' . $data);
+            $heightMap['data'] = strtoupper($data);
             $heightMap->save();
             echo 'SUCCESS';
         } else {

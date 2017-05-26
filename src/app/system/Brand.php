@@ -15,12 +15,12 @@ class Brand extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $brand = new Mapper($this->db, 'brand');
-        $brand->load(["name = ?", $name]);
+        $brand->load(["data = ?", $data]);
         if ($brand->dry()) {
-            $f3->log('Create brand ' . $name);
-            $brand['name'] = strtoupper($name);
+            $f3->log('Create brand ' . $data);
+            $brand['data'] = strtoupper($data);
             $brand->save();
             echo 'SUCCESS';
         } else {

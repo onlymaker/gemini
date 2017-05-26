@@ -15,12 +15,12 @@ class Pattern extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $pattern = new Mapper($this->db, 'pattern');
-        $pattern->load(["name = ?", $name]);
+        $pattern->load(["data = ?", $data]);
         if ($pattern->dry()) {
-            $f3->log('Create pattern ' . $name);
-            $pattern['name'] = strtoupper($name);
+            $f3->log('Create pattern ' . $data);
+            $pattern['data'] = strtoupper($data);
             $pattern->save();
             echo 'SUCCESS';
         } else {

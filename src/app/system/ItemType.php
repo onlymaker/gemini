@@ -15,12 +15,12 @@ class ItemType extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $itemType = new Mapper($this->db, 'item_type');
-        $itemType->load(["name = ?", $name]);
+        $itemType->load(["data = ?", $data]);
         if ($itemType->dry()) {
-            $f3->log('Create item type ' . $name);
-            $itemType['name'] = strtoupper($name);
+            $f3->log('Create item type ' . $data);
+            $itemType['data'] = strtoupper($data);
             $itemType->save();
             echo 'SUCCESS';
         } else {

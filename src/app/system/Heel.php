@@ -15,12 +15,12 @@ class Heel extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $heel = new Mapper($this->db, 'heel');
-        $heel->load(["name = ?", $name]);
+        $heel->load(["data = ?", $data]);
         if ($heel->dry()) {
-            $f3->log('Create heel ' . $name);
-            $heel['name'] = strtoupper($name);
+            $f3->log('Create heel ' . $data);
+            $heel['data'] = strtoupper($data);
             $heel->save();
             echo 'SUCCESS';
         } else {

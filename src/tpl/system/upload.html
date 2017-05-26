@@ -23,13 +23,14 @@
                 <option value="heel">heel</option>
                 <option value="height_map">height map</option>
                 <option value="material">material</option>
-                <option value="occasion">occasion</option>
+                <option value="lifestyle">lifestyle</option>
                 <option value="pattern">pattern</option>
                 <option value="strap">strap</option>
                 <option value="toe">toe</option>
                 <option value="feature">feature</option>
                 <option value="keyword">keyword</option>
                 <option value="color_map">color map</option>
+                <option value="upc">upc</option>
             </select>
         </div>
         <input id="upload-file" class="form-control" type="file" name="file"/>
@@ -55,7 +56,7 @@
         }
         var info = fileInfo(document.getElementById("upload-file"));
         if (!checkFileType(info)) {
-            return alert("错误的文件类型");
+            console.log(info);
         }
         if (!checkFileSize(info)) {
             return alert("文件大小不要超过2M");

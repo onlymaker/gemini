@@ -15,12 +15,12 @@ class Strap extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $strap = new Mapper($this->db, 'strap');
-        $strap->load(["name = ?", $name]);
+        $strap->load(["data = ?", $data]);
         if ($strap->dry()) {
-            $f3->log('Create strap ' . $name);
-            $strap['name'] = strtoupper($name);
+            $f3->log('Create strap ' . $data);
+            $strap['data'] = strtoupper($data);
             $strap->save();
             echo 'SUCCESS';
         } else {

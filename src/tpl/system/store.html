@@ -39,17 +39,17 @@
                 alert("已经处于编辑模式");
                 return false;
             }
-            var html = '<input name="name" class="form-control"/><div class="btn-group"><div class="btn btn-primary">添加</div><div class="btn btn-danger">取消</div></div>';
+            var html = '<input name="data" class="form-control"/><div class="btn-group"><div class="btn btn-primary">添加</div><div class="btn btn-danger">取消</div></div>';
             $(".table").before(html);
             $(".btn-primary").click(function () {
-                var name = $("input[name=name]").val();
-                if (!name) {
+                var data = $("input[name=data]").val();
+                if (!data) {
                     alert("输入不能为空");
                     return false;
                 }
                 var that = $(this);
                 that.append("<i class='fa fa-spinner fa-spin'></i>");
-                $.post("{{@BASE}}/system/store/create", {name: name})
+                $.post("{{@BASE}}/system/store/create", {name: data})
                     .done(function (data) {
                         console.log(data);
                         if (data == "SUCCESS") {

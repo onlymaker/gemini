@@ -58,10 +58,9 @@ class Upload extends \Web
         $f3 = \Base::instance();
         $mapper = new Mapper(Database::mysql(), $table);
         foreach ($rows as $i => $data) {
-            $name = $data[0];
-            $mapper->load("name = '$name'");
+            $mapper->load("data = '$data[0]'");
             if ($mapper->dry()) {
-                $mapper['name'] = $name;
+                $mapper['data'] = $data[0];
                 $mapper->save();
                 $f3->log($table . ': ' . $data[0] . ' created');
             } else {

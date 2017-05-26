@@ -15,12 +15,12 @@ class Toe extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $toe = new Mapper($this->db, 'toe');
-        $toe->load(["name = ?", $name]);
+        $toe->load(["data = ?", $data]);
         if ($toe->dry()) {
-            $f3->log('Create toe ' . $name);
-            $toe['name'] = strtoupper($name);
+            $f3->log('Create toe ' . $data);
+            $toe['data'] = strtoupper($data);
             $toe->save();
             echo 'SUCCESS';
         } else {

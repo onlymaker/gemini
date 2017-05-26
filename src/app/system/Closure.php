@@ -15,12 +15,12 @@ class Closure extends SysBase
 
     function post($f3)
     {
-        $name = $_POST['name'];
+        $data = $_POST['data'];
         $closure = new Mapper($this->db, 'closure');
-        $closure->load(["name = ?", $name]);
+        $closure->load(["data = ?", $data]);
         if ($closure->dry()) {
-            $f3->log('Create closure ' . $name);
-            $closure['name'] = strtoupper($name);
+            $f3->log('Create closure ' . $data);
+            $closure['data'] = strtoupper($data);
             $closure->save();
             echo 'SUCCESS';
         } else {

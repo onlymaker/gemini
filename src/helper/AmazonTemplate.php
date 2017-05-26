@@ -109,7 +109,7 @@ class AmazonTemplate
         'import_designation',
         'country_as_labeled',
         'fur_description',
-        'lifestyle',//occasion
+        'lifestyle',//lifestyle
         'special_features1',//feature1
         'special_features2',//feature2
         'special_features3',//feature3
