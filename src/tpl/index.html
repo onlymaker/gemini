@@ -37,12 +37,44 @@
         <div class="input-group-addon"><span id="search">Search</span></div>
     </div>
 </div>
+<div class="modal in" tabindex="-1" style="padding-right: 15px;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="mySmallModalLabel">UPC Fulfillment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="upc"/> Yes
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary download">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(function () {
         $(".main").height($(window).height());
+
         $("#create").click(function () {
             window.open("{{@BASE}}/Create");
-        })
+        });
+
+        $(".modal.in .close span").click(function () {
+            $(".modal.in").hide();
+        });
+
+        $(".modal.in .download").click(function () {
+            var id = $(this).attr("data");
+            var upc = $(".modal.in input").prop("checked") ? 1 : 0;
+            window.open("{{@BASE}}/Download?id=" + id + "&upc=" + upc);
+        });
+
         $("#search").click(function () {
             var model = $("input[name=keyword]").val();
             if (!model) {
@@ -76,7 +108,8 @@
                             console.log(html);
                             $(".main").append(html);
                             $(".btn-download").click(function () {
-                                window.open("{{@BASE}}/Download?id=" + $(this).attr("data"));
+                                $(".modal.in .download").attr("data", $(this).attr("data"))
+                                $(".modal.in").show();
                             })
                             $(".btn-edit").click(function () {
                                 window.open("{{@BASE}}/Edit?id=" + $(this).attr("data"));
