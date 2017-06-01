@@ -224,9 +224,18 @@ class AmazonTemplate
         }
     }
 
-    private static function getUPC($upc)
+    private static function getUPC()
     {
-        //TODO
+        $upc = new Mapper(Database::mysql(), 'upc');
+        $upc->load('status = 0', ['limit' => 1]);
+        if ($upc->dry()) {
+            \Base::instance()->log('WARNING: upc is empty');
+            return '';
+        } else {
+            $upc['status'] = 1;
+            $upc->save();
+            return $upc['data'];
+        }
     }
 
     private static function parent($data)
@@ -234,7 +243,7 @@ class AmazonTemplate
         $fields = array_flip(self::$head);
         $row = [self::getSite($data['store']) . '-' . $data['model']];
         $row[$fields['item_name']] = $data['name'];
-        $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC($data['upc']) : '';
+        $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
         $row[$fields['external_product_id_type']] = 'EAN';
         $row[$fields['brand_name']] = self::getData('brand', $data['brand']);
         $row[$fields['product_description']] = iconv('utf-8', 'gbk', '固定内容，可暂时忽略');
@@ -379,7 +388,7 @@ class AmazonTemplate
         foreach ($sizeArray as $size) {
             $row = [self::getSite($data['store']) . '-' . $data['model']] . '-' . $size;
             $row[$fields['item_name']] = $data['name'] . '-' . $sku['colorName'] . '-' . $size;
-            $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC($data['upc']) : '';
+            $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
             $row[$fields['external_product_id_type']] = 'EAN';
             $row[$fields['brand_name']] = self::getData('brand', $data['brand']);
             $row[$fields['product_description']] = iconv('utf-8', 'gbk', '固定内容，可暂时忽略');
@@ -553,9 +562,6 @@ class AmazonTemplate
      */
     public static function generate($data, $file)
     {
-        header('Content-Type: octet-stream');
-        header('Content-Disposition: attachment; filename="' . basename($file) . '"');
-
         $csv = fopen($file, 'w');
 
         fputcsv($csv, self::$head);
