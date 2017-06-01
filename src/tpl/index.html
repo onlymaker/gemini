@@ -73,6 +73,7 @@
             var id = $(this).attr("data");
             var upc = $(".modal.in input").prop("checked") ? 1 : 0;
             window.open("{{@BASE}}/Download?id=" + id + "&upc=" + upc);
+            $(".modal.in").hide();
         });
 
         $("#search").click(function () {
