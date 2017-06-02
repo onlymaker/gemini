@@ -4,11 +4,11 @@ namespace data;
 use Base as F3;
 use DB\SQL;
 
-class Database
+class OMS
 {
-    public static function mysql()
+    public static function instance()
     {
-        $name = 'MYSQL';
+        $name = 'OMS';
 
         if (!\Registry::exists($name)) {
             $f3 = F3::instance();

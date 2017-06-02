@@ -15,6 +15,7 @@ Image：
 2.希望支持自动从产品数据库调取图片做图片服务起上传，链接生成格式固定，图片服务器：https://www.qiniu.com/，有接口
  */
 use data\Database;
+use data\OMS;
 use DB\SQL\Mapper;
 
 class AmazonTemplate
@@ -238,6 +239,44 @@ class AmazonTemplate
         }
     }
 
+    //TODO
+    private static function getAutoKeywords()
+    {
+        return [1, 2, 3, 4, 5];
+    }
+
+    // TODO: map images to different site
+    private static function getImages($model) : array
+    {
+        $oms = OMS::instance();
+        $prototype = new Mapper($oms, 'prototype');
+        $prototype->load(['model = ?', trim($model)]);
+        if ($prototype->dry()) {
+            return [];
+        } else {
+            $images = $prototype['images'];
+            if (empty($images)) {
+                return [];
+            } else {
+                $results = explode(',', $images);
+                foreach ($results as &$result) {
+                    if ($pos = strpos($result, 'imageView2')) {
+                        $result = substr($result, 0, $pos);
+                    } else {
+                        $result = str_replace('_thumb', '', $result);
+                    }
+                }
+                return $results;
+            }
+        }
+    }
+
+    //TODO
+    private static function getSwatchImageUrl()
+    {
+        return 'swatch_image_url';
+    }
+
     private static function parent($data)
     {
         $fields = array_flip(self::$head);
@@ -283,11 +322,14 @@ class AmazonTemplate
         $row[$fields['bullet_point3']] = $data['bluePoint'][2];
         $row[$fields['bullet_point4']] = $data['bluePoint'][3];
         $row[$fields['bullet_point5']] = $data['bluePoint'][4];
-        $row[$fields['generic_keywords1']] = 'TODO';
-        $row[$fields['generic_keywords2']] = 'TODO';
-        $row[$fields['generic_keywords3']] = 'TODO';
-        $row[$fields['generic_keywords4']] = 'TODO';
-        $row[$fields['generic_keywords5']] = 'TODO';
+
+        $autoKeywords = self::getAutoKeywords();
+        $row[$fields['generic_keywords1']] = $autoKeywords[0];
+        $row[$fields['generic_keywords2']] = $autoKeywords[1];
+        $row[$fields['generic_keywords3']] = $autoKeywords[2];
+        $row[$fields['generic_keywords4']] = $autoKeywords[3];
+        $row[$fields['generic_keywords5']] = $autoKeywords[4];
+
         $row[$fields['style_keywords1']] = self::getData('keyword', $data['keyword'][0]);
         $row[$fields['style_keywords2']] = self::getData('keyword', $data['keyword'][1]);
         $row[$fields['style_keywords3']] = self::getData('keyword', $data['keyword'][2]);
@@ -296,16 +338,33 @@ class AmazonTemplate
         $row[$fields['platinum_keywords3']] = '';
         $row[$fields['platinum_keywords4']] = '';
         $row[$fields['platinum_keywords5']] = '';
-        $row[$fields['main_image_url']] = '';  //http://oi9kpzs50.bkt.clouddn.com/站点/SKU/1.jpg，见说明
-        $row[$fields['other_image_url1']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/2.jpg，见说明
-        $row[$fields['other_image_url2']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/3.jpg，见说明
-        $row[$fields['other_image_url3']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/4.jpg，见说明
-        $row[$fields['other_image_url4']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/5.jpg，见说明
-        $row[$fields['other_image_url5']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/6.jpg，见说明
-        $row[$fields['other_image_url6']] = '';//同上，随着图片数量相应填入
-        $row[$fields['other_image_url7']] = '';//同上，随着图片数量相应填入
-        $row[$fields['other_image_url8']] = '';//同上，随着图片数量相应填入
-        $row[$fields['swatch_image_url']] = '';//尺码图，固定链接，分站点
+
+        $images = self::getImages($data['model']);
+        if ($images) {
+            $row[$fields['main_image_url']] = array_shift($images);
+            $total = 8;
+            $length = min(count($images), $total);
+            for($i = 1; $i <= $total; $i++) {
+                $name = 'other_image_url' . $i;
+                if ($i <= $length) {
+                    $row[$fields[$name]] = $images[$i - 1];
+                } else {
+                    $row[$fields[$name]] = '';
+                }
+            }
+        } else {
+            $row[$fields['main_image_url']] = '';
+            $row[$fields['other_image_url1']] = '';
+            $row[$fields['other_image_url2']] = '';
+            $row[$fields['other_image_url3']] = '';
+            $row[$fields['other_image_url4']] = '';
+            $row[$fields['other_image_url5']] = '';
+            $row[$fields['other_image_url6']] = '';
+            $row[$fields['other_image_url7']] = '';
+            $row[$fields['other_image_url8']] = '';
+        }
+
+        $row[$fields['swatch_image_url']] = self::getSwatchImageUrl();
         $row[$fields['fulfillment_center_id']] = '';
         $row[$fields['package_height']] = '';
         $row[$fields['package_width']] = '';
@@ -428,11 +487,14 @@ class AmazonTemplate
             $row[$fields['bullet_point3']] = $data['bluePoint'][2];
             $row[$fields['bullet_point4']] = $data['bluePoint'][3];
             $row[$fields['bullet_point5']] = $data['bluePoint'][4];
-            $row[$fields['generic_keywords1']] = 'TODO';
-            $row[$fields['generic_keywords2']] = 'TODO';
-            $row[$fields['generic_keywords3']] = 'TODO';
-            $row[$fields['generic_keywords4']] = 'TODO';
-            $row[$fields['generic_keywords5']] = 'TODO';
+
+            $autoKeywords = self::getAutoKeywords();
+            $row[$fields['generic_keywords1']] = $autoKeywords[0];
+            $row[$fields['generic_keywords2']] = $autoKeywords[1];
+            $row[$fields['generic_keywords3']] = $autoKeywords[2];
+            $row[$fields['generic_keywords4']] = $autoKeywords[3];
+            $row[$fields['generic_keywords5']] = $autoKeywords[4];
+
             $row[$fields['style_keywords1']] = self::getData('keyword', $data['keyword'][0]);
             $row[$fields['style_keywords2']] = self::getData('keyword', $data['keyword'][1]);
             $row[$fields['style_keywords3']] = self::getData('keyword', $data['keyword'][2]);
@@ -441,16 +503,33 @@ class AmazonTemplate
             $row[$fields['platinum_keywords3']] = '';
             $row[$fields['platinum_keywords4']] = '';
             $row[$fields['platinum_keywords5']] = '';
-            $row[$fields['main_image_url']] = '';  //http://oi9kpzs50.bkt.clouddn.com/站点/SKU/1.jpg，见说明
-            $row[$fields['other_image_url1']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/2.jpg，见说明
-            $row[$fields['other_image_url2']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/3.jpg，见说明
-            $row[$fields['other_image_url3']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/4.jpg，见说明
-            $row[$fields['other_image_url4']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/5.jpg，见说明
-            $row[$fields['other_image_url5']] = '';//http://oi9kpzs50.bkt.clouddn.com/站点/SKU/6.jpg，见说明
-            $row[$fields['other_image_url6']] = '';//同上，随着图片数量相应填入
-            $row[$fields['other_image_url7']] = '';//同上，随着图片数量相应填入
-            $row[$fields['other_image_url8']] = '';//同上，随着图片数量相应填入
-            $row[$fields['swatch_image_url']] = '';//尺码图，固定链接，分站点
+
+            $images = self::getImages($sku);
+            if ($images) {
+                $row[$fields['main_image_url']] = array_shift($images);
+                $total = 8;
+                $length = min(count($images), $total);
+                for($i = 1; $i <= $total; $i++) {
+                    $name = 'other_image_url' . $i;
+                    if ($i <= $length) {
+                        $row[$fields[$name]] = $images[$i - 1];
+                    } else {
+                        $row[$fields[$name]] = '';
+                    }
+                }
+            } else {
+                $row[$fields['main_image_url']] = '';
+                $row[$fields['other_image_url1']] = '';
+                $row[$fields['other_image_url2']] = '';
+                $row[$fields['other_image_url3']] = '';
+                $row[$fields['other_image_url4']] = '';
+                $row[$fields['other_image_url5']] = '';
+                $row[$fields['other_image_url6']] = '';
+                $row[$fields['other_image_url7']] = '';
+                $row[$fields['other_image_url8']] = '';
+            }
+
+            $row[$fields['swatch_image_url']] = self::getSwatchImageUrl();
             $row[$fields['fulfillment_center_id']] = '';
             $row[$fields['package_height']] = '';
             $row[$fields['package_width']] = '';
@@ -522,7 +601,7 @@ class AmazonTemplate
             $row[$fields['heel_height']] = $data['heelHeight'];
             $row[$fields['platform_height']] = $data['platformHeight'];
             $row[$fields['water_resistance_level']] = '';
-            //TODO: generate image url
+
             $rows[] = $row;
         }
         return $rows;

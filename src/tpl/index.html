@@ -76,6 +76,12 @@
             $(".modal.in").hide();
         });
 
+        $("input[name=keyword]").keydown(function(e){
+            if(e.keyCode==13){
+                $("#search").click();
+            }
+        });
+
         $("#search").click(function () {
             var model = $("input[name=keyword]").val();
             if (!model) {
@@ -134,7 +140,7 @@
                                     .complete()
                             })
                         } else {
-                            alert("找不到相关内容");
+                            alert("找不到" + model);
                         }
                     } else {
                         alert(json.error.text);
