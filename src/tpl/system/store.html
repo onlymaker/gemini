@@ -10,8 +10,11 @@
         .container {
             margin-top: 100px;
         }
+        .input-group {
+            margin-top: 10px;
+        }
         .btn-group {
-            margin-top: 15px;
+            margin: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -20,14 +23,22 @@
             color: blue;
             cursor: pointer;
         }
+        .delete {
+            float: right;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <table class="table">
-        <tr><th class="create-store">添加</th><th class="close">关闭</th></tr>
+        <tr><th class="create-store">添加</th><th>图片服务器</th><th>尺码对照图</th><th class="close">关闭</th></tr>
         <repeat group="{{@stores}}" value="{{@store}}">
-            <tr><td colspan="2">{{@store['name']}}</td></tr>
+            <tr>
+                <td>{{@store['name']}}</td>
+                <td>{{@store['cdn']}}</td>
+                <td>{{@store['swatch_image_url']}}</td>
+                <td><div class="btn btn-danger delete" data="{{@store['id']}}">删除</div></td>
+            </tr>
         </repeat>
     </table>
 </div>
@@ -39,17 +50,22 @@
                 alert("已经处于编辑模式");
                 return false;
             }
-            var html = '<input name="data" class="form-control"/><div class="btn-group"><div class="btn btn-primary">添加</div><div class="btn btn-danger">取消</div></div>';
+            var html = '<div class="input-group"><span class="input-group-addon">Name</span><input name="name" class="form-control"/></div>' +
+                '<div class="input-group"><span class="input-group-addon">图片服务器</span><input name="cdn" class="form-control"/></div>' +
+                '<div class="input-group"><span class="input-group-addon">尺码对照图</span><input name="swatchImageUrl" class="form-control"/></div>' +
+                '<div class="btn-group"><div class="btn btn-primary">添加</div><div class="btn btn-danger cancel">取消</div></div>';
             $(".table").before(html);
             $(".btn-primary").click(function () {
-                var data = $("input[name=data]").val();
-                if (!data) {
-                    alert("输入不能为空");
+                var name = $("input[name=name]").val();
+                if (!name) {
+                    alert("名称不能为空");
                     return false;
                 }
+                var cdn = $("input[name=cdn]").val();
+                var swatchImageUrl = $("input[name=swatchImageUrl]").val();
                 var that = $(this);
                 that.append("<i class='fa fa-spinner fa-spin'></i>");
-                $.post("{{@BASE}}/system/store/create", {name: data})
+                $.post("{{@BASE}}/system/store/create", {name: name, cdn: cdn, swatchImageUrl: swatchImageUrl})
                     .done(function (data) {
                         console.log(data);
                         if (data == "SUCCESS") {
@@ -60,13 +76,13 @@
                         }
                     })
                     .complete(function () {
-                        $("input").remove();
+                        $(".input-group").remove();
                         that.parent().remove();
                         window.mode = 'read';
                     })
             })
-            $(".btn-danger").click(function () {
-                $("input").remove();
+            $(".cancel").click(function () {
+                $(".input-group").remove();
                 $(this).parent().remove();
                 window.mode = 'read';
             })
@@ -74,6 +90,24 @@
         })
         $(".close").click(function () {
             window.close();
+        })
+        $(".delete").click(function () {
+            var id = $(this).attr("data");
+            var that = $(this);
+            that.append("<i class='fa fa-spinner fa-spin'></i>");
+            $.post("{{@BASE}}/system/store/delete", {id: id})
+                .done(function (data) {
+                    console.log(data);
+                    if (data == "SUCCESS") {
+                        alert("删除成功");
+                        location.reload();
+                    } else {
+                        alert(data);
+                    }
+                })
+                .complete(function () {
+                    $(".fa-spin").remove();
+                })
         })
     })
 </script>

@@ -18,7 +18,9 @@ INSERT INTO user VALUES (1, 'debug', md5(concat(md5('123456'), '12345678')), '12
 DROP TABLE IF EXISTS store;
 CREATE TABLE store (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  name varchar(100) NOT NULL,
+  cdn varchar(500) DEFAULT '',
+  swatch_image_url varchar(500) DEFAULT '',
   PRIMARY KEY(id)
 );
 

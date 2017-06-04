@@ -161,6 +161,13 @@ class AmazonTemplate
         'water_resistance_level'//空
     ];
 
+    private static function getStore($id)
+    {
+        $store = new Mapper(Database::mysql(), 'store');
+        $store->load(['id = ?', $id]);
+        return $store->dry() ? [] : $store;
+    }
+
     private static function getData($table, $id)
     {
         $mapper = new Mapper(Database::mysql(), $table);
@@ -174,8 +181,8 @@ class AmazonTemplate
      */
     private static function getSite($store)
     {
-        $store = self::getData('store', $store);
-        switch ($store) {
+        $store = self::getStore($store);
+        switch ($store['name']) {
             case 'OMDE':
             case 'KHDE':
                 return 'EU';
@@ -187,7 +194,7 @@ class AmazonTemplate
             case 'OMCA':
                 return 'US';
             default:
-                return $store;
+                return $store['name'];
         }
     }
 
@@ -198,24 +205,24 @@ class AmazonTemplate
      */
     private static function getSize($type, $store)
     {
-        $store = self::getData('store', $store);
+        $site = self::getSite($store);
         switch ($type) {
             case 'manufacture':
-                if ($store == 'EU') {
+                if ($site == 'EU') {
                     return [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46];
-                } else if ($store == 'UK') {
+                } else if ($site == 'UK') {
                     return [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-                } else if ($store == 'US') {
+                } else if ($site == 'US') {
                     return [5, 6, 7, 8, 9, 9.5, 10, 11, 12, 13, 14, 15];
                 } else {
                     return [];
                 }
             case 'stock':
-                if ($store == 'EU') {
+                if ($site == 'EU') {
                     return [35.5, 36, 36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 43, 44, 45];
-                } else if ($store == 'UK') {
+                } else if ($site == 'UK') {
                     return [3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11];
-                } else if ($store == 'US') {
+                } else if ($site == 'US') {
                     return [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13, 14];
                 } else {
                     return [];
@@ -245,8 +252,7 @@ class AmazonTemplate
         return [1, 2, 3, 4, 5];
     }
 
-    // TODO: map images to different site
-    private static function getImages($model) : array
+    private static function getImages($store, $model) : array
     {
         $oms = OMS::instance();
         $prototype = new Mapper($oms, 'prototype');
@@ -258,8 +264,12 @@ class AmazonTemplate
             if (empty($images)) {
                 return [];
             } else {
+                $store = self::getStore($store);
                 $results = explode(',', $images);
                 foreach ($results as &$result) {
+                    if (!empty($store['cdn'])) {
+                        $results = str_replace('http://image.onlymaker.cn', $store['cdn'], $result);
+                    }
                     if ($pos = strpos($result, 'imageView2')) {
                         $result = substr($result, 0, $pos);
                     } else {
@@ -272,9 +282,10 @@ class AmazonTemplate
     }
 
     //TODO
-    private static function getSwatchImageUrl()
+    private static function getSwatchImageUrl($store)
     {
-        return 'swatch_image_url';
+        $store = self::getStore($store);
+        return $store['swatch_image_url'];
     }
 
     private static function parent($data)
@@ -339,7 +350,7 @@ class AmazonTemplate
         $row[$fields['platinum_keywords4']] = '';
         $row[$fields['platinum_keywords5']] = '';
 
-        $images = self::getImages($data['model']);
+        $images = self::getImages($data['store'], $data['model']);
         if ($images) {
             $row[$fields['main_image_url']] = array_shift($images);
             $total = 8;
@@ -364,7 +375,7 @@ class AmazonTemplate
             $row[$fields['other_image_url8']] = '';
         }
 
-        $row[$fields['swatch_image_url']] = self::getSwatchImageUrl();
+        $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
         $row[$fields['fulfillment_center_id']] = '';
         $row[$fields['package_height']] = '';
         $row[$fields['package_width']] = '';
@@ -504,7 +515,7 @@ class AmazonTemplate
             $row[$fields['platinum_keywords4']] = '';
             $row[$fields['platinum_keywords5']] = '';
 
-            $images = self::getImages($sku);
+            $images = self::getImages($data['store'], $sku);
             if ($images) {
                 $row[$fields['main_image_url']] = array_shift($images);
                 $total = 8;
@@ -529,7 +540,7 @@ class AmazonTemplate
                 $row[$fields['other_image_url8']] = '';
             }
 
-            $row[$fields['swatch_image_url']] = self::getSwatchImageUrl();
+            $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
             $row[$fields['fulfillment_center_id']] = '';
             $row[$fields['package_height']] = '';
             $row[$fields['package_width']] = '';

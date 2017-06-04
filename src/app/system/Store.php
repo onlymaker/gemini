@@ -15,12 +15,14 @@ class Store extends SysBase
 
     function create($f3)
     {
-        $data = $_POST['data'];
+        $name = $_POST['name'];
         $store = new Mapper($this->db, 'store');
-        $store->load(["data = ?", $data]);
+        $store->load(["name = ?", $name]);
         if ($store->dry()) {
-            $f3->log('Create store ' . $data);
-            $store['data'] = strtoupper($data);
+            $f3->log('Create store ' . $name);
+            $store['name'] = strtoupper($name);
+            $store['cdn'] = $_POST['cdn'] ?? '';
+            $store['swatch_image_url'] = $_POST['swatchImageUrl'];
             $store->save();
             echo 'SUCCESS';
         } else {
@@ -28,22 +30,22 @@ class Store extends SysBase
         }
     }
 
+    function delete()
+    {
+        $id = $_POST['id'];
+        $store = new Mapper($this->db, 'store');
+        $store->load(["id = ?", $id]);
+        if ($store->dry()) {
+            echo 'Store [' . $id . '] not found';
+        } else {
+            $store->erase();
+            echo 'SUCCESS';
+        }
+    }
+
     function stores()
     {
         $store = new Mapper($this->db ?? Database::mysql(), 'store');
         return $store->find();
-    }
-
-    function storeArray()
-    {
-        $data = [];
-        $stores = $this->stores();
-        foreach ($stores as $item) {
-            $data[] = [
-                'id' => $item['id'],
-                'data' => $item['data']
-            ];
-        }
-        return $data;
     }
 }
