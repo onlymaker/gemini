@@ -161,28 +161,21 @@ class AmazonTemplate
         'water_resistance_level'//空
     ];
 
-    private static function getStore($id)
+    private static function getStore($name)
     {
         $store = new Mapper(Database::mysql(), 'store');
-        $store->load(['id = ?', $id]);
+        $store->load(['name = ?', $name]);
         return $store->dry() ? [] : $store;
     }
 
-    private static function getData($table, $id)
-    {
-        $mapper = new Mapper(Database::mysql(), $table);
-        $mapper->load(['id = ?', $id]);
-        return $mapper->dry() ? 'null' : $mapper['data'];
-    }
-
     /**
-     * @param $store       : store id
-     * @return mixed|string: store name
+     * Mapping store to site [EU, UK, US]
+     * @param $store       : store name
+     * @return mixed|string: site
      */
     private static function getSite($store)
     {
-        $store = self::getStore($store);
-        switch ($store['name']) {
+        switch ($store) {
             case 'OMDE':
             case 'KHDE':
                 return 'EU';
@@ -194,13 +187,13 @@ class AmazonTemplate
             case 'OMCA':
                 return 'US';
             default:
-                return $store['name'];
+                return $store;
         }
     }
 
     /**
      * @param $type : 尺码类型（manufacture/stock）
-     * @param $store: store id
+     * @param $store: store name
      * @return array
      */
     private static function getSize($type, $store)
@@ -252,7 +245,7 @@ class AmazonTemplate
         return [1, 2, 3, 4, 5];
     }
 
-    private static function getImages($store, $model) : array
+    private static function getImages($storeName, $model) : array
     {
         $oms = OMS::instance();
         $prototype = new Mapper($oms, 'prototype');
@@ -264,7 +257,7 @@ class AmazonTemplate
             if (empty($images)) {
                 return [];
             } else {
-                $store = self::getStore($store);
+                $store = self::getStore($storeName);
                 $results = explode(',', $images);
                 foreach ($results as &$result) {
                     if (!empty($store['cdn'])) {
@@ -281,23 +274,22 @@ class AmazonTemplate
         }
     }
 
-    //TODO
-    private static function getSwatchImageUrl($store)
+    private static function getSwatchImageUrl($storeName)
     {
-        $store = self::getStore($store);
-        return $store['swatch_image_url'];
+        $store = self::getStore($storeName);
+        return $store['swatch_image_url'] ?? '';
     }
 
     private static function parent($data)
     {
         $fields = array_flip(self::$head);
-        $row = [self::getSite($data['store']) . '-' . $data['model']];
+        $row = [$data['store'] . '-' . $data['model']];
         $row[$fields['item_name']] = $data['name'];
         $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
         $row[$fields['external_product_id_type']] = 'EAN';
-        $row[$fields['brand_name']] = self::getData('brand', $data['brand']);
+        $row[$fields['brand_name']] = $data['brand'];
         $row[$fields['product_description']] = iconv('utf-8', 'gbk', '固定内容，可暂时忽略');
-        $row[$fields['item_type']] = self::getData('item_type', $data['itemType']);
+        $row[$fields['item_type']] = $data['itemType'];
         $row[$fields['model']] = $row[$fields['item_sku']];
         $row[$fields['update_delete']] = '';
         $row[$fields['standard_price']] = $data['price'];
@@ -341,9 +333,9 @@ class AmazonTemplate
         $row[$fields['generic_keywords4']] = $autoKeywords[3];
         $row[$fields['generic_keywords5']] = $autoKeywords[4];
 
-        $row[$fields['style_keywords1']] = self::getData('keyword', $data['keyword'][0]);
-        $row[$fields['style_keywords2']] = self::getData('keyword', $data['keyword'][1]);
-        $row[$fields['style_keywords3']] = self::getData('keyword', $data['keyword'][2]);
+        $row[$fields['style_keywords1']] = $data['keyword'][0];
+        $row[$fields['style_keywords2']] = $data['keyword'][1];
+        $row[$fields['style_keywords3']] = $data['keyword'][2];
         $row[$fields['platinum_keywords1']] = '';
         $row[$fields['platinum_keywords2']] = '';
         $row[$fields['platinum_keywords3']] = '';
@@ -393,7 +385,7 @@ class AmazonTemplate
         $row[$fields['cpsia_cautionary_statement2']] = '';
         $row[$fields['cpsia_cautionary_statement3']] = '';
         $row[$fields['cpsia_cautionary_statement4']] = '';
-        $row[$fields['style_name']] = self::getData('keyword', $data['keyword'][0]);
+        $row[$fields['style_name']] = $data['keyword'][0];
         $row[$fields['lens_color']] = '';
         $row[$fields['lens_color_map']] = '';
         $row[$fields['magnification_strength']] = '';
@@ -406,38 +398,38 @@ class AmazonTemplate
         $row[$fields['arm_length']] = '';
         $row[$fields['lens_height']] = '';
         $row[$fields['eyewear_unit_of_measure']] = '';
-        $row[$fields['closure_type']] = self::getData('closure', $data['closure']);
+        $row[$fields['closure_type']] = $data['closure'];
         $row[$fields['department_name']] = 'women';
         $row[$fields['color_name']] = '';
         $row[$fields['color_map']] = '';
         $row[$fields['import_designation']] = '';
         $row[$fields['country_as_labeled']] = '';
         $row[$fields['fur_description']] = '';
-        $row[$fields['lifestyle']] = self::getData('lifestyle', $data['lifestyle']);
-        $row[$fields['special_features1']] = self::getData('feature', $data['feature'][0]);
-        $row[$fields['special_features2']] = self::getData('feature', $data['feature'][1]);
-        $row[$fields['special_features3']] = self::getData('feature', $data['feature'][2]);
+        $row[$fields['lifestyle']] = $data['lifestyle'];
+        $row[$fields['special_features1']] = $data['feature'][0];
+        $row[$fields['special_features2']] = $data['feature'][1];
+        $row[$fields['special_features3']] = $data['feature'][2];
         $row[$fields['subject_character1']] = '';
         $row[$fields['subject_character2']] = '';
         $row[$fields['subject_character3']] = '';
         $row[$fields['subject_character4']] = '';
         $row[$fields['subject_character5']] = '';
-        $row[$fields['strap_type']] = self::getData('strap', $data['strap']);
+        $row[$fields['strap_type']] = $data['strap'];
         $row[$fields['lining_description']] = '';
         $row[$fields['shoulder_strap_drop']] = '';
         $row[$fields['shoulder_strap_drop_unit_of_measure']] = '';
         $row[$fields['size_name']] = '';
         $row[$fields['is_stain_resistant']] = '';
-        $row[$fields['material_type1']] = self::getData('material', $data['material']);
+        $row[$fields['material_type1']] = $data['material'];
         $row[$fields['material_type2']] = '';
         $row[$fields['material_type3']] = '';
-        $row[$fields['pattern_type']] = self::getData('pattern', $data['pattern']);
+        $row[$fields['pattern_type']] = $data['pattern'];
         $row[$fields['model_year']] = date('Y');
         $row[$fields['shoe_dimension_unit_of_measure']] = '';
         $row[$fields['sole_material']] = '';
-        $row[$fields['heel_type']] = self::getData('heel', $data['heel']);
+        $row[$fields['heel_type']] = $data['heel'];
         $row[$fields['height_map']] = $data['heightMap'];
-        $row[$fields['toe_style']] = self::getData('toe', $data['toe']);
+        $row[$fields['toe_style']] = $data['toe'];
         $row[$fields['arch_type']] = 'neutral';
         $row[$fields['cleat_description']] = '';
         $row[$fields['cleat_material_type']] = '';
@@ -456,13 +448,13 @@ class AmazonTemplate
         $fields = array_flip(self::$head);
         $sizeArray = self::getSize($data['size'], $data['store']);
         foreach ($sizeArray as $size) {
-            $row = [self::getSite($data['store']) . '-' . $data['model']] . '-' . $size;
+            $row = [$data['store'] . '-' . $data['model']] . '-' . $size;
             $row[$fields['item_name']] = $data['name'] . '-' . $sku['colorName'] . '-' . $size;
             $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
             $row[$fields['external_product_id_type']] = 'EAN';
-            $row[$fields['brand_name']] = self::getData('brand', $data['brand']);
+            $row[$fields['brand_name']] = $data['brand'];
             $row[$fields['product_description']] = iconv('utf-8', 'gbk', '固定内容，可暂时忽略');
-            $row[$fields['item_type']] = self::getData('item_type', $data['itemType']);
+            $row[$fields['item_type']] = $data['itemType'];
             $row[$fields['model']] = $row[$fields['item_sku']];
             $row[$fields['update_delete']] = '';
             $row[$fields['standard_price']] = $data['price'];
@@ -506,9 +498,9 @@ class AmazonTemplate
             $row[$fields['generic_keywords4']] = $autoKeywords[3];
             $row[$fields['generic_keywords5']] = $autoKeywords[4];
 
-            $row[$fields['style_keywords1']] = self::getData('keyword', $data['keyword'][0]);
-            $row[$fields['style_keywords2']] = self::getData('keyword', $data['keyword'][1]);
-            $row[$fields['style_keywords3']] = self::getData('keyword', $data['keyword'][2]);
+            $row[$fields['style_keywords1']] = $data['keyword'][0];
+            $row[$fields['style_keywords2']] = $data['keyword'][1];
+            $row[$fields['style_keywords3']] = $data['keyword'][2];
             $row[$fields['platinum_keywords1']] = '';
             $row[$fields['platinum_keywords2']] = '';
             $row[$fields['platinum_keywords3']] = '';
@@ -558,7 +550,7 @@ class AmazonTemplate
             $row[$fields['cpsia_cautionary_statement2']] = '';
             $row[$fields['cpsia_cautionary_statement3']] = '';
             $row[$fields['cpsia_cautionary_statement4']] = '';
-            $row[$fields['style_name']] = self::getData('keyword', $data['keyword'][0]);
+            $row[$fields['style_name']] = $data['keyword'][0];
             $row[$fields['lens_color']] = '';
             $row[$fields['lens_color_map']] = '';
             $row[$fields['magnification_strength']] = '';
@@ -571,38 +563,38 @@ class AmazonTemplate
             $row[$fields['arm_length']] = '';
             $row[$fields['lens_height']] = '';
             $row[$fields['eyewear_unit_of_measure']] = '';
-            $row[$fields['closure_type']] = self::getData('closure', $data['closure']);
+            $row[$fields['closure_type']] = $data['closure'];
             $row[$fields['department_name']] = 'women';
             $row[$fields['color_name']] = $sku['colorName'];
-            $row[$fields['color_map']] = self::getData('color_map', $sku['colorMap']);
+            $row[$fields['color_map']] = $sku['colorMap'];
             $row[$fields['import_designation']] = '';
             $row[$fields['country_as_labeled']] = '';
             $row[$fields['fur_description']] = '';
-            $row[$fields['lifestyle']] = self::getData('lifestyle', $data['lifestyle']);
-            $row[$fields['special_features1']] = self::getData('feature', $data['feature'][0]);
-            $row[$fields['special_features2']] = self::getData('feature', $data['feature'][1]);
-            $row[$fields['special_features3']] = self::getData('feature', $data['feature'][2]);
+            $row[$fields['lifestyle']] =$data['lifestyle'];
+            $row[$fields['special_features1']] = $data['feature'][0];
+            $row[$fields['special_features2']] = $data['feature'][1];
+            $row[$fields['special_features3']] = $data['feature'][2];
             $row[$fields['subject_character1']] = '';
             $row[$fields['subject_character2']] = '';
             $row[$fields['subject_character3']] = '';
             $row[$fields['subject_character4']] = '';
             $row[$fields['subject_character5']] = '';
-            $row[$fields['strap_type']] = self::getData('strap', $data['strap']);
+            $row[$fields['strap_type']] = $data['strap'];
             $row[$fields['lining_description']] = '';
             $row[$fields['shoulder_strap_drop']] = '';
             $row[$fields['shoulder_strap_drop_unit_of_measure']] = '';
             $row[$fields['size_name']] = '';
             $row[$fields['is_stain_resistant']] = '';
-            $row[$fields['material_type1']] = self::getData('material', $data['material']);
+            $row[$fields['material_type1']] = $data['material'];
             $row[$fields['material_type2']] = '';
             $row[$fields['material_type3']] = '';
-            $row[$fields['pattern_type']] = self::getData('pattern', $data['pattern']);
+            $row[$fields['pattern_type']] = $data['pattern'];
             $row[$fields['model_year']] = date('Y');
             $row[$fields['shoe_dimension_unit_of_measure']] = '';
             $row[$fields['sole_material']] = '';
-            $row[$fields['heel_type']] = self::getData('heel', $data['heel']);
+            $row[$fields['heel_type']] = $data['heel'];
             $row[$fields['height_map']] = $data['heightMap'];
-            $row[$fields['toe_style']] = self::getData('toe', $data['toe']);
+            $row[$fields['toe_style']] = $data['toe'];
             $row[$fields['arch_type']] = 'neutral';
             $row[$fields['cleat_description']] = '';
             $row[$fields['cleat_material_type']] = '';

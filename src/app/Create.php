@@ -3,6 +3,7 @@ namespace app;
 
 use app\common\AppBase;
 use DB\SQL\Mapper;
+use PHPUnit\Runner\Exception;
 
 class Create extends AppBase
 {
@@ -28,16 +29,20 @@ class Create extends AppBase
 
     function post($f3)
     {
-        $data = json_encode($_POST, JSON_UNESCAPED_UNICODE);
-        $f3->log($data);
-        $raw = new Mapper($this->db, 'raw');
-        $raw['user'] = $this->user['name'];
-        $raw['model'] = $_POST['model'] ?? 'undefined';
-        $raw['store'] = $_POST['store'] ?? 'undefined';
-        $raw['brand'] = $_POST['brand'] ?? 'undefined';
-        $raw['data'] = $data;
-        $raw->save();
-        $this->error['code'] = 0;
+        try {
+            $data = json_encode($_POST, JSON_UNESCAPED_UNICODE);
+            $raw = new Mapper($this->db, 'raw');
+            $raw['user'] = $this->user['name'];
+            $raw['model'] = $_POST['model'] ?? 'undefined';
+            $raw['store'] = $_POST['store'] ?? 'undefined';
+            $raw['brand'] = $_POST['brand'] ?? 'undefined';
+            $raw['data'] = $data;
+            $raw->save();
+            $this->error['code'] = 0;
+        } catch (Exception $e) {
+            $this->error['code'] = $e->getCode();
+            $this->error['text'] = $e->getMessage();
+        }
         echo $this->jsonResponse();
     }
 }
