@@ -58,14 +58,28 @@ class Upload extends \Web
         $f3 = \Base::instance();
         $mapper = new Mapper(Database::mysql(), $table);
         foreach ($rows as $i => $data) {
-            $mapper->load("data = '$data[0]'");
-            if ($mapper->dry()) {
-                $mapper['data'] = $data[0];
-                $mapper->save();
-                $f3->log($table . ': ' . $data[0] . ' created');
+            if ($table == 'generic_keyword') {
+                $mapper->load("name = '$data[0]'");
+                if ($mapper->dry()) {
+                    $mapper['name'] = strtolower($data[0]);
+                    $mapper['data'] = trim(str_replace('，', ',', $data[1]));
+                    $mapper->save();
+                    $f3->log($table . ': ' . $data[0] . ' created');
+                } else {
+                    $mapper->reset();
+                    $f3->log($table . ': ' . $data[0] . ' existed');
+                }
+
             } else {
-                $mapper->reset();
-                $f3->log($table . ': ' . $data[0] . ' existed');
+                $mapper->load("data = '$data[0]'");
+                if ($mapper->dry()) {
+                    $mapper['data'] = $data[0];
+                    $mapper->save();
+                    $f3->log($table . ': ' . $data[0] . ' created');
+                } else {
+                    $mapper->reset();
+                    $f3->log($table . ': ' . $data[0] . ' existed');
+                }
             }
         }
     }

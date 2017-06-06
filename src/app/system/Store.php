@@ -22,7 +22,11 @@ class Store extends SysBase
             $f3->log('Create store ' . $name);
             $store['name'] = strtoupper($name);
             $store['cdn'] = 'http://' . strtolower($name) . '.syncxplus.com';
-            $store['swatch_image_url'] = 'http://' . strtolower($name) . '.syncxplus.com/swatch.jpg';
+            if (self::getSite($name) == 'US') {
+                $store['swatch_image_url'] = 'http://' . strtolower($name) . '.syncxplus.com/us_size_chart.png';
+            } else {
+                $store['swatch_image_url'] = 'http://' . strtolower($name) . '.syncxplus.com/eu_size_chart.png';
+            }
             $store->save();
             echo 'SUCCESS';
         } else {
@@ -34,5 +38,28 @@ class Store extends SysBase
     {
         $store = new Mapper($this->db ?? Database::mysql(), 'store');
         return $store->find();
+    }
+
+    /**
+     * Mapping store to site [EU, UK, US]
+     * @param $store       : store name
+     * @return mixed|string: site
+     */
+    public static function getSite($store)
+    {
+        switch (strtoupper($store)) {
+            case 'OMDE':
+            case 'KHDE':
+                return 'EU';
+            case 'OMUK':
+            case 'KHUK':
+                return 'UK';
+            case 'AHUS':
+            case 'CLUS':
+            case 'OMCA':
+                return 'US';
+            default:
+                return $store;
+        }
     }
 }

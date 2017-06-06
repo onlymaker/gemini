@@ -124,6 +124,14 @@ CREATE TABLE upc (
   PRIMARY KEY(id)
 );
 
+DROP TABLE IF EXISTS generic_keyword;
+CREATE TABLE generic_keyword (
+  id int(20) unsigned NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  data TEXT,
+  PRIMARY KEY(id)
+);
+
 DROP TABLE IF EXISTS raw;
 CREATE TABLE raw (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,

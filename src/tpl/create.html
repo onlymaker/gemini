@@ -832,7 +832,19 @@
     $(function () {
         $(".btn-close").click(function () {
             window.close();
+        });
+
+        $("input[name=name]").on('input', function () {
+            var length = $(this).val().length;
+            if (length > 80) {
+                $(this).val($(this).val().substr(0, 80));
+                length = 80;
+            }
+            var html = '<p class="help-block name-length">已经输入字符个数' + length + '</p>';
+            $(".name-length").remove();
+            $(this).after(html);
         })
+
         $(".btn-submit").click(function () {
             var data = buildData();
             console.log("post data: ", data);
