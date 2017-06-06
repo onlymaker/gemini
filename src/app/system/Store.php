@@ -21,25 +21,12 @@ class Store extends SysBase
         if ($store->dry()) {
             $f3->log('Create store ' . $name);
             $store['name'] = strtoupper($name);
-            $store['cdn'] = $_POST['cdn'] ?? '';
-            $store['swatch_image_url'] = $_POST['swatchImageUrl'];
+            $store['cdn'] = 'http://' . strtolower($name) . '.syncxplus.com';
+            $store['swatch_image_url'] = 'http://' . strtolower($name) . '.syncxplus.com/swatch.jpg';
             $store->save();
             echo 'SUCCESS';
         } else {
             echo 'EXISTED';
-        }
-    }
-
-    function delete()
-    {
-        $id = $_POST['id'];
-        $store = new Mapper($this->db, 'store');
-        $store->load(["id = ?", $id]);
-        if ($store->dry()) {
-            echo 'Store [' . $id . '] not found';
-        } else {
-            $store->erase();
-            echo 'SUCCESS';
         }
     }
 
