@@ -620,34 +620,6 @@ class AmazonTemplate
 
     /**
      * @param $data
-    {
-     * "name": "",
-     * "model": "test",
-     * "store": "",
-     * "brand": "",
-     * "price": "",
-     * "currency": "",
-     * "delivery": "",
-     * "size": "",
-     * "itemType": "",
-     * "platformHeight": "",
-     * "heelHeight": "",
-     * "shaftHeight": "",
-     * "minimumCircumference": "",
-     * "heel": "",
-     * "strap": "",
-     * "closure": "",
-     * "pattern": "",
-     * "toe": "",
-     * "lifestyle": "",
-     * "material": "",
-     * "heightMap": "",
-     * "upc": "0",
-     * "bulletPoint": ["","","","",""],
-     * "keyword": ["","",""],
-     * "feature": ["","",""],
-     * "sku":[{"sku":"","colorName":"","colorMap":"","images":""}, ...]
-     * }
      * @param $file
      */
     public static function generate($data, $file)
