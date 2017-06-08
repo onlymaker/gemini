@@ -36,14 +36,19 @@ class Create extends AppBase
         $brand = $_POST['brand'] ?? 'undefined';
         $raw = new Mapper($this->db, 'raw');
         $raw->load(['user = ? and model = ? and store = ? and brand = ?', $user, $model, $store, $brand]);
-        if ($raw->dry()) {
+        if ($raw->dry()) { // create
             $raw['user'] = $user;
             $raw['model'] = $model;
             $raw['store'] = $store;
             $raw['brand'] = $brand;
+            $raw['data'] = $data;
+            $raw->save();
+        } else {
+            if ($raw['data'] != $data) { // update
+                $raw['data'] = $data;
+                $raw->save();
+            }
         }
-        $raw['data'] = $data;
-        $raw->save();
         $this->error['code'] = 0;
         echo $this->jsonResponse();
     }
