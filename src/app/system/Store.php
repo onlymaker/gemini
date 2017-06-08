@@ -50,13 +50,16 @@ class Store extends SysBase
         switch (strtoupper($store)) {
             case 'OMDE':
             case 'KHDE':
+            case 'OSDE':
                 return 'EU';
             case 'OMUK':
             case 'KHUK':
+            case 'OSUK':
                 return 'UK';
             case 'AHUS':
             case 'CLUS':
             case 'OMCA':
+            case 'OSUS':
                 return 'US';
             default:
                 return $store;
