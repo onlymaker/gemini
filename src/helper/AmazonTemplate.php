@@ -277,7 +277,7 @@ class AmazonTemplate
                 $results = explode(',', $images);
                 foreach ($results as &$result) {
                     if (!empty($store['cdn'])) {
-                        $results = str_replace('http://image.onlymaker.cn', $store['cdn'], $result);
+                        $result = str_replace('http://image.onlymaker.cn', $store['cdn'], $result);
                     }
                     if ($pos = strpos($result, 'imageView2')) {
                         $result = substr($result, 0, $pos);
