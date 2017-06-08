@@ -98,7 +98,7 @@ class AmazonTemplate
         'package_weight',//空
         'package_weight_unit_of_measure',//空
         'parent_child',//parent or child，第一行是parent
-        'parent_sku',//子SKU
+        'parent_sku',//父SKU
         'relationship_type',//variation
         'variation_theme',//Size/Color
         'prop_65',//空
@@ -392,7 +392,7 @@ class AmazonTemplate
         $row[$fields['package_weight']] = '';
         $row[$fields['package_weight_unit_of_measure']] = '';
         $row[$fields['parent_child']] = 'parent';
-        $row[$fields['parent_sku']] = '';
+        $row[$fields['parent_sku']] = $data['model'];
         $row[$fields['relationship_type']] = 'variation';
         $row[$fields['variation_theme']] = 'Size/Color';
         $row[$fields['prop_65']] = '';
@@ -462,9 +462,10 @@ class AmazonTemplate
     {
         $rows = [];
         $fields = array_flip(self::$head);
+        $site = Store::getSite($data['store']);
         $sizeArray = self::getSize($data['size'], $data['store']);
         foreach ($sizeArray as $size) {
-            $row = [$data['store'] . '-' . $data['model']] . '-' . $size;
+            $row = [$data['store'] . '-' . $sku['sku'] . '-' . $site . $size];
             $row[$fields['item_name']] = $data['name'] . '-' . $sku['colorName'] . '-' . $size;
             $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
             $row[$fields['external_product_id_type']] = 'EAN';
@@ -523,7 +524,7 @@ class AmazonTemplate
             $row[$fields['platinum_keywords4']] = '';
             $row[$fields['platinum_keywords5']] = '';
 
-            $images = self::getImages($data['store'], $sku);
+            $images = self::getImages($data['store'], $sku['sku']);
             if ($images) {
                 $row[$fields['main_image_url']] = array_shift($images);
                 $total = 8;
@@ -557,7 +558,7 @@ class AmazonTemplate
             $row[$fields['package_weight']] = '';
             $row[$fields['package_weight_unit_of_measure']] = '';
             $row[$fields['parent_child']] = 'child';
-            $row[$fields['parent_sku']] = $sku['sku'];
+            $row[$fields['parent_sku']] = $data['model'];
             $row[$fields['relationship_type']] = 'variation';
             $row[$fields['variation_theme']] = 'Size/Color';
             $row[$fields['prop_65']] = '';
