@@ -18,7 +18,7 @@
         <textarea class="form-control">{{@raw['data']}}</textarea>
         <div class="btn-group">
             <div class="btn btn-default cancel">取消</div>
-            <div class="btn btn-primary submit"  data="{{@raw['id']}}">修改</div>
+            <div class="btn btn-primary submit">修改</div>
         </div>
     </div>
 </div>
@@ -29,7 +29,11 @@
             window.close();
         });
         $(".submit").click(function () {
-            var id = $(this).attr("data");
+            try {
+                JSON.parse($("textarea").val());
+            } catch (error) {
+                return alert("修改后的格式错误");
+            }
             $(".submit").attr("disabled", true);
             $(this).append("<i class='fa fa-spinner fa-spin'></i>");
             $.post("{{@BASE}}/Create", JSON.parse($("textarea").val()))

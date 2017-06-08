@@ -29,27 +29,22 @@ class Create extends AppBase
 
     function post($f3)
     {
-        try {
-            $data = json_encode($_POST, JSON_UNESCAPED_UNICODE);
-            $user = $this->user['name'];
-            $model = $_POST['model'] ?? 'undefined';
-            $store = $_POST['store'] ?? 'undefined';
-            $brand = $_POST['brand'] ?? 'undefined';
-            $raw = new Mapper($this->db, 'raw');
-            $raw->load(['user = ? and model = ? and store = ? and brand = ?', $user, $model, $store, $brand]);
-            if ($raw->dry()) {
-                $raw['user'] = $user;
-                $raw['model'] = $model;
-                $raw['store'] = $store;
-                $raw['brand'] = $brand;
-            }
-            $raw['data'] = $data;
-            $raw->save();
-            $this->error['code'] = 0;
-        } catch (Exception $e) {
-            $this->error['code'] = $e->getCode();
-            $this->error['text'] = $e->getMessage();
+        $data = json_encode($_POST, JSON_UNESCAPED_UNICODE);
+        $user = $this->user['name'];
+        $model = $_POST['model'] ?? 'undefined';
+        $store = $_POST['store'] ?? 'undefined';
+        $brand = $_POST['brand'] ?? 'undefined';
+        $raw = new Mapper($this->db, 'raw');
+        $raw->load(['user = ? and model = ? and store = ? and brand = ?', $user, $model, $store, $brand]);
+        if ($raw->dry()) {
+            $raw['user'] = $user;
+            $raw['model'] = $model;
+            $raw['store'] = $store;
+            $raw['brand'] = $brand;
         }
+        $raw['data'] = $data;
+        $raw->save();
+        $this->error['code'] = 0;
         echo $this->jsonResponse();
     }
 }

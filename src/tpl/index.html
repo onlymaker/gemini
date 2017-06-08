@@ -115,6 +115,11 @@
                             console.log(html);
                             $(".main").append(html);
                             $(".btn-download").click(function () {
+                                var row = $(this).parent().parent().parent();
+                                var user = row.find("td").eq(1).text();
+                                if (user != "{{@user['name']}}") {
+                                    return alert("只能下载自己创建的记录");
+                                }
                                 $(".modal.in .download").attr("data", $(this).attr("data"))
                                 $(".modal.in").show();
                             })
