@@ -359,29 +359,20 @@ class AmazonTemplate
         $row[$fields['platinum_keywords5']] = '';
 
         $images = self::getImages($data['store'], $data['model']);
+        //父产品只要一张图
         if ($images) {
             $row[$fields['main_image_url']] = array_shift($images);
-            $total = 8;
-            $length = min(count($images), $total);
-            for($i = 1; $i <= $total; $i++) {
-                $name = 'other_image_url' . $i;
-                if ($i <= $length) {
-                    $row[$fields[$name]] = $images[$i - 1];
-                } else {
-                    $row[$fields[$name]] = '';
-                }
-            }
         } else {
             $row[$fields['main_image_url']] = '';
-            $row[$fields['other_image_url1']] = '';
-            $row[$fields['other_image_url2']] = '';
-            $row[$fields['other_image_url3']] = '';
-            $row[$fields['other_image_url4']] = '';
-            $row[$fields['other_image_url5']] = '';
-            $row[$fields['other_image_url6']] = '';
-            $row[$fields['other_image_url7']] = '';
-            $row[$fields['other_image_url8']] = '';
         }
+        $row[$fields['other_image_url1']] = '';
+        $row[$fields['other_image_url2']] = '';
+        $row[$fields['other_image_url3']] = '';
+        $row[$fields['other_image_url4']] = '';
+        $row[$fields['other_image_url5']] = '';
+        $row[$fields['other_image_url6']] = '';
+        $row[$fields['other_image_url7']] = '';
+        $row[$fields['other_image_url8']] = '';
 
         $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
         $row[$fields['fulfillment_center_id']] = '';
@@ -392,7 +383,7 @@ class AmazonTemplate
         $row[$fields['package_weight']] = '';
         $row[$fields['package_weight_unit_of_measure']] = '';
         $row[$fields['parent_child']] = 'parent';
-        $row[$fields['parent_sku']] = $data['model'];
+        $row[$fields['parent_sku']] = '';
         $row[$fields['relationship_type']] = 'variation';
         $row[$fields['variation_theme']] = 'Size/Color';
         $row[$fields['prop_65']] = '';
