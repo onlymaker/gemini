@@ -302,7 +302,7 @@ class AmazonTemplate
         $row = [$data['store'] . '-' . $data['model']];
         $row[$fields['item_name']] = $data['name'];
         $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
-        $row[$fields['external_product_id_type']] = 'EAN';
+        $row[$fields['external_product_id_type']] = empty($row[$fields['external_product_id']]) ? '' : 'EAN';
         $row[$fields['brand_name']] = $data['brand'];
         $row[$fields['product_description']] = iconv('utf-8', 'gbk', '固定内容，可暂时忽略');
         $row[$fields['item_type']] = $data['itemType'];
@@ -459,7 +459,7 @@ class AmazonTemplate
             $row = [$data['store'] . '-' . $sku['sku'] . '-' . $site . $size];
             $row[$fields['item_name']] = $data['name'] . '-' . $sku['colorName'] . '-' . $size;
             $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
-            $row[$fields['external_product_id_type']] = 'EAN';
+            $row[$fields['external_product_id_type']] = empty($row[$fields['external_product_id']]) ? '' : 'EAN';
             $row[$fields['brand_name']] = $data['brand'];
             $row[$fields['product_description']] = iconv('utf-8', 'gbk', '固定内容，可暂时忽略');
             $row[$fields['item_type']] = $data['itemType'];
