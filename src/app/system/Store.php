@@ -60,9 +60,8 @@ class Store extends SysBase
             case 'CLUS':
             case 'OMCA':
             case 'OSUS':
-                return 'US';
             default:
-                return $store;
+                return 'US';
         }
     }
 }
