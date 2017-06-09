@@ -653,12 +653,14 @@ DES;
         unset($data['sku']);
 
         foreach ($all as $sku) {
-            $children = self::children($sku, $data);
-            foreach ($children as $child) {
-                fputcsv($csv, $child);
+            if (!empty($sku['sku'])) {
+                $children = self::children($sku, $data);
+                foreach ($children as $child) {
+                    fputcsv($csv, $child);
+                }
+                ob_flush();
+                flush();
             }
-            ob_flush();
-            flush();
         }
 
         fclose($csv);
