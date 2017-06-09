@@ -147,7 +147,7 @@ class AmazonTemplate
         'material_type3',//空
         'pattern_type',//pattern
         'model_year',//2017
-        'shoe_dimension_unit_of_measure',//空
+        'shoe_dimension_unit_of_measure',//CM
         'sole_material',//空
         'heel_type',//heel
         'height_map',//heightMap
@@ -356,11 +356,11 @@ DES;
         $row[$fields['item_length']] = '';
         $row[$fields['item_width']] = '';
         $row[$fields['item_height']] = '';
-        $row[$fields['bullet_point1']] = $data['bluePoint'][0];
-        $row[$fields['bullet_point2']] = $data['bluePoint'][1];
-        $row[$fields['bullet_point3']] = $data['bluePoint'][2];
-        $row[$fields['bullet_point4']] = $data['bluePoint'][3];
-        $row[$fields['bullet_point5']] = $data['bluePoint'][4];
+        $row[$fields['bullet_point1']] = $data['bulletPoint'][0];
+        $row[$fields['bullet_point2']] = $data['bulletPoint'][1];
+        $row[$fields['bullet_point3']] = $data['bulletPoint'][2];
+        $row[$fields['bullet_point4']] = $data['bulletPoint'][3];
+        $row[$fields['bullet_point5']] = $data['bulletPoint'][4];
 
         $autoKeywords = self::getAutoKeywords($data['name']);
         $row[$fields['generic_keywords1']] = $autoKeywords[0];
@@ -394,7 +394,7 @@ DES;
         $row[$fields['other_image_url7']] = '';
         $row[$fields['other_image_url8']] = '';
 
-        $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
+        $row[$fields['swatch_image_url']] = '';
         $row[$fields['fulfillment_center_id']] = '';
         $row[$fields['package_height']] = '';
         $row[$fields['package_width']] = '';
@@ -452,7 +452,7 @@ DES;
         $row[$fields['material_type3']] = '';
         $row[$fields['pattern_type']] = $data['pattern'];
         $row[$fields['model_year']] = date('Y');
-        $row[$fields['shoe_dimension_unit_of_measure']] = '';
+        $row[$fields['shoe_dimension_unit_of_measure']] = 'CM';
         $row[$fields['sole_material']] = '';
         $row[$fields['heel_type']] = $data['heel'];
         $row[$fields['height_map']] = $data['heightMap'];
@@ -513,11 +513,11 @@ DES;
             $row[$fields['item_length']] = '';
             $row[$fields['item_width']] = '';
             $row[$fields['item_height']] = '';
-            $row[$fields['bullet_point1']] = $data['bluePoint'][0];
-            $row[$fields['bullet_point2']] = $data['bluePoint'][1];
-            $row[$fields['bullet_point3']] = $data['bluePoint'][2];
-            $row[$fields['bullet_point4']] = $data['bluePoint'][3];
-            $row[$fields['bullet_point5']] = $data['bluePoint'][4];
+            $row[$fields['bullet_point1']] = $data['bulletPoint'][0];
+            $row[$fields['bullet_point2']] = $data['bulletPoint'][1];
+            $row[$fields['bullet_point3']] = $data['bulletPoint'][2];
+            $row[$fields['bullet_point4']] = $data['bulletPoint'][3];
+            $row[$fields['bullet_point5']] = $data['bulletPoint'][4];
 
             $autoKeywords = self::getAutoKeywords($data['name']);
             $row[$fields['generic_keywords1']] = $autoKeywords[0];
@@ -548,8 +548,13 @@ DES;
                         $row[$fields[$name]] = '';
                     }
                 }
+                if ($length == $total) {
+                    $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
+                } else {
+                    $row[$fields['other_image_url' . ($length + 1)]] = self::getSwatchImageUrl($data['store']);
+                }
             } else {
-                $row[$fields['main_image_url']] = '';
+                $row[$fields['main_image_url']] = self::getSwatchImageUrl($data['store']);
                 $row[$fields['other_image_url1']] = '';
                 $row[$fields['other_image_url2']] = '';
                 $row[$fields['other_image_url3']] = '';
@@ -558,9 +563,9 @@ DES;
                 $row[$fields['other_image_url6']] = '';
                 $row[$fields['other_image_url7']] = '';
                 $row[$fields['other_image_url8']] = '';
+                $row[$fields['swatch_image_url']] = '';
             }
 
-            $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
             $row[$fields['fulfillment_center_id']] = '';
             $row[$fields['package_height']] = '';
             $row[$fields['package_width']] = '';
@@ -569,7 +574,7 @@ DES;
             $row[$fields['package_weight']] = '';
             $row[$fields['package_weight_unit_of_measure']] = '';
             $row[$fields['parent_child']] = 'child';
-            $row[$fields['parent_sku']] = $data['model'];
+            $row[$fields['parent_sku']] = $data['store'] . '-' . $data['model'];
             $row[$fields['relationship_type']] = 'variation';
             $row[$fields['variation_theme']] = 'Size/Color';
             $row[$fields['prop_65']] = '';
@@ -611,14 +616,14 @@ DES;
             $row[$fields['lining_description']] = '';
             $row[$fields['shoulder_strap_drop']] = '';
             $row[$fields['shoulder_strap_drop_unit_of_measure']] = '';
-            $row[$fields['size_name']] = '';
+            $row[$fields['size_name']] = $site . $size;
             $row[$fields['is_stain_resistant']] = '';
             $row[$fields['material_type1']] = $data['material'];
             $row[$fields['material_type2']] = '';
             $row[$fields['material_type3']] = '';
             $row[$fields['pattern_type']] = $data['pattern'];
             $row[$fields['model_year']] = date('Y');
-            $row[$fields['shoe_dimension_unit_of_measure']] = '';
+            $row[$fields['shoe_dimension_unit_of_measure']] = 'CM';
             $row[$fields['sole_material']] = '';
             $row[$fields['heel_type']] = $data['heel'];
             $row[$fields['height_map']] = $data['heightMap'];
