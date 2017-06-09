@@ -15,7 +15,7 @@ class Index extends AppBase
     function search($f3)
     {
         $mapper = new Mapper($this->db, 'raw');
-        $results = $mapper->find(['model like ?', '%' . $_GET['model'] . '%']);
+        $results = $mapper->find(['model like ?', '%' . $_GET['model'] . '%'], ['order' => 'update_time desc']);
         $data = [];
         foreach ($results as $result) {
             $data[] = [
@@ -24,7 +24,7 @@ class Index extends AppBase
                 'model' => $result['model'],
                 'store' => $result['store'],
                 'brand' => $result['brand'],
-                'create_time' => $result['create_time']
+                'update_time' => $result['update_time']
             ];
         }
         $f3->log($this->db->log());
