@@ -86,6 +86,8 @@
             var model = $("input[name=keyword]").val();
             if (!model) {
                 return alert("输入为空");
+            } else if (model.length < 4) {
+                return alert("输入字符太少");
             }
             $(this).append("<i class='fa fa-spinner fa-spin'></i>");
             $.get("{{@BASE}}/search?model=" + model)
