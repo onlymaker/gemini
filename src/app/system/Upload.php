@@ -59,17 +59,22 @@ class Upload extends \Web
         $mapper = new Mapper(Database::mysql(), $table);
         foreach ($rows as $i => $data) {
             if ($table == 'generic_keyword') {
+                $keywordString = trim(str_replace('，', ',', $data[1]));
                 $mapper->load("name = '$data[0]'");
                 if ($mapper->dry()) {
                     $mapper['name'] = strtolower($data[0]);
-                    $mapper['data'] = trim(str_replace('，', ',', $data[1]));
+                    $mapper['data'] = $keywordString;
                     $mapper->save();
                     $f3->log($table . ': ' . $data[0] . ' created');
                 } else {
-                    $mapper->reset();
-                    $f3->log($table . ': ' . $data[0] . ' existed');
+                    if ($mapper['data'] != $keywordString) {
+                        $mapper['data'] = $keywordString;
+                        $mapper->save();
+                        $f3->log($table . ': ' . $data[0] . ' updated');
+                    } else {
+                        $f3->log($table . ': ' . $data[0] . ' existed');
+                    }
                 }
-
             } else {
                 $mapper->load("data = '$data[0]'");
                 if ($mapper->dry()) {
@@ -77,7 +82,6 @@ class Upload extends \Web
                     $mapper->save();
                     $f3->log($table . ': ' . $data[0] . ' created');
                 } else {
-                    $mapper->reset();
                     $f3->log($table . ': ' . $data[0] . ' existed');
                 }
             }
