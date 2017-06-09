@@ -121,7 +121,7 @@ class AmazonTemplate
         'lens_height',//空
         'eyewear_unit_of_measure',//空
         'closure_type',//closure
-        'department_name',//women
+        'department_name',//womens
         'color_name',//colorName
         'color_map',//colorMap
         'import_designation',//空
@@ -426,7 +426,7 @@ DES;
         $row[$fields['lens_height']] = '';
         $row[$fields['eyewear_unit_of_measure']] = '';
         $row[$fields['closure_type']] = $data['closure'];
-        $row[$fields['department_name']] = 'women';
+        $row[$fields['department_name']] = 'womens';
         $row[$fields['color_name']] = '';
         $row[$fields['color_map']] = '';
         $row[$fields['import_designation']] = '';
@@ -592,7 +592,7 @@ DES;
             $row[$fields['lens_height']] = '';
             $row[$fields['eyewear_unit_of_measure']] = '';
             $row[$fields['closure_type']] = $data['closure'];
-            $row[$fields['department_name']] = 'women';
+            $row[$fields['department_name']] = 'womens';
             $row[$fields['color_name']] = $sku['colorName'];
             $row[$fields['color_map']] = $sku['colorMap'];
             $row[$fields['import_designation']] = '';
