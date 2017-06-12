@@ -4,9 +4,9 @@
     <include href="common/header.html"/>
 </head>
 <body>
-<include href="common/navbar.html"/>
 <div class="container">
     <table class="table table-striped">
+    <check if="{{@type == 'results'}}">
         <repeat group="{{@results}}" value="{{@result}}">
         <tr>
             <td>{{@result['update_time']}}</td>
@@ -24,6 +24,26 @@
             </td>
         </tr>
         </repeat>
+    </check>
+    <check if="{{@type == 'hints'}}">
+        <check if="{{@hints}}">
+            <true>
+                <tr>
+                    <td>找到类似型号如下</td>
+                </tr>
+            </true>
+            <false>
+                <tr>
+                    <td>找不到产品 <strong>{{@model}}</strong></td>
+                </tr>
+            </false>
+        </check>
+        <repeat group="{{@hints}}" value="{{@hint}}">
+            <tr>
+                <td><a href="{{@BASE}}/search?model={{@hint['model']}}">{{@hint['model']}}</a></td>
+            </tr>
+        </repeat>
+    </check>
     </table>
 </div>
 <div class="modal in" tabindex="-1" style="padding-right: 15px;">
@@ -48,8 +68,6 @@
 </div>
 <script>
     $(function () {
-        $(".table").css("margin-top", $("nav.navbar-fixed-top").height() * 1.5);
-
         $(".modal.in .close span").click(function () {
             $(".modal.in").hide();
         });

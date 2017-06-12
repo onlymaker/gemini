@@ -86,7 +86,7 @@
             var model = $("input[name=keyword]").val();
             if (!model) {
                 return alert("输入为空");
-            } else if (model.length < 4) {
+            } else if (model.length < 3) {
                 return alert("输入字符太少");
             }
             window.open("{{@BASE}}/search?model=" + model);

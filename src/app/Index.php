@@ -15,9 +15,17 @@ class Index extends AppBase
     function search($f3)
     {
         $mapper = new Mapper($this->db, 'raw');
-        $results = $mapper->find(['model like ?', $_GET['model'] . '%'], ['order' => 'update_time desc']);
+        $results = $mapper->find(['model = ?', trim($_GET['model'])], ['order' => 'update_time desc']);
+        if ($results) {
+            $f3->set('type', 'results');
+            $f3->set('results', $results);
+        } else {
+            $hints = $this->db->exec('SELECT DISTINCT model FROM raw WHERE model like ?', '%' . trim($_GET['model'] . '%'));
+            $f3->set('type', 'hints');
+            $f3->set('hints', $hints);
+        }
         $f3->set('title', '产品查找 ' . $_GET['model']);
-        $f3->set('results', $results);
+        $f3->set('model', $_GET['model']);
         echo \Template::instance()->render('search.html');
     }
 
