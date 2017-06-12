@@ -705,7 +705,8 @@ DES;
                 if ($length == $total) {
                     $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
                 } else {
-                    $row[$fields['other_image_url' . ($length + 1)]] = self::getSwatchImageUrl($data['store']);
+                    $row[$fields['other_image_url' . ++ $length]] = self::getSwatchImageUrl($data['store']);
+                    $row[$fields['swatch_image_url']] = '';
                 }
             } else {
                 $row[$fields['main_image_url']] = self::getSwatchImageUrl($data['store']);
