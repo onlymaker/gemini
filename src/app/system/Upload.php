@@ -58,12 +58,13 @@ class Upload extends \Web
         $f3 = \Base::instance();
         $mapper = new Mapper(Database::mysql(), $table);
         foreach ($rows as $i => $data) {
-            if ($table == 'generic_keyword') {
+            if ($table == 'generic_keyword') {//name,data,language
                 $keywordString = trim(str_replace('，', ',', $data[1]));
-                $mapper->load(["name = ?", $data[0]]);
+                $mapper->load(["name = ? and language = ?", $data[0], $data[2] ?? 'en']);
                 if ($mapper->dry()) {
                     $mapper['name'] = strtolower($data[0]);
                     $mapper['data'] = $keywordString;
+                    $mapper['language'] = $data[2] ?? 'en';
                     $mapper->save();
                     $f3->log($table . ': ' . $data[0] . ' created');
                 } else {
@@ -75,10 +76,11 @@ class Upload extends \Web
                         $f3->log($table . ': ' . $data[0] . ' existed');
                     }
                 }
-            } else {
-                $mapper->load("data = ?", $data[0]);
+            } else {//name,language
+                $mapper->load("data = ? and language = ?", $data[0], $data[1] ?? 'en');
                 if ($mapper->dry()) {
                     $mapper['data'] = $data[0];
+                    $mapper['language'] = $data[1];
                     $mapper->save();
                     $f3->log($table . ': ' . $data[0] . ' created');
                 } else {

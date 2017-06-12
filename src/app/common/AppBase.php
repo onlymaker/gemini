@@ -8,6 +8,7 @@ class AppBase
     use Url;
 
     protected $error = ['code' => -1, 'text' => 'Undefined'];
+    protected $language;
     protected $user;
     protected $db;
 
@@ -22,6 +23,12 @@ class AppBase
             }
             $f3->reroute($this->url('/Login'));
         }
+        if (empty($_COOKIE['language'])) {
+            $this->language = 'en';
+        } else {
+            $this->language = $_COOKIE['language'];
+        }
+        $f3->set('language', $this->language);
         $this->user = [
             'name' => $f3->get('SESSION.AUTHENTICATION'),
             'role' => $f3->get('SESSION.AUTHORIZATION')

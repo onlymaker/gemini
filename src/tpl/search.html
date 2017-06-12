@@ -6,7 +6,7 @@
 <body>
 <include href="common/navbar.html"/>
 <div class="container">
-    <table class="table">
+    <table class="table table-striped">
         <repeat group="{{@results}}" value="{{@result}}">
         <tr>
             <td>{{@result['update_time']}}</td>
@@ -14,6 +14,7 @@
             <td>{{@result['model']}}</td>
             <td>{{@result['store']}}</td>
             <td>{{@result['brand']}}</td>
+            <td>{{@result['language']}}</td>
             <td>
                 <div class="btn-group">
                     <div class="btn btn-success btn-download" data="{{@result['id']}}">下载</div>

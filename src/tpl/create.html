@@ -3,6 +3,11 @@
 <head>
     <include href="common/header.html" />
     <style>
+        .alert {
+            border-radius: 0;
+            position: fixed;
+            width: 100%;
+        }
         .base-info, .row {
             margin: 20px auto;
         }
@@ -16,6 +21,8 @@
     </style>
 </head>
 <body>
+<div class="alert alert-success" role="alert">Language: {{@language}}</div>
+<div id="top-alert-holder"></div>
 <div class="container">
     <div class="form-horizontal base-info">
         <div class="form-group">
@@ -830,6 +837,8 @@
 <script src="{{@BASE}}/js/kindeditor-4.1.2/lang/zh-CN.js"></script>
 <script>
     $(function () {
+        $("#top-alert-holder").css("height", $(".alert").outerHeight());
+
         $(".btn-close").click(function () {
             window.close();
         });

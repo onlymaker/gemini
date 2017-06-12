@@ -15,20 +15,9 @@ class Index extends AppBase
     function search($f3)
     {
         $mapper = new Mapper($this->db, 'raw');
-        $results = $mapper->find(['model like ?', '%' . $_GET['model'] . '%'], ['order' => 'update_time desc']);
-        $data = [];
-        foreach ($results as $result) {
-            $data[] = [
-                'id' => $result['id'],
-                'user' => $result['user'],
-                'model' => $result['model'],
-                'store' => $result['store'],
-                'brand' => $result['brand'],
-                'update_time' => $result['update_time']
-            ];
-        }
+        $results = $mapper->find(['model like ?', $_GET['model'] . '%'], ['order' => 'update_time desc']);
         $f3->set('title', '产品查找 ' . $_GET['model']);
-        $f3->set('results', $data);
+        $f3->set('results', $results);
         echo \Template::instance()->render('search.html');
     }
 

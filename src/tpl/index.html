@@ -33,12 +33,47 @@
         <div class="input-group-addon"><span id="search">Search</span></div>
     </div>
 </div>
+<div class="modal in" tabindex="-1" style="padding-right: 15px;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="mySmallModalLabel">Select Language</h4>
+            </div>
+            <div class="modal-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="radio" name="language" value="en"/> en
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary confirm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(function () {
         $(".main").height($(window).height());
 
         $("#create").click(function () {
-            window.open("{{@BASE}}/Create");
+            $(".modal.in").show();
+        });
+
+        $(".modal.in .close span").click(function () {
+            $(".modal.in").hide();
+        });
+
+        $(".modal.in .confirm").click(function () {
+            var language = $(".modal.in input:checked").val();
+            if (language) {
+                setCookie("language", language);
+                $(".modal.in").hide();
+                window.open("{{@BASE}}/Create");
+            } else {
+                alert("尚未设置语言");
+            }
         });
 
         $("input[name=keyword]").keydown(function(e){
