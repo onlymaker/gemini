@@ -9,8 +9,8 @@ class Create extends AppBase
     function get($f3)
     {
         $f3->set('title', 'Create');
-        $f3->set('stores', (new Mapper($this->db, 'store'))->find(['language = ?', $this->language], ['order' => 'name']));
-        $f3->set('brands', (new Mapper($this->db, 'brand'))->find(['language = ?', $this->language], ['order' => 'data']));
+        $f3->set('stores', (new Mapper($this->db, 'store'))->find(null, ['order' => 'name']));
+        $f3->set('brands', (new Mapper($this->db, 'brand'))->find(null, ['order' => 'data']));
         $f3->set('itemTypes', (new Mapper($this->db, 'item_type'))->find(['language = ?', $this->language], ['order' => 'data']));
         $f3->set('heels', (new Mapper($this->db, 'heel'))->find(['language = ?', $this->language], ['order' => 'data']));
         $f3->set('straps', (new Mapper($this->db, 'strap'))->find(['language = ?', $this->language], ['order' => 'data']));

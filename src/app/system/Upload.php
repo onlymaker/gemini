@@ -4,6 +4,7 @@ namespace app\system;
 use app\common\Url;
 use data\Database;
 use DB\SQL\Mapper;
+use helper\Store;
 
 class Upload extends \Web
 {
@@ -76,7 +77,24 @@ class Upload extends \Web
                         $f3->log($table . ': ' . $data[0] . ' existed');
                     }
                 }
-            } else {//name,language
+            } else if ($table == 'store') {//name
+                $mapper->load(["name = ?", $data[0]]);
+                if ($mapper->dry()) {
+                    Store::create($data[0]);
+                    $f3->log($table . ': ' . $data[0] . ' created');
+                } else {
+                    $f3->log($table . ': ' . $data[0] . ' existed');
+                }
+            } else if (in_array($table, ['brand', 'upc'])) {//data
+                $mapper->load(["data = ?", $data[0]]);
+                if ($mapper->dry()) {
+                    $mapper['data'] = $data[0];
+                    $mapper->save();
+                    $f3->log($table . ': ' . $data[0] . ' created');
+                } else {
+                    $f3->log($table . ': ' . $data[0] . ' existed');
+                }
+            } else {//data,language
                 $mapper->load(["data = ? and language = ?", $data[0], $data[1] ?? 'en']);
                 if ($mapper->dry()) {
                     $mapper['data'] = $data[0];

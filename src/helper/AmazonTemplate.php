@@ -14,7 +14,6 @@ Image：
 1.链接中的SKU，针对不同的子产品，SKU有不同
 2.希望支持自动从产品数据库调取图片做图片服务起上传，链接生成格式固定，图片服务器：https://www.qiniu.com/，有接口
  */
-use app\system\Store;
 use data\Database;
 use data\OMS;
 use DB\SQL\Mapper;
@@ -324,7 +323,7 @@ class AmazonTemplate
      */
     private static function getSize($type, $store)
     {
-        $site = Store::getSite($store);
+        $site = Store::get($store)['market_unit'];
         switch ($type) {
             case 'manufacture':
                 if ($site == 'EU') {
@@ -444,7 +443,7 @@ DES;
             if (empty($images)) {
                 return [];
             } else {
-                $store = Store::getStore($storeName);
+                $store = Store::get($storeName);
                 $results = explode(',', $images);
                 foreach ($results as &$result) {
                     if (!empty($store['cdn'])) {
@@ -463,7 +462,7 @@ DES;
 
     private static function getSwatchImageUrl($storeName)
     {
-        $store = Store::getStore($storeName);
+        $store = Store::get($storeName);
         return $store['swatch_image_url'] ?? '';
     }
 
@@ -624,7 +623,7 @@ DES;
     {
         $rows = [];
         $fields = array_flip(self::$head[2]);
-        $site = Store::getSite($data['store']);
+        $site = Store::get($data['store'])['market_unit'];
         $sizeArray = self::getSize($data['size'], $data['store']);
         foreach ($sizeArray as $size) {
             $row = [$data['store'] . '-' . $sku['sku'] . '-' . $site . $size];

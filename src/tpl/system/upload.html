@@ -9,31 +9,28 @@
 </head>
 <body>
 <div class="container">
-    <p class="help-block">上传的excel文件格式如图所示：</p>
-    <div class="thumbnail"><img src="{{@BASE}}/excel.png"></div>
     <p class="help-block">excel内容不要超过100行</p>
-
     <form id="upload-form" enctype="multipart/form-data">
         <label>Excel类型</label>
         <div class="form-group">
             <select class="form-control">
                 <option selected></option>
-                <option value="brand">brand</option>
-                <option value="closure">closure</option>
-                <option value="color_map">color map</option>
-                <option value="feature">feature</option>
-                <option value="generic_keyword">generic keyword</option>
-                <option value="heel">heel</option>
-                <option value="height_map">height map</option>
-                <option value="item_type">item type</option>
-                <option value="keyword">style keyword</option>
-                <option value="lifestyle">lifestyle</option>
-                <option value="material">material</option>
-                <option value="pattern">pattern</option>
-                <option value="store">store</option>
-                <option value="strap">strap</option>
-                <option value="toe">toe</option>
-                <option value="upc">upc</option>
+                <option value="brand">brand (data)</option>
+                <option value="closure">closure (data,language)</option>
+                <option value="color_map">color map (data,language)</option>
+                <option value="feature">feature (data,language)</option>
+                <option value="generic_keyword">generic keyword (name,data,language)</option>
+                <option value="heel">heel (data,language)</option>
+                <option value="height_map">height map (data,language)</option>
+                <option value="item_type">item type (data,language)</option>
+                <option value="keyword">style keyword (data,language)</option>
+                <option value="lifestyle">lifestyle (data,language)</option>
+                <option value="material">material (data,language)</option>
+                <option value="pattern">pattern (data,language)</option>
+                <option value="store">store (name)</option>
+                <option value="strap">strap (data,language)</option>
+                <option value="toe">toe (data,language)</option>
+                <option value="upc">upc (data)</option>
             </select>
         </div>
         <input id="upload-file" class="form-control" type="file" name="file"/>
