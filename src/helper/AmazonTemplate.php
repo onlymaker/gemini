@@ -412,7 +412,11 @@ DES;
                 foreach ($query as $item) {
                     $results .= $item['data'] . ',';
                 }
-                self::$genericKeywordDictionary = explode(',', substr($results, 0, strlen($results) - 1));
+                if (empty($results)) {
+                    self::$genericKeywordDictionary = [];
+                } else {
+                    self::$genericKeywordDictionary = explode(',', substr($results, 0, strlen($results) - 1));
+                }
             }
         }
         $keywords = [];
