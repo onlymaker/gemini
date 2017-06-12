@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <include href="common/header.html"/>
+</head>
+<body>
+<include href="common/navbar.html"/>
+<div class="container">
+    <table class="table">
+        <repeat group="{{@results}}" value="{{@result}}">
+        <tr>
+            <td>{{@result['update_time']}}</td>
+            <td>{{@result['user']}}</td>
+            <td>{{@result['model']}}</td>
+            <td>{{@result['store']}}</td>
+            <td>{{@result['brand']}}</td>
+            <td>
+                <div class="btn-group">
+                    <div class="btn btn-success btn-download" data="{{@result['id']}}">下载</div>
+                    <div class="btn btn-primary btn-edit" data="{{@result['id']}}">编辑</div>
+                    <div class="btn btn-danger btn-delete" data="{{@result['id']}}">删除</div>
+                </div>
+            </td>
+        </tr>
+        </repeat>
+    </table>
+</div>
+<div class="modal in" tabindex="-1" style="padding-right: 15px;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="mySmallModalLabel">UPC Fulfillment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="upc"/> Yes
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary download">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".table").css("margin-top", $("nav.navbar-fixed-top").height() * 1.5);
+
+        $(".modal.in .close span").click(function () {
+            $(".modal.in").hide();
+        });
+
+        $(".modal.in .download").click(function () {
+            var id = $(this).attr("data");
+            var upc = $(".modal.in input").prop("checked") ? 1 : 0;
+            location.href = "{{@BASE}}/Download?id=" + id + "&upc=" + upc;
+            $(".modal.in").hide();
+        });
+
+        $(".btn-download").click(function () {
+            var row = $(this).parent().parent().parent();
+            var user = row.find("td").eq(1).text();
+            if (user != "{{@user['name']}}") {
+                return alert("只能下载自己创建的记录");
+            }
+            $(".modal.in .download").attr("data", $(this).attr("data"))
+            $(".modal.in").show();
+        })
+        $(".btn-edit").click(function () {
+            location.href = "{{@BASE}}/Edit?id=" + $(this).attr("data");
+        })
+        $(".btn-delete").click(function () {
+            var row = $(this).parent().parent().parent();
+            var user = row.find("td").eq(1).text();
+            if (user != "{{@user['name']}}") {
+                return alert("只能删除自己创建的记录");
+            }
+            $.post("{{@BASE}}/delete", {id: $(this).attr("data")})
+                .done(function (data) {
+                    var json = JSON.parse(data);
+                    if (json.error.code == 0) {
+                        row.remove();
+                    } else {
+                        alert(json.error.text);
+                    }
+                })
+                .fail(alert)
+                .complete()
+        })
+    })
+</script>
+</body>
+</html>

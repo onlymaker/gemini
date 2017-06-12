@@ -22,10 +22,6 @@
         #search {
             color: black;
         }
-        .table {
-            margin-top: 20px;
-            width: 80%;
-        }
     </style>
 </head>
 <body>
@@ -37,26 +33,6 @@
         <div class="input-group-addon"><span id="search">Search</span></div>
     </div>
 </div>
-<div class="modal in" tabindex="-1" style="padding-right: 15px;">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="mySmallModalLabel">UPC Fulfillment</h4>
-            </div>
-            <div class="modal-body">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="upc"/> Yes
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary download">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     $(function () {
         $(".main").height($(window).height());
@@ -65,19 +41,8 @@
             window.open("{{@BASE}}/Create");
         });
 
-        $(".modal.in .close span").click(function () {
-            $(".modal.in").hide();
-        });
-
-        $(".modal.in .download").click(function () {
-            var id = $(this).attr("data");
-            var upc = $(".modal.in input").prop("checked") ? 1 : 0;
-            window.open("{{@BASE}}/Download?id=" + id + "&upc=" + upc);
-            $(".modal.in").hide();
-        });
-
         $("input[name=keyword]").keydown(function(e){
-            if(e.keyCode==13){
+            if(e.keyCode == 13){
                 $("#search").click();
             }
         });
@@ -89,74 +54,7 @@
             } else if (model.length < 4) {
                 return alert("输入字符太少");
             }
-            $(this).append("<i class='fa fa-spinner fa-spin'></i>");
-            $.get("{{@BASE}}/search?model=" + model)
-                .done(function (data) {
-                    console.log(data);
-                    var json = JSON.parse(data);
-                    if (json.error.code == 0) {
-                        $(".table").remove();
-                        var results = json.results;
-                        if (results && results.length > 0) {
-                            var html = '<table class="table">';
-                            for(var i in results) {
-                                html += '<tr>' +
-                                    '<td>' + results[i]['update_time'] + '</td>' +
-                                    '<td>' + results[i]['user'] + '</td>' +
-                                    '<td>' + results[i]['model'] + '</td>' +
-                                    '<td>' + results[i]['store'] + '</td>' +
-                                    '<td>' + results[i]['brand'] + '</td>' +
-                                    '<td><div class="btn-group">' +
-                                    '<div class="btn btn-success btn-download" data="' + results[i]['id'] + '">下载</div>' +
-                                    '<div class="btn btn-primary btn-edit" data="' + results[i]['id'] + '">编辑</div>' +
-                                    '<div class="btn btn-danger btn-delete" data="' + results[i]['id'] + '">删除</div>' +
-                                    '</div></td>' +
-                                    '</tr>';
-                            }
-                            html += '</table>';
-                            console.log(html);
-                            $(".main").append(html);
-                            $(".btn-download").click(function () {
-                                var row = $(this).parent().parent().parent();
-                                var user = row.find("td").eq(1).text();
-                                if (user != "{{@user['name']}}") {
-                                    return alert("只能下载自己创建的记录");
-                                }
-                                $(".modal.in .download").attr("data", $(this).attr("data"))
-                                $(".modal.in").show();
-                            })
-                            $(".btn-edit").click(function () {
-                                window.open("{{@BASE}}/Edit?id=" + $(this).attr("data"));
-                            })
-                            $(".btn-delete").click(function () {
-                                var row = $(this).parent().parent().parent();
-                                var user = row.find("td").eq(1).text();
-                                if (user != "{{@user['name']}}") {
-                                    return alert("只能删除自己创建的记录");
-                                }
-                                $.post("{{@BASE}}/delete", {id: $(this).attr("data")})
-                                    .done(function (data) {
-                                        var json = JSON.parse(data);
-                                        if (json.error.code == 0) {
-                                            row.remove();
-                                        } else {
-                                            alert(json.error.text);
-                                        }
-                                    })
-                                    .fail(alert)
-                                    .complete()
-                            })
-                        } else {
-                            alert("找不到" + model);
-                        }
-                    } else {
-                        alert(json.error.text);
-                    }
-                })
-                .fail(alert)
-                .complete(function () {
-                    $(".fa-spin").remove();
-                })
+            window.open("{{@BASE}}/search?model=" + model);
         })
     })
 </script>

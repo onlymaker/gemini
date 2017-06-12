@@ -27,9 +27,9 @@ class Index extends AppBase
                 'update_time' => $result['update_time']
             ];
         }
-        $f3->log($this->db->log());
-        $this->error['code'] = 0;
-        echo $this->jsonResponse(['results' => $data]);
+        $f3->set('title', '产品查找 ' . $_GET['model']);
+        $f3->set('results', $data);
+        echo \Template::instance()->render('search.html');
     }
 
     function delete($f3)
