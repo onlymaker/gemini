@@ -317,13 +317,6 @@ class AmazonTemplate
         ]
     ];
 
-    private static function getStore($name)
-    {
-        $store = new Mapper(Database::mysql(), 'store');
-        $store->load(['name = ?', $name]);
-        return $store->dry() ? [] : $store;
-    }
-
     /**
      * @param $type : 尺码类型（manufacture/stock）
      * @param $store: store name
@@ -451,7 +444,7 @@ DES;
             if (empty($images)) {
                 return [];
             } else {
-                $store = self::getStore($storeName);
+                $store = Store::getStore($storeName);
                 $results = explode(',', $images);
                 foreach ($results as &$result) {
                     if (!empty($store['cdn'])) {
@@ -470,7 +463,7 @@ DES;
 
     private static function getSwatchImageUrl($storeName)
     {
-        $store = self::getStore($storeName);
+        $store = Store::getStore($storeName);
         return $store['swatch_image_url'] ?? '';
     }
 

@@ -8,8 +8,9 @@ class Store extends SysBase
 {
     function get($f3)
     {
+        $mapper = new Mapper($this->db, 'store');
         $f3->set('title', '商店管理');
-        $f3->set('stores', $this->stores());
+        $f3->set('stores', $mapper->find());
         echo \Template::instance()->render('system/store.html');
     }
 
@@ -34,10 +35,11 @@ class Store extends SysBase
         }
     }
 
-    function stores()
+    public static function getStore($name)
     {
-        $store = new Mapper($this->db ?? Database::mysql(), 'store');
-        return $store->find();
+        $store = new Mapper(Database::mysql(), 'store');
+        $store->load(['name = ?', $name]);
+        return $store->dry() ? [] : $store;
     }
 
     /**
@@ -47,21 +49,23 @@ class Store extends SysBase
      */
     public static function getSite($store)
     {
-        switch (strtoupper($store)) {
-            case 'OMDE':
-            case 'KHDE':
-            case 'OSDE':
-                return 'EU';
-            case 'OMUK':
-            case 'KHUK':
-            case 'OSUK':
-                return 'UK';
-            case 'AHUS':
-            case 'CLUS':
-            case 'OMCA':
-            case 'OSUS':
-            default:
-                return 'US';
+        $hash = [
+            'EU' => ['EU'],
+            'UK' => ['UK'],
+            'US' => ['CA', 'US']
+        ];
+
+        foreach ($hash as $site => $suffixes) {
+            foreach ($suffixes as $suffix) {
+                $length = strlen($suffix);
+                if ($length <= strlen($store) && stripos($store, $suffix, - $length) !== false) {
+                    return $site;
+                }
+            }
         }
+
+        \Base::instance()->log('WARN: the {store} doesn\'t match to any site suffix', ['store' => $store]);
+
+        return strtoupper($store);
     }
 }
