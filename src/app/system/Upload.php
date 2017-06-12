@@ -77,7 +77,7 @@ class Upload extends \Web
                     }
                 }
             } else {//name,language
-                $mapper->load("data = ? and language = ?", $data[0], $data[1] ?? 'en');
+                $mapper->load(["data = ? and language = ?", $data[0], $data[1] ?? 'en']);
                 if ($mapper->dry()) {
                     $mapper['data'] = $data[0];
                     $mapper['language'] = $data[1];
