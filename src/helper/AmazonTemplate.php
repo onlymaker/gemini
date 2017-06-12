@@ -396,9 +396,9 @@ DES;
     {
         if (!is_array(self::$genericKeywordDictionary)) {
             if (empty($hints)) {
-                self::$genericKeywordDictionary = [];
+                return [];
             } else {
-                $names = explode(' ', $hints);
+                $names = explode(' ', addslashes($hints));
                 $filter = '';
                 foreach ($names as $name) {
                     $name = trim($name);

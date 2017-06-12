@@ -60,7 +60,7 @@ class Upload extends \Web
         foreach ($rows as $i => $data) {
             if ($table == 'generic_keyword') {
                 $keywordString = trim(str_replace('，', ',', $data[1]));
-                $mapper->load("name = '$data[0]'");
+                $mapper->load(["name = ?", $data[0]]);
                 if ($mapper->dry()) {
                     $mapper['name'] = strtolower($data[0]);
                     $mapper['data'] = $keywordString;
@@ -76,7 +76,7 @@ class Upload extends \Web
                     }
                 }
             } else {
-                $mapper->load("data = '$data[0]'");
+                $mapper->load("data = ?", $data[0]);
                 if ($mapper->dry()) {
                     $mapper['data'] = $data[0];
                     $mapper->save();
