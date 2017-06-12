@@ -15,5 +15,3 @@ ALTER TABLE raw ADD COLUMN language VARCHAR(10) DEFAULT 'en';
 ALTER TABLE store ADD COLUMN market_unit VARCHAR(10) DEFAULT 'US';
 ALTER TABLE strap ADD COLUMN language VARCHAR(10) DEFAULT 'en';
 ALTER TABLE toe ADD COLUMN language VARCHAR(10) DEFAULT 'en';
-
-# ignore upc, user

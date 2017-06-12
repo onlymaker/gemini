@@ -3,7 +3,6 @@ namespace app;
 
 use app\common\Url;
 use data\Database;
-use Ramsey\Uuid\Uuid;
 
 class Login
 {
