@@ -18,11 +18,6 @@ class Download extends AppBase
             $f3->log("Request download {id} not found", ['id' => $_GET['id']]);
             header('HTTP/1.1 404 Not Found');
         } else {
-            $csv = '/tmp/' . $mapper['model'] . date('_Ymd') . '.csv';
-
-            header('Content-Type: octet-stream');
-            header('Content-Disposition: attachment; filename="' . basename($csv) . '"');
-
             $data = json_decode($mapper['data'], true);
             $data['upc'] = $_GET['upc'];
 
@@ -30,9 +25,13 @@ class Download extends AppBase
             var_dump($data);
             $f3->log(ob_get_clean());
 
-            AmazonTemplate::generate($data, $csv);
+            $excel = '/tmp/' . $mapper['model'] . date('_Ymd') . '.xls';
 
-            echo file_get_contents($csv);
+            AmazonTemplate::generate($data, $excel);
+
+            header('Content-Type: octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($excel) . '"');
+            echo file_get_contents($excel);
         }
     }
 }

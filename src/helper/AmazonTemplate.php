@@ -649,10 +649,13 @@ DES;
      */
     public static function generate($data, $file)
     {
-        $csv = fopen($file, 'w');
+        \PHPExcel_Settings::setCacheStorageMethod(\PHPExcel_CachedObjectStorageFactory::cache_to_discISAM, ['memoryCacheSize' => '16M']);
 
-        fputcsv($csv, self::$head);
-        fputcsv($csv, self::parent($data));
+        $row = 1;
+        $excel = new \PHPExcel();
+        $excel->setActiveSheetIndex(0);
+        $excel->getActiveSheet()->fromArray(self::$head, '', 'A' . $row);
+        $excel->getActiveSheet()->fromArray(self::parent($data), '', 'A' . ++ $row);
 
         $all = $data['sku'];
         unset($data['sku']);
@@ -661,13 +664,12 @@ DES;
             if (!empty($sku['sku'])) {
                 $children = self::children($sku, $data);
                 foreach ($children as $child) {
-                    fputcsv($csv, $child);
+                    $excel->getActiveSheet()->fromArray($child, '', 'A' . ++ $row);
                 }
-                ob_flush();
-                flush();
             }
         }
 
-        fclose($csv);
+        $writer = new \PHPExcel_Writer_Excel5($excel);
+        $writer->save($file);
     }
 }
