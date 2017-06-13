@@ -11,6 +11,11 @@ class Download extends AppBase
     {
         $f3->log("Request download {id} by {user}", ['id' => $_GET['id'], 'user' => $this->user['name']]);
 
+        $dir = SYSTEM . '/downloads/';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
         $mapper = new Mapper($this->db, 'raw');
         $mapper->load(['id = ?', $_GET['id']]);
 
@@ -25,7 +30,7 @@ class Download extends AppBase
             var_dump($data);
             $f3->log(ob_get_clean());
 
-            $excel = '/tmp/' . $mapper['model'] . date('_Ymd') . '.xls';
+            $excel = $dir . $this->user['name'] . '_' . $mapper['model'] . date('_Ymd') . '.xls';
 
             AmazonTemplate::generate($data, $excel);
 
