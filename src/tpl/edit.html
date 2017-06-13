@@ -3,6 +3,9 @@
 <head>
     <include href="common/header.html"/>
     <style>
+        .check-model {
+            cursor: pointer;
+        }
         .alert {
             border-radius: 0;
             position: fixed;
@@ -35,7 +38,10 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="model">型号</label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" id="model" name="model" placeholder="model"/>
+                <div class="input-group">
+                    <input class="form-control" type="text" id="model" name="model" placeholder="model"/>
+                    <div class="input-group-addon check-model">Check</div>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -855,7 +861,31 @@
             var html = '<p class="help-block name-length">已经输入字符个数' + length + '</p>';
             $(".name-length").remove();
             $(this).after(html);
-        })
+        });
+
+        $(".check-model").click(function () {
+            var model = $("input[name=model]").val();
+            if (!model) {
+                return alert("产品型号为空");
+            } else {
+                var that = $(this);
+                that.append("<i class='fa fa-spinner fa-spin'></i>");
+                $.get("{{@BASE}}/model/check?model=" + model)
+                    .done(function (data) {
+                        console.log(data);
+                        var json = JSON.parse(data);
+                        if (json.error.code == 0) {
+                            return alert("产品型号有效");
+                        } else {
+                            return alert("产品型号不存在");
+                        }
+                    })
+                    .fail(alert)
+                    .always(function () {
+                        that.find("i").remove();
+                    })
+            }
+        });
 
         $(".btn-submit").click(function () {
             var data = buildData();

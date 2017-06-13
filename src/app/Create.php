@@ -2,6 +2,7 @@
 namespace app;
 
 use app\common\AppBase;
+use data\OMS;
 use DB\SQL\Mapper;
 
 class Create extends AppBase
@@ -50,6 +51,16 @@ class Create extends AppBase
             }
         }
         $this->error['code'] = 0;
+        echo $this->jsonResponse();
+    }
+
+    function checkModel()
+    {
+        $mapper = new Mapper(OMS::instance(), 'prototype');
+        $mapper->load(['model = ?', $_GET['model']]);
+        if (!$mapper->dry()) {
+            $this->error['code'] = 0;
+        }
         echo $this->jsonResponse();
     }
 }
