@@ -21,6 +21,9 @@ class Download extends SysBase
             }
             $file = $dir . $this->user['name'] . '_' . $table . date('_Ymd') . '.csv';
 
+            header('Content-Type: octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+
             $csv = fopen($file, 'w');
 
             $count = 0;
@@ -32,14 +35,14 @@ class Download extends SysBase
                     fputcsv($csv, $mapper->fields());
                 }
                 fputcsv($csv, $mapper->cast());
+                ob_flush();
+                flush();
                 $count ++;
                 $mapper->next();
             }
 
             fclose($csv);
 
-            header('Content-Type: octet-stream');
-            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
             echo file_get_contents($file);
         }
     }
