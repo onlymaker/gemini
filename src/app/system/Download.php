@@ -28,11 +28,10 @@ class Download extends SysBase
             $mapper->load();
 
             while (!$mapper->dry()) {
-                $fields = $mapper->fields(true);
                 if ($count === 0) {
-                    fputcsv($csv, array_keys($fields));
+                    fputcsv($csv, $mapper->fields());
                 }
-                fputcsv($csv, $fields);
+                fputcsv($csv, $mapper->cast());
                 $count ++;
                 $mapper->next();
             }
