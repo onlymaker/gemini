@@ -3,12 +3,14 @@ namespace app;
 
 use app\common\AppBase;
 use DB\SQL\Mapper;
+use helper\Language;
 
 class Index extends AppBase
 {
     function get($f3)
     {
         $f3->set('title', '首页');
+        $f3->set('languages', Language::all());
         echo \Template::instance()->render('index.html');
     }
 

@@ -4,6 +4,7 @@ namespace app\system;
 use app\common\Url;
 use data\Database;
 use DB\SQL\Mapper;
+use helper\Language;
 use helper\Store;
 
 class Upload extends \Web
@@ -61,11 +62,12 @@ class Upload extends \Web
         foreach ($rows as $i => $data) {
             if ($table == 'generic_keyword') {//name,data,language
                 $keywordString = trim(str_replace('，', ',', $data[1]));
-                $mapper->load(["name = ? and language = ?", $data[0], $data[2] ?? 'en']);
+                $language = $this->getLanguage($data[2]);
+                $mapper->load(["name = ? and language = ?", $data[0], $language]);
                 if ($mapper->dry()) {
                     $mapper['name'] = strtolower($data[0]);
                     $mapper['data'] = $keywordString;
-                    $mapper['language'] = $data[2] ?? 'en';
+                    $mapper['language'] = $language;
                     $mapper->save();
                     $f3->log($table . ': ' . $data[0] . ' created');
                 } else {
@@ -95,10 +97,11 @@ class Upload extends \Web
                     $f3->log($table . ': ' . $data[0] . ' existed');
                 }
             } else {//data,language
-                $mapper->load(["data = ? and language = ?", $data[0], $data[1] ?? 'en']);
+                $language = $this->getLanguage($data[1]);
+                $mapper->load(["data = ? and language = ?", $data[0], $language]);
                 if ($mapper->dry()) {
                     $mapper['data'] = $data[0];
-                    $mapper['language'] = $data[1];
+                    $mapper['language'] = $language;
                     $mapper->save();
                     $f3->log($table . ': ' . $data[0] . ' created');
                 } else {
@@ -106,5 +109,23 @@ class Upload extends \Web
                 }
             }
         }
+    }
+
+    function getLanguage($code)
+    {
+        $languages = Language::all();
+
+        if (in_array($code, $languages)) {
+            $language = $code;
+        } else {
+            if (empty($code)) {
+                $language = 'en';
+            } else {
+                $language = $code;
+                Language::add($language);
+            }
+        }
+
+        return $language;
     }
 }
