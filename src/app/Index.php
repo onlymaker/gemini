@@ -22,7 +22,7 @@ class Index extends AppBase
             $f3->set('type', 'results');
             $f3->set('results', $results);
         } else {
-            $hints = $this->db->exec('SELECT DISTINCT model FROM raw WHERE model like ?', trim($_GET['model'] . '%'));
+            $hints = $this->db->exec('SELECT DISTINCT model FROM raw WHERE model like ?', trim($_GET['model']) . '%');
             $f3->set('type', 'hints');
             $f3->set('hints', $hints);
         }
