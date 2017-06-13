@@ -861,8 +861,8 @@
             var data = buildData();
             if (data.name.length > 80) {
                 return alert("产品名称不能超过80个字符");
-            } else if (!data.model) {
-                return alert("产品型号不能为空");
+            } else if (data.model.length < 3) {
+                return alert("产品型号不能少于3个字符");
             } else if (!data.store) {
                 return alert("产品站点不能为空");
             } else if (isNaN(data.price) || data.price < 0) {
