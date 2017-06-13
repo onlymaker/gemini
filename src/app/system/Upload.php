@@ -4,7 +4,6 @@ namespace app\system;
 use app\common\Url;
 use data\Database;
 use DB\SQL\Mapper;
-use helper\Language;
 use helper\Store;
 
 class Upload extends \Web
@@ -54,78 +53,43 @@ class Upload extends \Web
 
     function excel2table($file, $table) {
         @ini_set('memory_limit', '256M');
+        $f3 = \Base::instance();
         $excel = \PHPExcel_IOFactory::load($file);
         $sheet = $excel->getSheet(0);
         $rows = $sheet->toArray();
-        $f3 = \Base::instance();
         $mapper = new Mapper(Database::mysql(), $table);
         foreach ($rows as $i => $data) {
-            if ($table == 'generic_keyword') {//name,data,language
-                $keywordString = trim(str_replace('，', ',', $data[1]));
-                $language = $this->getLanguage($data[2]);
-                $mapper->load(["name = ? and language = ?", $data[0], $language]);
-                if ($mapper->dry()) {
-                    $mapper['name'] = strtolower($data[0]);
-                    $mapper['data'] = $keywordString;
-                    $mapper['language'] = $language;
-                    $mapper->save();
-                    $f3->log($table . ': ' . $data[0] . ' created');
-                } else {
-                    if ($mapper['data'] != $keywordString) {
-                        $mapper['data'] = $keywordString;
-                        $mapper->save();
-                        $f3->log($table . ': ' . $data[0] . ' updated');
-                    } else {
-                        $f3->log($table . ': ' . $data[0] . ' existed');
-                    }
-                }
+            if ($table == 'generic_keyword') {//name,data(us),uk,de
+                $mapper->load(["name = ?", $data[0]]);
+                $mapper['name'] = strtolower($data[0]);
+                $mapper['us'] = trim(str_replace('，', ',', $data[1]));
+                $mapper['uk'] = trim(str_replace('，', ',', $data[2]));
+                $mapper['de'] = trim(str_replace('，', ',', $data[3]));
+                $mapper->save();
             } else if ($table == 'store') {//name
                 $mapper->load(["name = ?", $data[0]]);
                 if ($mapper->dry()) {
                     Store::create($data[0]);
-                    $f3->log($table . ': ' . $data[0] . ' created');
-                } else {
-                    $f3->log($table . ': ' . $data[0] . ' existed');
                 }
-            } else if (in_array($table, ['brand', 'upc'])) {//data
+            } else if ($table == 'brand') {//name
+                $mapper->load(["name = ?", $data[0]]);
+                if ($mapper->dry()) {
+                    $mapper['name'] = $data[0];
+                    $mapper->save();
+                }
+            } else if ($table == 'upc') {//data
                 $mapper->load(["data = ?", $data[0]]);
                 if ($mapper->dry()) {
                     $mapper['data'] = $data[0];
                     $mapper->save();
-                    $f3->log($table . ': ' . $data[0] . ' created');
-                } else {
-                    $f3->log($table . ': ' . $data[0] . ' existed');
                 }
-            } else {//data,language
-                $language = $this->getLanguage($data[1]);
-                $mapper->load(["data = ? and language = ?", $data[0], $language]);
-                if ($mapper->dry()) {
-                    $mapper['data'] = $data[0];
-                    $mapper['language'] = $language;
-                    $mapper->save();
-                    $f3->log($table . ': ' . $data[0] . ' created');
-                } else {
-                    $f3->log($table . ': ' . $data[0] . ' existed');
-                }
+            } else {//us,uk,de
+                $mapper->load(["us = ?", $data[0]]);
+                $mapper['us'] = $data[0];
+                $mapper['uk'] = $data[1];
+                $mapper['de'] = $data[2];
+                $mapper->save();
             }
         }
-    }
-
-    function getLanguage($code)
-    {
-        $languages = Language::all();
-
-        if (in_array($code, $languages)) {
-            $language = $code;
-        } else {
-            if (empty($code)) {
-                $language = 'en';
-            } else {
-                $language = $code;
-                Language::add($language);
-            }
-        }
-
-        return $language;
     }
 }

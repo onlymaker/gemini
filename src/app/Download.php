@@ -30,7 +30,7 @@ class Download extends AppBase
             var_dump($data);
             $f3->log(ob_get_clean());
 
-            $excel = $dir . $this->user['name'] . '_' . $mapper['model'] . date('_Ymd') . '.xls';
+            $excel = $dir . $mapper['model'] . '_' . $mapper['store'] . '_' . $this->user['name'] . date('_Ymd') . '.xls';
 
             AmazonTemplate::generate($data, $excel);
 

@@ -61,7 +61,7 @@
                 <select class="form-control" id="brand" name="brand">
                     <option></option>
                     <repeat group="{{@brands}}" value="{{@brand}}">
-                    <option value="{{@brand['data']}}">{{@brand['data']}}</option>
+                    <option value="{{@brand['name']}}">{{@brand['name']}}</option>
                     </repeat>
                 </select>
             </div>
@@ -139,7 +139,7 @@
                 <select class="form-control" id="item-type" name="item-type">
                     <option></option>
                     <repeat group="{{@itemTypes}}" value="{{@itemType}}">
-                    <option value="{{@itemType['data']}}">{{@itemType['data']}}</option>
+                    <option value="{{@itemType[@language]}}">{{@itemType[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -176,7 +176,7 @@
                 <select class="form-control" id="heel" name="heel">
                     <option></option>
                     <repeat group="{{@heels}}" value="{{@heel}}">
-                    <option value="{{@heel['data']}}">{{@heel['data']}}</option>
+                    <option value="{{@heel[@language]}}">{{@heel[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -187,7 +187,7 @@
                 <select class="form-control" id="strap" name="strap">
                     <option></option>
                     <repeat group="{{@straps}}" value="{{@strap}}">
-                    <option value="{{@strap['data']}}">{{@strap['data']}}</option>
+                    <option value="{{@strap[@language]}}">{{@strap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -198,7 +198,7 @@
                 <select class="form-control" id="closure" name="closure">
                     <option></option>
                     <repeat group="{{@closures}}" value="{{@closure}}">
-                    <option value="{{@closure['data']}}">{{@closure['data']}}</option>
+                    <option value="{{@closure[@language]}}">{{@closure[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -209,7 +209,7 @@
                 <select class="form-control" id="pattern" name="pattern">
                     <option></option>
                     <repeat group="{{@patterns}}" value="{{@pattern}}">
-                    <option value="{{@pattern['data']}}">{{@pattern['data']}}</option>
+                    <option value="{{@pattern[@language]}}">{{@pattern[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -220,7 +220,7 @@
                 <select class="form-control" id="toe" name="toe">
                     <option></option>
                     <repeat group="{{@toes}}" value="{{@toe}}">
-                    <option value="{{@toe['data']}}">{{@toe['data']}}</option>
+                    <option value="{{@toe[@language]}}">{{@toe[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -231,7 +231,7 @@
                 <select class="form-control" id="lifestyle" name="lifestyle">
                     <option></option>
                     <repeat group="{{@lifestyles}}" value="{{@lifestyle}}">
-                    <option value="{{@lifestyle['data']}}">{{@lifestyle['data']}}</option>
+                    <option value="{{@lifestyle[@language]}}">{{@lifestyle[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -242,7 +242,7 @@
                 <select class="form-control" id="material" name="material">
                     <option></option>
                     <repeat group="{{@materials}}" value="{{@material}}">
-                    <option value="{{@material['data']}}">{{@material['data']}}</option>
+                    <option value="{{@material[@language]}}">{{@material[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -253,7 +253,7 @@
                 <select class="form-control" id="height-map" name="height-map">
                     <option></option>
                     <repeat group="{{@heightMaps}}" value="{{@heightMap}}">
-                    <option value="{{@heightMap['data']}}">{{@heightMap['data']}}</option>
+                    <option value="{{@heightMap[@language]}}">{{@heightMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -267,7 +267,7 @@
                 <select class="form-control" name="keyword">
                     <option></option>
                     <repeat group="{{@keywords}}" value="{{@keyword}}">
-                    <option value="{{@keyword['data']}}">{{@keyword['data']}}</option>
+                    <option value="{{@keyword[@language]}}">{{@keyword[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -278,7 +278,7 @@
                 <select class="form-control" name="keyword">
                     <option></option>
                     <repeat group="{{@keywords}}" value="{{@keyword}}">
-                    <option value="{{@keyword['data']}}">{{@keyword['data']}}</option>
+                    <option value="{{@keyword[@language]}}">{{@keyword[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -289,7 +289,7 @@
                 <select class="form-control" name="keyword">
                     <option></option>
                     <repeat group="{{@keywords}}" value="{{@keyword}}">
-                    <option value="{{@keyword['data']}}">{{@keyword['data']}}</option>
+                    <option value="{{@keyword[@language]}}">{{@keyword[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -302,7 +302,7 @@
                 <select class="form-control" name="feature">
                     <option></option>
                     <repeat group="{{@features}}" value="{{@feature}}">
-                        <option value="{{@feature['data']}}">{{@feature['data']}}</option>
+                        <option value="{{@feature[@language]}}">{{@feature[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -313,7 +313,7 @@
                 <select class="form-control" name="feature">
                     <option></option>
                     <repeat group="{{@features}}" value="{{@feature}}">
-                    <option value="{{@feature['data']}}">{{@feature['data']}}</option>
+                    <option value="{{@feature[@language]}}">{{@feature[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -324,7 +324,7 @@
                 <select class="form-control" name="feature">
                     <option></option>
                     <repeat group="{{@features}}" value="{{@feature}}">
-                    <option value="{{@feature['data']}}">{{@feature['data']}}</option>
+                    <option value="{{@feature[@language]}}">{{@feature[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -351,7 +351,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -376,7 +376,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -401,7 +401,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -426,7 +426,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -451,7 +451,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -476,7 +476,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -501,7 +501,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -526,7 +526,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -551,7 +551,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -576,7 +576,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -601,7 +601,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -626,7 +626,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -651,7 +651,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -676,7 +676,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -701,7 +701,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -726,7 +726,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -751,7 +751,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -776,7 +776,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -801,7 +801,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -826,7 +826,7 @@
                 <select class="form-control" name="color-map">
                     <option></option>
                     <repeat group="{{@colorMaps}}" value="{{@colorMap}}">
-                    <option value="{{@colorMap['data']}}">{{@colorMap['data']}}</option>
+                    <option value="{{@colorMap[@language]}}">{{@colorMap[@language]}}</option>
                     </repeat>
                 </select>
             </div>
@@ -892,7 +892,7 @@
             } else if (data.model.length < 3) {
                 return alert("产品型号不能少于3个字符");
             } else if (!data.store) {
-                return alert("产品站点不能为空");
+                return alert("店铺不能为空");
             } else if (isNaN(data.price) || data.price < 0) {
                 return alert("产品价格输入错误");
             } else if (!data.currency) {

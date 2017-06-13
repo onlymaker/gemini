@@ -19,7 +19,7 @@ class Download extends SysBase
             if (!is_dir($dir)) {
                 mkdir($dir, 0777, true);
             }
-            $file = $dir . $this->user['name'] . '_' . $table . date('_Ymd') . '.csv';
+            $file = $dir . $table . date('_Ymd') . '.csv';
 
             header('Content-Type: octet-stream');
             header('Content-Disposition: attachment; filename="' . basename($file) . '"');

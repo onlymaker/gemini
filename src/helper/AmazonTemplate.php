@@ -323,24 +323,24 @@ class AmazonTemplate
      */
     private static function getSize($type, $store)
     {
-        $site = Store::get($store)['market_unit'];
+        $marketUnit = Store::get($store)['market_unit'];
         switch ($type) {
             case 'manufacture':
-                if ($site == 'EU') {
+                if ($marketUnit == 'EU') {
                     return [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46];
-                } else if ($site == 'UK') {
+                } else if ($marketUnit == 'UK') {
                     return [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-                } else if ($site == 'US') {
+                } else if ($marketUnit == 'US') {
                     return [5, 6, 7, 8, 9, 9.5, 10, 11, 12, 13, 14, 15];
                 } else {
                     return [];
                 }
             case 'stock':
-                if ($site == 'EU') {
+                if ($marketUnit == 'EU') {
                     return [35.5, 36, 36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 43, 44, 45];
-                } else if ($site == 'UK') {
+                } else if ($marketUnit == 'UK') {
                     return [3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11];
-                } else if ($site == 'US') {
+                } else if ($marketUnit == 'US') {
                     return [5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13, 14];
                 } else {
                     return [];
@@ -623,10 +623,10 @@ DES;
     {
         $rows = [];
         $fields = array_flip(self::$head[2]);
-        $site = Store::get($data['store'])['market_unit'];
+        $marketUnit = Store::get($data['store'])['market_unit'];
         $sizeArray = self::getSize($data['size'], $data['store']);
         foreach ($sizeArray as $size) {
-            $row = [$data['store'] . '-' . $sku['sku'] . '-' . $site . $size];
+            $row = [$data['store'] . '-' . $sku['sku'] . '-' . $marketUnit . $size];
             $row[$fields['item_name']] = $data['name'] . '-' . $sku['colorName'] . '-' . $size;
             $row[$fields['external_product_id']] = $data['upc'] == 1 ? self::getUPC() : '';
             $row[$fields['external_product_id_type']] = empty($row[$fields['external_product_id']]) ? '' : 'EAN';
@@ -767,7 +767,7 @@ DES;
             $row[$fields['lining_description']] = '';
             $row[$fields['shoulder_strap_drop']] = '';
             $row[$fields['shoulder_strap_drop_unit_of_measure']] = '';
-            $row[$fields['size_name']] = $site . $size;
+            $row[$fields['size_name']] = $marketUnit . $size;
             $row[$fields['is_stain_resistant']] = '';
             $row[$fields['material_type1']] = $data['material'];
             $row[$fields['material_type2']] = '';

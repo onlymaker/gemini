@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS store;
 CREATE TABLE store (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(100) NOT NULL,
+  market_unit VARCHAR(10) DEFAULT 'us',
   cdn varchar(500) DEFAULT '',
   swatch_image_url varchar(500) DEFAULT '',
   PRIMARY KEY(id)
@@ -27,91 +28,115 @@ CREATE TABLE store (
 DROP TABLE IF EXISTS brand;
 CREATE TABLE brand (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  name varchar(100) NOT NULL,
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS item_type;
 CREATE TABLE item_type (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS closure;
 CREATE TABLE closure (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS heel;
 CREATE TABLE heel (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS height_map;
 CREATE TABLE height_map (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS material;
 CREATE TABLE material (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS lifestyle;
 CREATE TABLE lifestyle (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS pattern;
 CREATE TABLE pattern (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS strap;
 CREATE TABLE strap (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS toe;
 CREATE TABLE toe (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS feature;
 CREATE TABLE feature (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS keyword;
 CREATE TABLE keyword (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS color_map;
 CREATE TABLE color_map (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
-  data varchar(100) NOT NULL,
+  us varchar(100) NOT NULL,
+  uk varchar(100) DEFAULT '',
+  de varchar(100) DEFAULT '',
   PRIMARY KEY(id)
 );
 
@@ -128,7 +153,9 @@ DROP TABLE IF EXISTS generic_keyword;
 CREATE TABLE generic_keyword (
   id int(20) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(100) NOT NULL,
-  data TEXT,
+  us TEXT,
+  uk TEXT,
+  de TEXT,
   PRIMARY KEY(id)
 );
 
@@ -138,6 +165,7 @@ CREATE TABLE raw (
   model VARCHAR(100) NOT NULL,
   store VARCHAR(100) NOT NULL,
   brand VARCHAR(100) NOT NULL,
+  language VARCHAR(10) DEFAULT 'us',
   data TEXT,
   user VARCHAR(100),
   update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

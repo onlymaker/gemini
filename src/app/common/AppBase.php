@@ -23,11 +23,7 @@ class AppBase
             }
             $f3->reroute($this->url('/Login'));
         }
-        if (empty($_COOKIE['language'])) {
-            $this->language = 'en';
-        } else {
-            $this->language = $_COOKIE['language'];
-        }
+        $this->language = $_COOKIE['language'] ?? 'us';
         $f3->set('language', $this->language);
         $this->user = [
             'name' => $f3->get('SESSION.AUTHENTICATION'),

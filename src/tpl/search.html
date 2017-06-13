@@ -89,6 +89,8 @@
             $(".modal.in").show();
         })
         $(".btn-edit").click(function () {
+            //set language before edit
+            setCookie('language', $(this).parent().parent().prev().text());
             location.href = "{{@BASE}}/Edit?id=" + $(this).attr("data");
         })
         $(".btn-delete").click(function () {

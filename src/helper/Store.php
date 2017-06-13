@@ -7,6 +7,12 @@ use DB\SQL\Mapper;
 
 class Store
 {
+    private static $MARKET_UNIT_HASH = [
+        'EU' => ['EU'],
+        'UK' => ['UK'],
+        'US' => ['CA', 'US']
+    ];
+
     public static function get($name)
     {
         $store = new Mapper(Database::mysql(), 'store');
@@ -18,8 +24,8 @@ class Store
     {
         $store = new Mapper(Database::mysql(), 'store');
         $store['name'] = strtoupper($name);
-        $store['market_unit'] = self::parseMarketUnit($name);
         $store['cdn'] = 'http://' . strtolower($name) . '.syncxplus.com';
+        $store['market_unit'] = self::parseMarketUnit($name);
         if ($store['market_unit'] == 'US') {
             $store['swatch_image_url'] = 'http://' . strtolower($name) . '.syncxplus.com/us_size_chart.png';
         } else {
@@ -28,25 +34,24 @@ class Store
         $store->save();
     }
 
+    public static function languages()
+    {
+        return ['us', 'uk', 'de'];
+    }
+
     private static function parseMarketUnit($name)
     {
-        $hash = [
-            'EU' => ['EU'],
-            'UK' => ['UK'],
-            'US' => ['CA', 'US']
-        ];
-
-        foreach ($hash as $site => $suffixes) {
+        foreach (self::$MARKET_UNIT_HASH as $marketUnit => $suffixes) {
             foreach ($suffixes as $suffix) {
                 $length = strlen($suffix);
                 if ($length <= strlen($name) && stripos($name, $suffix, - $length) !== false) {
-                    return $site;
+                    return $marketUnit;
                 }
             }
         }
 
-        \Base::instance()->log('WARN: the {name} doesn\'t match to any site suffix', ['name' => $name]);
+        \Base::instance()->log('WARN: the {name} doesn\'t match to any market unit', ['name' => $name]);
 
-        return strtoupper($name);
+        return $name;
     }
 }
