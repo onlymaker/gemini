@@ -30,7 +30,10 @@
     <table class="table">
         <tr><th class="create-user">添加用户</th><th class="close">关闭</th></tr>
         <repeat group="{{@users}}" value="{{@user}}">
-            <tr><td>{{@user['username']}}</td><td><span class="reset-password" data="{{@user['id']}}">重置密码</span></td></tr>
+            <tr>
+                <td>{{@user['username']}}</td>
+                <td><check if="{{@user['username'] != 'debug'}}"><span class="reset-password" data="{{@user['id']}}">重置密码</span></check></td>
+            </tr>
         </repeat>
     </table>
 </div>
