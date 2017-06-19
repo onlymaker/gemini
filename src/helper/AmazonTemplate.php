@@ -20,8 +20,8 @@ Image：
  */
 class AmazonTemplate
 {
-    private static $genericKeywordDictionary = '';
-    private static $header = [
+    protected static $genericKeywordDictionary = '';
+    protected static $header = [
         [
             'TemplateType=Shoes',
             'Version=2015.1008',
@@ -319,7 +319,7 @@ class AmazonTemplate
      * @param $store: store name
      * @return array
      */
-    private static function getSize($type, $store)
+    protected static function getSize($type, $store)
     {
         $marketUnit = Store::get($store)['market_unit'];
         switch ($type) {
@@ -348,7 +348,7 @@ class AmazonTemplate
         }
     }
 
-    private static function getDescription()
+    protected static function getDescription()
     {
         return <<<DES
 <b>Onlymaker</b> is a shoes brand, synchronized with the latest fashion trend, taking dedicated handmade craft work as well as an attractive price.</br>
@@ -369,7 +369,7 @@ DES;
 
     }
 
-    private static function getUPC()
+    protected static function getUPC()
     {
         $upc = new Mapper(Database::mysql(), 'upc');
         $upc->load('status = 0', ['limit' => 1]);
@@ -383,7 +383,7 @@ DES;
         }
     }
 
-    private static function getAutoKeywords($hints)
+    protected static function getAutoKeywords($hints)
     {
         if (!is_array(self::$genericKeywordDictionary)) {
             if (empty($hints)) {
@@ -430,7 +430,7 @@ DES;
         return $keywords;
     }
 
-    private static function getImages($storeName, $model) : array
+    protected static function getImages($storeName, $model) : array
     {
         $oms = OMS::instance();
         $prototype = new Mapper($oms, 'prototype');
@@ -459,13 +459,13 @@ DES;
         }
     }
 
-    private static function getSwatchImageUrl($storeName)
+    protected static function getSwatchImageUrl($storeName)
     {
         $store = Store::get($storeName);
         return $store['swatch_image_url'] ?? '';
     }
 
-    private static function parent($data)
+    protected static function parent($data)
     {
         $fields = array_flip(self::$header[2]);
         $row = [$data['store'] . '-' . $data['model']];
@@ -618,7 +618,7 @@ DES;
         return $row;
     }
 
-    private static function children($sku, $data)
+    protected static function children($sku, $data)
     {
         $rows = [];
         $fields = array_flip(self::$header[2]);
@@ -793,7 +793,7 @@ DES;
         return $rows;
     }
 
-    private static function writeRow(\PHPExcel_Worksheet $sheet, int $rowNumber, array $data)
+    protected static function writeRow(\PHPExcel_Worksheet $sheet, int $rowNumber, array $data)
     {
         $row = $sheet->getRowIterator($rowNumber)->current();
         $cell = $row->getCellIterator();

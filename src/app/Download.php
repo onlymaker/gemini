@@ -4,6 +4,8 @@ namespace app;
 use app\common\AppBase;
 use DB\SQL\Mapper;
 use helper\AmazonTemplate;
+use helper\AmazonTemplateDE;
+use helper\AmazonTemplateUK;
 
 class Download extends AppBase
 {
@@ -30,9 +32,26 @@ class Download extends AppBase
             var_dump($data);
             $f3->log(ob_get_clean());
 
-            $excel = $dir . $mapper['model'] . '_' . $mapper['store'] . '_' . $this->user['name'] . date('_Ymd') . '.xls';
+            $excel = $dir
+                .$mapper['model']
+                .'_' . $mapper['language']
+                .'_' . $mapper['store']
+                .(empty($mapper['brand']) ? '' : '_' . $mapper['brand'])
+                .'_' . $this->user['name']
+                .date('_Ymd')
+                .'.xls';
 
-            AmazonTemplate::generate($data, $excel);
+            switch ($mapper['language']) {
+                case 'de':
+                    AmazonTemplateDE::generate($data, $excel);
+                    break;
+                case 'uk':
+                    AmazonTemplateUK::generate($data, $excel);
+                    break;
+                case 'us':
+                default:
+                    AmazonTemplate::generate($data, $excel);
+            }
 
             header('Content-Type: octet-stream');
             header('Content-Disposition: attachment; filename="' . basename($excel) . '"');
