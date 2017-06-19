@@ -66,6 +66,7 @@ class Edit extends AppBase
             'price' => 'clear',
             'currency' => 'clear',
             'size' => 'clear',
+            'bulletPoint' => ['clear'],
             'itemType' => 'item_type',
             'heel' => 'heel',
             'strap' => 'strap',
@@ -77,7 +78,6 @@ class Edit extends AppBase
             'heightMap' => 'height_map',
             'feature' => ['feature'],
             'keyword' => ['keyword'],
-            'bulletPoint' => ['generic_keyword'],
             'sku' => [
                 ['colorMap' => 'color_map']
             ]
@@ -96,7 +96,11 @@ class Edit extends AppBase
             } else if (is_string($value[0])) {
                 foreach ($data[$key] as &$default) {
                     if (!empty($default)) {
-                        $default = $this->translate($value[0], $default, $language);
+                        if ($value[0] == 'clear') {
+                            $default = '';
+                        } else {
+                            $default = $this->translate($value[0], $default, $language);
+                        }
                     }
                 }
             } else {

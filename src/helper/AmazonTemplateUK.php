@@ -257,11 +257,14 @@ class AmazonTemplateUK extends AmazonTemplate
         $row[$fields['item_weight_unit_of_measure']] = 'KG';
         $row[$fields['recommended_browse_nodes1']] = '';//TODO
         $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
-        $row[$fields['generic_keywords1']] = $data['bulletPoint'][0];
-        $row[$fields['generic_keywords2']] = $data['bulletPoint'][1];
-        $row[$fields['generic_keywords3']] = $data['bulletPoint'][2];
-        $row[$fields['generic_keywords4']] = $data['bulletPoint'][3];
-        $row[$fields['generic_keywords5']] = $data['bulletPoint'][4];
+
+        $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
+        $row[$fields['generic_keywords1']] = $autoKeywords[0];
+        $row[$fields['generic_keywords2']] = $autoKeywords[1];
+        $row[$fields['generic_keywords3']] = $autoKeywords[2];
+        $row[$fields['generic_keywords4']] = $autoKeywords[3];
+        $row[$fields['generic_keywords5']] = $autoKeywords[4];
+
         $row[$fields['platinum_keywords1']] = '';
         $row[$fields['platinum_keywords2']] = '';
         $row[$fields['platinum_keywords3']] = '';
@@ -275,6 +278,7 @@ class AmazonTemplateUK extends AmazonTemplate
         } else {
             $row[$fields['main_image_url']] = '';
         }
+
         $row[$fields['other_image_url1']] = '';
         $row[$fields['other_image_url2']] = '';
         $row[$fields['other_image_url3']] = '';
@@ -283,9 +287,7 @@ class AmazonTemplateUK extends AmazonTemplate
         $row[$fields['other_image_url6']] = '';
         $row[$fields['other_image_url7']] = '';
         $row[$fields['other_image_url8']] = '';
-
         $row[$fields['swatch_image_url']] = '';
-
         $row[$fields['package_height']] = '';
         $row[$fields['package_width']] = '';
         $row[$fields['package_length']] = '';
@@ -375,11 +377,14 @@ class AmazonTemplateUK extends AmazonTemplate
             $row[$fields['item_weight_unit_of_measure']] = 'KG';
             $row[$fields['recommended_browse_nodes1']] = '';//TODO
             $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
-            $row[$fields['generic_keywords1']] = $data['bulletPoint'][0];
-            $row[$fields['generic_keywords2']] = $data['bulletPoint'][1];
-            $row[$fields['generic_keywords3']] = $data['bulletPoint'][2];
-            $row[$fields['generic_keywords4']] = $data['bulletPoint'][3];
-            $row[$fields['generic_keywords5']] = $data['bulletPoint'][4];
+
+            $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
+            $row[$fields['generic_keywords1']] = $autoKeywords[0];
+            $row[$fields['generic_keywords2']] = $autoKeywords[1];
+            $row[$fields['generic_keywords3']] = $autoKeywords[2];
+            $row[$fields['generic_keywords4']] = $autoKeywords[3];
+            $row[$fields['generic_keywords5']] = $autoKeywords[4];
+
             $row[$fields['platinum_keywords1']] = '';
             $row[$fields['platinum_keywords2']] = '';
             $row[$fields['platinum_keywords3']] = '';

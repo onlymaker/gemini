@@ -383,7 +383,7 @@ DES;
         }
     }
 
-    protected static function getAutoKeywords($hints)
+    protected static function getAutoKeywords($hints, $language = 'us')
     {
         if (!is_array(self::$genericKeywordDictionary)) {
             if (empty($hints)) {
@@ -401,7 +401,7 @@ DES;
                 $query = Database::mysql()->exec('SELECT * FROM generic_keyword WHERE name in ' . $filter);
                 $results = '';
                 foreach ($query as $item) {
-                    $results .= $item['data'] . ',';
+                    $results .= $item[$language] . ',';
                 }
                 if (empty($results)) {
                     self::$genericKeywordDictionary = [];
@@ -534,6 +534,7 @@ DES;
         } else {
             $row[$fields['main_image_url']] = '';
         }
+
         $row[$fields['other_image_url1']] = '';
         $row[$fields['other_image_url2']] = '';
         $row[$fields['other_image_url3']] = '';
@@ -542,7 +543,6 @@ DES;
         $row[$fields['other_image_url6']] = '';
         $row[$fields['other_image_url7']] = '';
         $row[$fields['other_image_url8']] = '';
-
         $row[$fields['swatch_image_url']] = '';
         $row[$fields['fulfillment_center_id']] = '';
         $row[$fields['package_height']] = '';
