@@ -27,7 +27,7 @@
 <body>
 <div class="alert alert-success" role="alert">
     Language: {{@language}}
-    <button type="button" class="switch-language"><span>切换站点</span></button>
+    <check if="{{@language == 'us'}}"><button type="button" class="switch-language"><span>切换站点</span></button></check>
 </div>
 <div class="modal in" tabindex="-1" style="padding-right: 15px;">
     <div class="modal-dialog modal-sm" role="document">

@@ -2,8 +2,12 @@
 
 namespace helper;
 
+use data\Database;
+use data\OMS;
+use DB\SQL\Mapper;
+
 /*
-【说明】
+amazon template for US as default
 Item_sku:
 父SKU：站点-SKU 的方式构成
 子SKU：站点-SKU-尺码 的方式构成；尺码分现货鞋与生产鞋；尺码根据站点不同分 US UK EU
@@ -14,17 +18,10 @@ Image：
 1.链接中的SKU，针对不同的子产品，SKU有不同
 2.希望支持自动从产品数据库调取图片做图片服务起上传，链接生成格式固定，图片服务器：https://www.qiniu.com/，有接口
  */
-use data\Database;
-use data\OMS;
-use DB\SQL\Mapper;
-
-//  amazon template for US as default
 class AmazonTemplate
 {
-    private static $type = 'Shoes';
-    private static $version = '2015.1008';
     private static $genericKeywordDictionary = '';
-    private static $head = [
+    private static $header = [
         [
             'TemplateType=Shoes',
             'Version=2015.1008',
@@ -470,7 +467,7 @@ DES;
 
     private static function parent($data)
     {
-        $fields = array_flip(self::$head[2]);
+        $fields = array_flip(self::$header[2]);
         $row = [$data['store'] . '-' . $data['model']];
         $row[$fields['item_name']] = $data['name'];
         $row[$fields['external_product_id']] = '';
@@ -624,7 +621,7 @@ DES;
     private static function children($sku, $data)
     {
         $rows = [];
-        $fields = array_flip(self::$head[2]);
+        $fields = array_flip(self::$header[2]);
         $marketUnit = Store::get($data['store'])['market_unit'];
         $sizeArray = self::getSize($data['size'], $data['store']);
         foreach ($sizeArray as $size) {
@@ -821,9 +818,9 @@ DES;
         $row = 1;
         $excel = new \PHPExcel();
         $excel->setActiveSheetIndex(0);
-        self::writeRow($excel->getActiveSheet(), $row, self::$head[0]);
-        $excel->getActiveSheet()->fromArray(self::$head[1], '', 'A' . ++ $row);
-        $excel->getActiveSheet()->fromArray(self::$head[2], '', 'A' . ++ $row);
+        self::writeRow($excel->getActiveSheet(), $row, self::$header[0]);
+        $excel->getActiveSheet()->fromArray(self::$header[1], '', 'A' . ++ $row);
+        $excel->getActiveSheet()->fromArray(self::$header[2], '', 'A' . ++ $row);
         $excel->getActiveSheet()->fromArray(self::parent($data), '', 'A' . ++ $row);
 
         $all = $data['sku'];
