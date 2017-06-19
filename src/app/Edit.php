@@ -54,71 +54,60 @@ class Edit extends AppBase
 
     function translateRaw($raw, $language)
     {
+        /*
+         * 四种类型标志：
+         * 需要重新填写的属性：clear
+         * 直接按词典替换：string(table name)
+         * 属性为字符串数组，每个元素按照词典替换：[table name]
+         * 属性为object，每个元素指定需要替换的字段和表名：[[object field, table name], ...]
+         */
+        $propertyMap = [
+            'store' => 'clear',
+            'price' => 'clear',
+            'currency' => 'clear',
+            'size' => 'clear',
+            'itemType' => 'item_type',
+            'heel' => 'heel',
+            'strap' => 'strap',
+            'closure' => 'closure',
+            'pattern' => 'pattern',
+            'toe' => 'toe',
+            'lifestyle' => 'lifestyle',
+            'material' => 'material',
+            'heightMap' => 'height_map',
+            'feature' => ['feature'],
+            'keyword' => ['keyword'],
+            'bulletPoint' => ['generic_keyword'],
+            'sku' => [
+                ['colorMap' => 'color_map']
+            ]
+        ];
         $data = json_decode($raw, true);
 
-        $clearProperties = [
-            'store',
-            'price',
-            'currency',
-            'size'
-        ];
-        foreach ($clearProperties as $property) {
-            $data[$property] = '';
-        }
-
-        $simpleProperties = [
-            'itemType',
-            'heel',
-            'strap',
-            'closure',
-            'pattern',
-            'toe',
-            'lifestyle',
-            'material',
-            'heightMap',
-        ];
-        $simpleTables = [
-            'item_type',
-            'heel',
-            'strap',
-            'closure',
-            'pattern',
-            'toe',
-            'lifestyle',
-            'material',
-            'height_map',
-        ];
-        foreach ($simpleProperties as $i => $property) {
-            if (!empty($data[$property])) {
-                $data[$property] = $this->translate($simpleTables[$i], $data[$property], $language);
-            }
-        }
-
-        //keyword,feature,sku(color_map)
-        $objProperties = [
-            'keyword',
-            'feature',
-            'sku'
-        ];
-        foreach ($objProperties as $objProperty) {
-            if ($objProperty == 'sku') {
-                foreach ($data['sku'] as &$sku) {
-                    if (!empty($sku['colorMap'])) {
-                        $sku = $this->translate('color_map', $sku['colorMap'], $language);
+        foreach ($propertyMap as $key => $value) {
+            if (is_string($value)) {
+                if (!empty($data[$key])) {
+                    if ($value == 'clear') {
+                        $data[$key] = '';
+                    } else {
+                        $data[$key] = $this->translate($value, $data[$key], $language);
+                    }
+                }
+            } else if (is_string($value[0])) {
+                foreach ($data[$key] as &$default) {
+                    if (!empty($default)) {
+                        $default = $this->translate($value[0], $default, $language);
                     }
                 }
             } else {
-                foreach ($data[$objProperty] as &$property) {
-                    if (!empty($property)) {
-                        $property = $this->translate($objProperty, $property, $language);
+                foreach ($data[$key] as &$obj) {
+                    foreach ($value as $property => $table) {
+                        if (!empty($obj[$property])) {
+                            $obj[$property] = $this->translate($table, $obj[$property], $language);
+                        }
                     }
                 }
             }
-        }
-
-        //bulletPoint
-        foreach ($data['bulletPoint'] as &$bulletPoint) {
-            $bulletPoint = $this->translate('generic_keyword', $bulletPoint, $language);
         }
 
         return json_encode($data, JSON_UNESCAPED_UNICODE);
