@@ -18,6 +18,7 @@ use data\Database;
 use data\OMS;
 use DB\SQL\Mapper;
 
+//  amazon template for US as default
 class AmazonTemplate
 {
     private static $type = 'Shoes';
@@ -30,7 +31,7 @@ class AmazonTemplate
             ['The top 3 rows are for Amazon.com use only. Do not modify or delete the top 3 rows.', 'C1', 'I1'],
             ['Offer - These attributes are required to make your item buyable for customers on the site', 'J1', 'AC1'],
             ['Dimensions - These attributes specify the size and weight of a product', 'AD1', 'AK1'],
-            ['Discovery - These attributes have an effect on how customers can find your product on the site using browse or search', 'AD1', 'BC1'],
+            ['Discovery - These attributes have an effect on how customers can find your product on the site using browse or search', 'AL1', 'BC1'],
             ['Images - These attributes provide links to images for a product', 'BD1', 'BM1'],
             ['Fulfillment - Use these columns to provide fulfillment-related information for either Amazon-fulfilled (FBA) or seller-fulfilled orders.', 'BN1', 'BT1'],
             ['Variation - Populate these attributes if your product is available in different variations (for example color or wattage)', 'BU1', 'BX1'],
@@ -370,6 +371,7 @@ We aim to help women realize their dream of owning the perfect shoes. </br></br>
 DES;
 
     }
+
     private static function getUPC()
     {
         $upc = new Mapper(Database::mysql(), 'upc');
@@ -794,10 +796,24 @@ DES;
         return $rows;
     }
 
-    /**
-     * @param $data
-     * @param $file
-     */
+    private static function writeRow(\PHPExcel_Worksheet $sheet, int $rowNumber, array $data)
+    {
+        $row = $sheet->getRowIterator($rowNumber)->current();
+        $cell = $row->getCellIterator();
+        foreach ($data as $item) {
+            if (is_array($item)) {
+                $cell->current()->setValue($item[0])->setDataType(\PHPExcel_Cell_DataType::TYPE_STRING);
+                if (count($item) == 3) {
+                    $sheet->mergeCells($item[1] . ':' . $item[2]);
+                    $cell = $row->getCellIterator(substr($item[2], 0, strlen($item[2]) - 1));
+                }
+            } else {
+                $cell->current()->setValue($item)->setDataType(\PHPExcel_Cell_DataType::TYPE_STRING);
+            }
+            $cell->next();
+        }
+    }
+
     public static function generate($data, $file)
     {
         \PHPExcel_Settings::setCacheStorageMethod(\PHPExcel_CachedObjectStorageFactory::cache_to_discISAM, ['memoryCacheSize' => '16M']);
@@ -826,21 +842,36 @@ DES;
         $writer->save($file);
     }
 
-    private static function writeRow(\PHPExcel_Worksheet $sheet, int $rowNumber, array $data)
+    public static function printHeader($file, $maxHeaderRow = 3)
     {
-        $row = $sheet->getRowIterator($rowNumber)->current();
-        $cell = $row->getCellIterator();
-        foreach ($data as $item) {
-            if (is_array($item)) {
-                $cell->current()->setValue($item[0])->setDataType(\PHPExcel_Cell_DataType::TYPE_STRING);
-                if (count($item) == 3) {
-                    $sheet->mergeCells($item[1] . ':' . $item[2]);
-                    $cell = $row->getCellIterator(substr($item[2], 0, strlen($item[2]) - 1));
+        $tmp = '/tmp/' . basename($file, ".xls") . '.header';
+        if (is_file($tmp)) {
+            unlink($tmp);
+        }
+
+        $excel = \PHPExcel_IOFactory::load($file);
+        $sheet = $excel->getSheet(0);
+
+        $rowIterator = $sheet->getRowIterator();
+        foreach ($rowIterator as $row) {
+            if ($row->getRowIndex() <= $maxHeaderRow) {
+                file_put_contents($tmp, $row->getRowIndex() . ": [\n", FILE_APPEND);
+                $cellIterator = $row->getCellIterator();
+                $cellIterator->setIterateOnlyExistingCells();
+                foreach ($cellIterator as $cell) {
+                    $value = trim($cell->getValue());
+                    if (!empty($value)) {
+                        $value = addslashes(preg_replace('/\f|\n|\r|\t|\v/', '', $value));
+                        if ($cell->isMergeRangeValueCell()) {
+                            $bounds = explode(':', $cell->getMergeRange());
+                            file_put_contents($tmp, "    ['$value', '$bounds[0]', '$bounds[1]'],\n", FILE_APPEND);
+                        } else {
+                            file_put_contents($tmp, "    '$value',\n", FILE_APPEND);
+                        }
+                    }
                 }
-            } else {
-                $cell->current()->setValue($item)->setDataType(\PHPExcel_Cell_DataType::TYPE_STRING);
+                file_put_contents($tmp, "],\n", FILE_APPEND);
             }
-            $cell->next();
         }
     }
 }
