@@ -2,6 +2,9 @@
 
 namespace helper;
 
+use data\Database;
+use DB\SQL\Mapper;
+
 class AmazonTemplateUK extends AmazonTemplate
 {
     protected static $header = [
@@ -222,6 +225,13 @@ class AmazonTemplateUK extends AmazonTemplate
         ]
     ];
 
+    protected static function getRecommendedBrowseNodes($itemType)
+    {
+        $translator = new Mapper(Database::mysql(), 'translator');
+        $translator->load(['name =? and language = ?', $itemType, 'uk']);
+        return $translator->dry() ? $itemType : $translator['data'];
+    }
+
     protected static function parent($data)
     {
         $fields = array_flip(self::$header[2]);
@@ -255,7 +265,7 @@ class AmazonTemplateUK extends AmazonTemplate
         $row[$fields['item_dimensions_unit_of_measure']] = '';
         $row[$fields['item_weight']] = 1;
         $row[$fields['item_weight_unit_of_measure']] = 'KG';
-        $row[$fields['recommended_browse_nodes1']] = '';//TODO
+        $row[$fields['recommended_browse_nodes1']] = self::getRecommendedBrowseNodes($data['itemType']);
         $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
 
         $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
@@ -375,7 +385,7 @@ class AmazonTemplateUK extends AmazonTemplate
             $row[$fields['item_dimensions_unit_of_measure']] = '';
             $row[$fields['item_weight']] = 1;
             $row[$fields['item_weight_unit_of_measure']] = 'KG';
-            $row[$fields['recommended_browse_nodes1']] = '';//TODO
+            $row[$fields['recommended_browse_nodes1']] = self::getRecommendedBrowseNodes($data['itemType']);
             $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
 
             $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
