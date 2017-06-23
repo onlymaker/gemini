@@ -59,42 +59,44 @@ class Upload extends \Web
         $rows = $sheet->toArray();
         $mapper = new Mapper(Database::mysql(), $table);
         foreach ($rows as $i => $data) {
-            if ($table == 'generic_keyword') {//name,data(us),uk,de
-                $mapper->load(["name = ?", $data[0]]);
-                $mapper['name'] = strtolower($data[0]);
-                $mapper['us'] = trim(str_replace('，', ',', $data[1]));
-                $mapper['uk'] = trim(str_replace('，', ',', $data[2]));
-                $mapper['de'] = trim(str_replace('，', ',', $data[3]));
-                $mapper->save();
-            } else if ($table == 'translator') {
-                $mapper->load(['name =? and language = ?', $data[0], $data[1]]);
-                $mapper['name'] = $data[0];
-                $mapper['language'] = $data[1];
-                $mapper['data'] = $data[2];
-                $mapper->save();
-            } else if ($table == 'store') {//name
-                $mapper->load(["name = ?", $data[0]]);
-                if ($mapper->dry()) {
-                    Store::create($data[0]);
-                }
-            } else if ($table == 'brand') {//name
-                $mapper->load(["name = ?", $data[0]]);
-                if ($mapper->dry()) {
+            if (!empty(preg_replace('/\s/', '', $data))) {
+                if ($table == 'generic_keyword') {//name,data(us),uk,de
+                    $mapper->load(["name = ?", $data[0]]);
+                    $mapper['name'] = strtolower($data[0]);
+                    $mapper['us'] = trim(str_replace('，', ',', $data[1]));
+                    $mapper['uk'] = trim(str_replace('，', ',', $data[2]));
+                    $mapper['de'] = trim(str_replace('，', ',', $data[3]));
+                    $mapper->save();
+                } else if ($table == 'translator') {
+                    $mapper->load(['name =? and language = ?', $data[0], $data[1]]);
                     $mapper['name'] = $data[0];
+                    $mapper['language'] = $data[1];
+                    $mapper['data'] = $data[2];
+                    $mapper->save();
+                } else if ($table == 'store') {//name
+                    $mapper->load(["name = ?", $data[0]]);
+                    if ($mapper->dry()) {
+                        Store::create($data[0]);
+                    }
+                } else if ($table == 'brand') {//name
+                    $mapper->load(["name = ?", $data[0]]);
+                    if ($mapper->dry()) {
+                        $mapper['name'] = $data[0];
+                        $mapper->save();
+                    }
+                } else if ($table == 'upc') {//data
+                    $mapper->load(["data = ?", $data[0]]);
+                    if ($mapper->dry()) {
+                        $mapper['data'] = $data[0];
+                        $mapper->save();
+                    }
+                } else {//us,uk,de
+                    $mapper->load(["us = ?", $data[0]]);
+                    $mapper['us'] = $data[0];
+                    $mapper['uk'] = $data[1];
+                    $mapper['de'] = $data[2];
                     $mapper->save();
                 }
-            } else if ($table == 'upc') {//data
-                $mapper->load(["data = ?", $data[0]]);
-                if ($mapper->dry()) {
-                    $mapper['data'] = $data[0];
-                    $mapper->save();
-                }
-            } else {//us,uk,de
-                $mapper->load(["us = ?", $data[0]]);
-                $mapper['us'] = $data[0];
-                $mapper['uk'] = $data[1];
-                $mapper['de'] = $data[2];
-                $mapper->save();
             }
         }
     }
