@@ -27,7 +27,14 @@ class Edit extends AppBase
                 } else {
                     $data = $raw['data'];
                 }
+            } else {
+                $data = $mapper['data'];
             }
+            $data = json_decode($data, true);
+            $this->pregReplace($data);
+
+            $f3->set('data', $data);
+            $f3->set('languages', Store::languages());
 
             $f3->set('title', 'Edit');
             $f3->set('stores', (new Mapper($this->db, 'store'))->find(null, ['order' => 'name']));
@@ -45,10 +52,18 @@ class Edit extends AppBase
             $f3->set('features', (new Mapper($this->db, 'feature'))->find(null, ['order' => $this->language]));
             $f3->set('colorMaps', (new Mapper($this->db, 'color_map'))->find(null, ['order' => $this->language]));
 
-            $f3->set('data', json_decode($data ?? $mapper['data'], true));
-            $f3->set('languages', Store::languages());
-
             echo \Template::instance()->render('edit.html');
+        }
+    }
+
+    function pregReplace(&$data, $pattern = '/\f|\n|\r|\t|\v/')
+    {
+        foreach ($data as $key => &$value) {
+            if (is_array($value)) {
+                $this->pregReplace($value);
+            } else {
+                $data[$key] = preg_replace($pattern, ' ', $value);
+            }
         }
     }
 
