@@ -32,7 +32,9 @@ class Download extends SysBase
 
             while (!$mapper->dry()) {
                 if ($count === 0) {
-                    fputcsv($csv, $mapper->fields());
+                    $fields = $mapper->fields();
+                    unset($fields['id']);
+                    fputcsv($csv, $fields);
                 }
                 fputcsv($csv, $mapper->cast());
                 ob_flush();
