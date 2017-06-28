@@ -317,7 +317,7 @@ class AmazonTemplateDE
         $row[$fields['fulfillment_center_id']] = '';
         $row[$fields['parent_child']] = 'parent';
         $row[$fields['parent_sku']] = '';
-        $row[$fields['relationship_type']] = '';
+        $row[$fields['relationship_type']] = 'variation';
         $row[$fields['variation_theme']] = '';
         $row[$fields['country_of_origin']] = '';
         $row[$fields['eu_toys_safety_directive_warning']] = '';
@@ -453,7 +453,7 @@ class AmazonTemplateDE
             $row[$fields['fulfillment_center_id']] = '';
             $row[$fields['parent_child']] = 'child';
             $row[$fields['parent_sku']] = $data['store'] . '-' . $data['model'];
-            $row[$fields['relationship_type']] = '';
+            $row[$fields['relationship_type']] = 'variation';
             $row[$fields['variation_theme']] = '';
             $row[$fields['country_of_origin']] = '';
             $row[$fields['eu_toys_safety_directive_warning']] = '';
