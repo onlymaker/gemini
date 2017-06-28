@@ -8,7 +8,7 @@ use DB\SQL\Mapper;
 class Store
 {
     private static $MARKET_UNIT_HASH = [
-        'EU' => ['EU'],
+        'DE' => ['EU'],
         'UK' => ['UK'],
         'US' => ['CA', 'US']
     ];
