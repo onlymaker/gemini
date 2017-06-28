@@ -80,7 +80,7 @@ class Edit extends AppBase
             'store' => 'clear',
             'price' => 'clear',
             'currency' => 'clear',
-            'size' => 'clear',
+            //'size' => 'clear',
             'bulletPoint' => ['clear'],
             'itemType' => 'item_type',
             'heel' => 'heel',

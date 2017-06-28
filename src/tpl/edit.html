@@ -1075,7 +1075,7 @@
         <repeat group="{{@data['sku']}}" value="{{@value}}" key="{{@key}}">
         $("input[name=sub-sku]").eq("{{@key}}").val("{{@value['sku']}}");
         $("input[name=color-name]").eq("{{@key}}").val("{{@value['colorName']}}");
-        $("select[name=color-map]").children().each(function () {
+        $("select[name=color-map]").eq("{{@key}}").children().each(function () {
             if ($(this).val() == "{{@value['colorMap']}}") {
                 $(this).prop("selected", true);
                 return false;
