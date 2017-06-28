@@ -79,8 +79,6 @@ class Edit extends AppBase
         $propertyMap = [
             'store' => 'clear',
             'price' => 'clear',
-            'currency' => 'clear',
-            //'size' => 'clear',
             'bulletPoint' => ['clear'],
             'itemType' => 'item_type',
             'heel' => 'heel',
@@ -128,6 +126,12 @@ class Edit extends AppBase
                 }
             }
         }
+
+        $currencyMap = [
+            'de' => 'EUR',
+            'uk' => 'GBP'
+        ];
+        $data['currency'] = $currencyMap[$language];
 
         return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
