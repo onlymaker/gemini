@@ -310,7 +310,7 @@ class AmazonTemplateUK
         $row[$fields['parent_child']] = 'parent';
         $row[$fields['parent_sku']] = '';
         $row[$fields['relationship_type']] = 'variation';
-        $row[$fields['variation_theme']] = '';
+        $row[$fields['variation_theme']] = 'Size/Color';
         $row[$fields['country_of_origin']] = '';
         $row[$fields['eu_toys_safety_directive_warning']] = '';
         $row[$fields['department_name']] = 'womens';
@@ -445,7 +445,7 @@ class AmazonTemplateUK
             $row[$fields['parent_child']] = 'child';
             $row[$fields['parent_sku']] = $data['store'] . '-' . $data['model'];
             $row[$fields['relationship_type']] = 'variation';
-            $row[$fields['variation_theme']] = '';
+            $row[$fields['variation_theme']] = 'Size/Color';
             $row[$fields['country_of_origin']] = '';
             $row[$fields['eu_toys_safety_directive_warning']] = '';
             $row[$fields['department_name']] = 'womens';
