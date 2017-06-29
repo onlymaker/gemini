@@ -2,7 +2,6 @@
 namespace app;
 
 use app\common\AppBase;
-use data\OMS;
 use DB\SQL\Mapper;
 
 class Index extends AppBase
@@ -52,18 +51,5 @@ class Index extends AppBase
         $f3->log($this->db->log());
         $this->error['code'] = 0;
         echo $this->jsonResponse();
-    }
-
-    function getImage($model)
-    {
-        $oms = OMS::instance();
-        $prototype = new Mapper($oms, 'prototype');
-        $prototype->load(['model = ?', $model]);
-        if (!$prototype->dry() && !empty($prototype['images'])) {
-            $images = explode(',', $prototype['images']);
-            return $images[0] . '?imageView2/0/w/100';
-        } else {
-            return 'http://qiniu.syncxplus.com/meta/holder.jpg?imageView2/0/w/100';
-        }
     }
 }

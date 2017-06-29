@@ -52,6 +52,8 @@ class Edit extends AppBase
             $f3->set('features', (new Mapper($this->db, 'feature'))->find(null, ['order' => $this->language]));
             $f3->set('colorMaps', (new Mapper($this->db, 'color_map'))->find(null, ['order' => $this->language]));
 
+            $f3->set('image', $this->getImage($mapper['model']));
+
             echo \Template::instance()->render('edit.html');
         }
     }

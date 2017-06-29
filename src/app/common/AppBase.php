@@ -2,6 +2,8 @@
 namespace app\common;
 
 use data\Database;
+use data\OMS;
+use DB\SQL\Mapper;
 
 class AppBase
 {
@@ -38,6 +40,19 @@ class AppBase
             return json_encode(array_merge(['error' => $this->error], $data), JSON_UNESCAPED_UNICODE);
         } else {
             return json_encode(['error' => $this->error]);
+        }
+    }
+
+    function getImage($model)
+    {
+        $oms = OMS::instance();
+        $prototype = new Mapper($oms, 'prototype');
+        $prototype->load(['model = ?', $model]);
+        if (!$prototype->dry() && !empty($prototype['images'])) {
+            $images = explode(',', $prototype['images']);
+            return $images[0] . '?imageView2/0/w/100';
+        } else {
+            return 'http://qiniu.syncxplus.com/meta/holder.jpg?imageView2/0/w/100';
         }
     }
 }
