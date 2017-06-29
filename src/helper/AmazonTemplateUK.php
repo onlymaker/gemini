@@ -309,7 +309,7 @@ class AmazonTemplateUK
         $row[$fields['fulfillment_center_id']] = '';
         $row[$fields['parent_child']] = 'parent';
         $row[$fields['parent_sku']] = '';
-        $row[$fields['relationship_type']] = 'variation';
+        $row[$fields['relationship_type']] = '';
         $row[$fields['variation_theme']] = 'Size/Color';
         $row[$fields['country_of_origin']] = '';
         $row[$fields['eu_toys_safety_directive_warning']] = '';
