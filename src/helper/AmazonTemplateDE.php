@@ -240,7 +240,11 @@ DES;
     {
         $translator = new Mapper(Database::mysql(), 'translator');
         $translator->load(['name =? and language = ?', $itemType, 'de']);
-        return $translator->dry() ? $itemType : $translator['data'];
+        if ($translator->dry()) {
+            return [];
+        } else {
+            return explode(',', $translator['data']);
+        }
     }
 
     protected static function parent($data)
@@ -277,8 +281,10 @@ DES;
         $row[$fields['website_shipping_weight']] = 1;
         $row[$fields['item_weight']] = 1;
         $row[$fields['item_weight_unit_of_measure']] = 'KG';
-        $row[$fields['recommended_browse_nodes1']] = self::getRecommendedBrowseNodes($data['itemType']);
-        $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
+
+        $recommendedBrowseNodes = self::getRecommendedBrowseNodes($data['itemType']);
+        $row[$fields['recommended_browse_nodes1']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
+        $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
 
         $autoKeywords = self::getAutoKeywords($data['name'], 'de');
         $row[$fields['generic_keywords1']] = $autoKeywords[0];
@@ -398,8 +404,10 @@ DES;
             $row[$fields['website_shipping_weight']] = 1;
             $row[$fields['item_weight']] = 1;
             $row[$fields['item_weight_unit_of_measure']] = 'KG';
-            $row[$fields['recommended_browse_nodes1']] = self::getRecommendedBrowseNodes($data['itemType']);
-            $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
+
+            $recommendedBrowseNodes = self::getRecommendedBrowseNodes($data['itemType']);
+            $row[$fields['recommended_browse_nodes1']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
+            $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
 
             $autoKeywords = self::getAutoKeywords($data['name'], 'de');
             $row[$fields['generic_keywords1']] = $autoKeywords[0];

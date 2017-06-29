@@ -231,7 +231,11 @@ class AmazonTemplateUK
     {
         $translator = new Mapper(Database::mysql(), 'translator');
         $translator->load(['name =? and language = ?', $itemType, 'uk']);
-        return $translator->dry() ? $itemType : $translator['data'];
+        if ($translator->dry()) {
+            return [];
+        } else {
+            return explode(',', $translator['data']);
+        }
     }
 
     protected static function parent($data)
@@ -267,8 +271,10 @@ class AmazonTemplateUK
         $row[$fields['item_dimensions_unit_of_measure']] = '';
         $row[$fields['item_weight']] = 1;
         $row[$fields['item_weight_unit_of_measure']] = 'KG';
-        $row[$fields['recommended_browse_nodes1']] = self::getRecommendedBrowseNodes($data['itemType']);
-        $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
+
+        $recommendedBrowseNodes = self::getRecommendedBrowseNodes($data['itemType']);
+        $row[$fields['recommended_browse_nodes1']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
+        $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
 
         $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
         $row[$fields['generic_keywords1']] = $autoKeywords[0];
@@ -387,8 +393,10 @@ class AmazonTemplateUK
             $row[$fields['item_dimensions_unit_of_measure']] = '';
             $row[$fields['item_weight']] = 1;
             $row[$fields['item_weight_unit_of_measure']] = 'KG';
-            $row[$fields['recommended_browse_nodes1']] = self::getRecommendedBrowseNodes($data['itemType']);
-            $row[$fields['recommended_browse_nodes2']] = $row[$fields['recommended_browse_nodes1']];
+
+            $recommendedBrowseNodes = self::getRecommendedBrowseNodes($data['itemType']);
+            $row[$fields['recommended_browse_nodes1']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
+            $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
 
             $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
             $row[$fields['generic_keywords1']] = $autoKeywords[0];
