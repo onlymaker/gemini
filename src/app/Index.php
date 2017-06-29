@@ -2,8 +2,8 @@
 namespace app;
 
 use app\common\AppBase;
+use data\OMS;
 use DB\SQL\Mapper;
-use helper\Store;
 
 class Index extends AppBase
 {
@@ -15,13 +15,23 @@ class Index extends AppBase
 
     function search($f3)
     {
+        $results = [];
         $mapper = new Mapper($this->db, 'raw');
-        $results = $mapper->find(['model = ?', trim($_GET['model'])], ['order' => 'update_time desc']);
-        if ($results) {
+        $data = $mapper->find(['model = ?', trim($_GET['model'])], ['order' => 'update_time desc']);
+        if ($data) {
+            foreach ($data as $i => $result) {
+                $results[$i] = $result->cast();
+                $results[$i]['image'] = $this->getImage($result['model']);
+            }
             $f3->set('type', 'results');
             $f3->set('results', $results);
         } else {
-            $hints = $this->db->exec('SELECT DISTINCT model FROM raw WHERE model like ?', trim($_GET['model']) . '%');
+            $hints = [];
+            $data = $this->db->exec('SELECT DISTINCT model FROM raw WHERE model like ?', trim($_GET['model']) . '%');
+            foreach ($data as $i => $hint) {
+                $hints[$i] = ['model' => $hint['model']];
+                $hints[$i]['image'] = $this->getImage($hint['model']);
+            }
             $f3->set('type', 'hints');
             $f3->set('hints', $hints);
         }
@@ -42,5 +52,18 @@ class Index extends AppBase
         $f3->log($this->db->log());
         $this->error['code'] = 0;
         echo $this->jsonResponse();
+    }
+
+    function getImage($model)
+    {
+        $oms = OMS::instance();
+        $prototype = new Mapper($oms, 'prototype');
+        $prototype->load(['model = ?', $model]);
+        if (!$prototype->dry() && !empty($prototype['images'])) {
+            $images = explode(',', $prototype['images']);
+            return $images[0] . '?imageView2/0/w/100';
+        } else {
+            return 'http://qiniu.syncxplus.com/meta/holder.jpg?imageView2/0/w/100';
+        }
     }
 }

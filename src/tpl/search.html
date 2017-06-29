@@ -9,6 +9,7 @@
     <check if="{{@type == 'results'}}">
         <repeat group="{{@results}}" value="{{@result}}">
         <tr>
+            <td><img src="{{@result['image']}}"/></td>
             <td>{{@result['update_time']}}</td>
             <td>{{@result['user']}}</td>
             <td>{{@result['model']}}</td>
@@ -40,6 +41,7 @@
         </check>
         <repeat group="{{@hints}}" value="{{@hint}}">
             <tr>
+                <td><img src="{{@hint['image']}}"/></td>
                 <td><a href="{{@BASE}}/search?model={{@hint['model']}}">{{@hint['model']}}</a></td>
             </tr>
         </repeat>
