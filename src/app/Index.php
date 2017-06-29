@@ -39,6 +39,31 @@ class Index extends AppBase
         echo \Template::instance()->render('search.html');
     }
 
+    function page($f3, $args)
+    {
+        $filter = null;
+        if (isset($_GET['myself'])) {
+            $filter = ['user = ?', $this->user['name']];
+            $f3->set('myself', true);
+        } else {
+            $f3->set('myself', false);
+        }
+        $pageNo = $args['pageNo'];
+        $pageSize = 20;
+        $mapper = new Mapper($this->db, 'raw');
+        $page = $mapper->paginate($pageNo - 1, $pageSize, $filter, ['order' => 'id DESC'], 0, false);
+        $results = [];
+        foreach ($page['subset'] as $key => $value) {
+            $results[$key] = $value->cast();
+            $results[$key]['image'] = $this->getImage($value['model']);
+        }
+        $f3->set('title', '产品列表');
+        $f3->set('results', $results);
+        $f3->set('current', $pageNo);
+        $f3->set('pageCount', $page['count']);
+        echo \Template::instance()->render('list.html');
+    }
+
     function delete($f3)
     {
         $f3->log('Request to delete raw: ' . $_POST['id']);
