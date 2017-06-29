@@ -55,11 +55,13 @@ class Create extends AppBase
 
     function checkModel()
     {
+        $image = '';
         $mapper = new Mapper(OMS::instance(), 'prototype');
         $mapper->load(['model = ?', $_GET['model']]);
         if (!$mapper->dry()) {
             $this->error['code'] = 0;
+            $image = $this->getImage($_GET['model']);
         }
-        echo $this->jsonResponse();
+        echo $this->jsonResponse(['image' => $image]);
     }
 }

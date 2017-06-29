@@ -42,6 +42,7 @@
                     <input class="form-control" type="text" id="model" name="model" placeholder="model"/>
                     <div class="input-group-addon check-model">Check</div>
                 </div>
+                <p><img id="model-thumb" src="{{@image}}"></p>
             </div>
         </div>
         <div class="form-group">
@@ -873,7 +874,9 @@
                         console.log(data);
                         var json = JSON.parse(data);
                         if (json.error.code == 0) {
+                            $("#model-thumb").attr("src", json.image);
                             return alert("产品型号有效");
+                            $("img")
                         } else {
                             return alert("产品型号不存在");
                         }
