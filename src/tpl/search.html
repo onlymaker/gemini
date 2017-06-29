@@ -83,7 +83,7 @@
 
         $(".btn-download").click(function () {
             var row = $(this).parent().parent().parent();
-            var user = row.find("td").eq(1).text();
+            var user = row.find("td").eq(2).text();
             if (user != "{{@user['name']}}") {
                 return alert("只能下载自己创建的记录");
             }
@@ -97,7 +97,7 @@
         })
         $(".btn-delete").click(function () {
             var row = $(this).parent().parent().parent();
-            var user = row.find("td").eq(1).text();
+            var user = row.find("td").eq(2).text();
             if (user != "{{@user['name']}}") {
                 return alert("只能删除自己创建的记录");
             }
