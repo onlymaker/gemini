@@ -243,7 +243,7 @@ DES;
         if ($translator->dry()) {
             return [];
         } else {
-            return explode(',', $translator['data']);
+            return explode(';', $translator['data']);
         }
     }
 
