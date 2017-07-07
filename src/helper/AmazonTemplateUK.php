@@ -261,7 +261,7 @@ class AmazonTemplateUK
         $row[$fields['offering_can_be_gift_messaged']] = '';
         $row[$fields['offering_can_be_giftwrapped']] = '';
         $row[$fields['is_discontinued_by_manufacturer']] = '';
-        $row[$fields['fulfillment_latency']] = 11;
+        $row[$fields['fulfillment_latency']] = 10;
         $row[$fields['merchant_shipping_group_name']] = $data['delivery'] == 'null' ? '' : $data['delivery'];
         $row[$fields['website_shipping_weight_unit_of_measure']] = 'KG';
         $row[$fields['website_shipping_weight']] = 1;
@@ -383,7 +383,7 @@ class AmazonTemplateUK
             $row[$fields['offering_can_be_gift_messaged']] = '';
             $row[$fields['offering_can_be_giftwrapped']] = '';
             $row[$fields['is_discontinued_by_manufacturer']] = '';
-            $row[$fields['fulfillment_latency']] = 11;
+            $row[$fields['fulfillment_latency']] = 10;
             $row[$fields['merchant_shipping_group_name']] = $data['delivery'] == 'null' ? '' : $data['delivery'];
             $row[$fields['website_shipping_weight_unit_of_measure']] = 'KG';
             $row[$fields['website_shipping_weight']] = 1;

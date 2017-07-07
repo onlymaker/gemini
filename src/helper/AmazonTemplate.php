@@ -188,7 +188,7 @@ class AmazonTemplate
             'list_price',//空
             'currency',//currency
             'product_tax_code',//空
-            'fulfillment_latency',//11
+            'fulfillment_latency',//10
             'product_site_launch_date',//空
             'merchant_release_date',//空
             'restock_date',//空
@@ -481,7 +481,7 @@ DES;
         $row[$fields['list_price']] = '';
         $row[$fields['currency']] = $data['currency'];
         $row[$fields['product_tax_code']] = '';
-        $row[$fields['fulfillment_latency']] = 11;
+        $row[$fields['fulfillment_latency']] = 10;
         $row[$fields['product_site_launch_date']] = '';
         $row[$fields['merchant_release_date']] = '';
         $row[$fields['restock_date']] = '';
@@ -638,7 +638,7 @@ DES;
             $row[$fields['list_price']] = '';
             $row[$fields['currency']] = $data['currency'];
             $row[$fields['product_tax_code']] = '';
-            $row[$fields['fulfillment_latency']] = 11;
+            $row[$fields['fulfillment_latency']] = 10;
             $row[$fields['product_site_launch_date']] = '';
             $row[$fields['merchant_release_date']] = '';
             $row[$fields['restock_date']] = '';
