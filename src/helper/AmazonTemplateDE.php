@@ -467,7 +467,7 @@ DES;
             $row[$fields['variation_theme']] = 'Size/Color';
             $row[$fields['country_of_origin']] = '';
             $row[$fields['eu_toys_safety_directive_warning']] = '';
-            $row[$fields['model_name']] = $data['store'] . '-' . $data['model'];
+            $row[$fields['model_name']] = $row[$fields['item_sku']];
             $row[$fields['department_name']] = 'damen';
             $row[$fields['style_name']] = $data['keyword'][0];
             $row[$fields['color_name']] = $sku['colorName'];
