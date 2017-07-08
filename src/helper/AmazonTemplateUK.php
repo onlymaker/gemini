@@ -274,7 +274,7 @@ class AmazonTemplateUK
 
         $recommendedBrowseNodes = self::getRecommendedBrowseNodes($data['itemType']);
         $row[$fields['recommended_browse_nodes1']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
-        $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
+        $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[1] ?? $data['itemType'];
 
         $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
         $row[$fields['generic_keywords1']] = $autoKeywords[0];
@@ -396,7 +396,7 @@ class AmazonTemplateUK
 
             $recommendedBrowseNodes = self::getRecommendedBrowseNodes($data['itemType']);
             $row[$fields['recommended_browse_nodes1']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
-            $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[0] ?? $data['itemType'];
+            $row[$fields['recommended_browse_nodes2']] = $recommendedBrowseNodes[1] ?? $data['itemType'];
 
             $autoKeywords = self::getAutoKeywords($data['name'], 'uk');
             $row[$fields['generic_keywords1']] = $autoKeywords[0];
