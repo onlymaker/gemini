@@ -2,6 +2,11 @@
 <html>
 <head>
     <include href="common/header.html"/>
+    <style>
+        .checkbox span {
+            margin-right: 50px;
+        }
+    </style>
 </head>
 <body>
 <include href="common/navbar.html"/>
@@ -9,14 +14,16 @@
 <div class="container">
     <div class="checkbox">
         <label>
-            <check if="{{@myself}}">
-                <true>
-                    <input id="user-filter" type="checkbox" name="myself" checked/> 只看自己
-                </true>
-                <false>
-                    <input id="user-filter" type="checkbox" name="myself"/> 只看自己
-                </false>
-            </check>
+            <repeat group="{{@filterUsers}}" value="{{@filter}}">
+                <check if="{{@filterUser == @filter}}">
+                    <true>
+                        <input type="checkbox" name="filter-user" data="{{@filter}}" checked/> <span>{{@filter}}</span>
+                    </true>
+                    <false>
+                        <input type="checkbox" name="filter-user" data="{{@filter}}"/> <span>{{@filter}}</span>
+                    </false>
+                </check>
+            </repeat>
         </label>
     </div>
     <table class="table table-striped">
@@ -80,16 +87,17 @@
         var pageCount = "{{@pageCount}}";
         for (var i = 1; i <= pageCount; i++) {
             var url = "{{@BASE}}/page/" + i;
-            if ($("#user-filter").prop("checked")) {
-                url += "?myself";
+            var filter = $("input[name=filter-user]:checked");
+            if (filter.length > 0) {
+                url += "?filterUser=" + filter.attr("data");
             }
             html += '<li><a href="' + url + '">' + i + "</a></li>";
         }
         $(".pagination").append(html);
 
-        $("#user-filter").on('change', function () {
+        $("input[name=filter-user]").on('change', function () {
             if ($(this).prop("checked")) {
-                location.href = "{{@BASE}}/page/1?myself";
+                location.href = "{{@BASE}}/page/1?filterUser=" + $(this).attr("data");
             } else {
                 location.href = "{{@BASE}}/page/1";
             }

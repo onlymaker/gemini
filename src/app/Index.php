@@ -42,12 +42,13 @@ class Index extends AppBase
     function page($f3, $args)
     {
         $filter = null;
-        if (isset($_GET['myself'])) {
-            $filter = ['user = ?', $this->user['name']];
-            $f3->set('myself', true);
+        if (!empty($_GET['filterUser'])) {
+            $filter = ['user = ?', $_GET['filterUser']];
+            $f3->set('filterUser', $_GET['filterUser']);
         } else {
-            $f3->set('myself', false);
+            $f3->set('filterUser', '');
         }
+        $f3->set('filterUsers', array_unique([$this->user['name'], 'chanpin01', 'amazonus01']));
         $pageNo = $args['pageNo'];
         $pageSize = 20;
         $mapper = new Mapper($this->db, 'raw');
