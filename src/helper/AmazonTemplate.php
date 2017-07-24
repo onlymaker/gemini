@@ -459,10 +459,15 @@ DES;
         }
     }
 
-    protected static function getSwatchImageUrl($storeName)
+    protected static function getSwatchImageUrl($type, $storeName)
     {
-        $store = Store::get($storeName);
-        return $store['swatch_image_url'] ?? '';
+        if ($type == 'stock') {
+            $imageUrl = 'http://' . strtolower($storeName) . '.syncxplus.com/stock_size_chart.png';
+        } else {
+            $store = Store::get($storeName);
+            $imageUrl = $store['swatch_image_url'];
+        }
+        return $imageUrl ?? '';
     }
 
     protected static function parent($data)
@@ -698,13 +703,13 @@ DES;
                     }
                 }
                 if ($length == $total) {
-                    $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['store']);
+                    $row[$fields['swatch_image_url']] = self::getSwatchImageUrl($data['size'], $data['store']);
                 } else {
-                    $row[$fields['other_image_url' . ++ $length]] = self::getSwatchImageUrl($data['store']);
+                    $row[$fields['other_image_url' . ++ $length]] = self::getSwatchImageUrl($data['size'], $data['store']);
                     $row[$fields['swatch_image_url']] = '';
                 }
             } else {
-                $row[$fields['main_image_url']] = self::getSwatchImageUrl($data['store']);
+                $row[$fields['main_image_url']] = self::getSwatchImageUrl($data['size'], $data['store']);
                 $row[$fields['other_image_url1']] = '';
                 $row[$fields['other_image_url2']] = '';
                 $row[$fields['other_image_url3']] = '';
